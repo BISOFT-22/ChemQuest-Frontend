@@ -1,0 +1,158 @@
+/* Paleta de Colores */
+body {
+    background-color: #ffffff; /* Fondo blanco */
+    color: #302e2e; /* Texto primario negro */
+    font-family: 'Montserrat', sans-serif; /* Fuente principal */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Rozha One', serif; /* Fuente secundaria para títulos */
+}
+
+/* Texto secundario gris */
+.secondary-text {
+    color: #878686;
+}
+
+/* Estilos de Botones */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-cancel {
+    background-color: #6b007b; /* Morado oscuro */
+    color: #ffffff;
+}
+
+.btn-continue {
+    background-color: #1a661a; /* Verde oscuro */
+    color: #ffffff;
+}
+
+.btn-save {
+    background-color: #1a661a; /* Verde oscuro */
+    color: #ffffff;
+}
+
+/* Listados */
+.list-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.list-item img {
+    width: 50px; /* Ajusta el tamaño de la imagen representativa */
+    height: 50px;
+    margin-right: 10px;
+}
+
+/* Estilo para selects personalizados */
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+}
+
+/* Estilo para iconos */
+.icon {
+    margin-left: 5px; /* Ajusta el espaciado entre el texto y el icono */
+}
+
+/* Otros estilos opcionales */
+.minecraft-font {
+    font-family: 'Minecraft Font', sans-serif;
+}
+
+.rainy-hearts {
+    font-family: 'Rainy Hearts', sans-serif;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.nav-left {
+    position: absolute;
+    left: 20px; /* Ajusta este valor según necesites */
+}
+
+.nav-left .logo {
+    height: 40px; /* Ajusta el tamaño de la imagen según necesites */
+}
+
+.nav-right {
+    position: absolute;
+    right: 20px; /* Ajusta este valor según necesites */
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.nav-right .profile {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right .profile-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nav-right .profile-name {
+    font-size: 16px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    margin: 0 10px;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 40px; /* Misma altura que la navbar */
+    margin-top: auto; /* Para que el footer se mantenga en la parte inferior */
+}
+
+.footer p {
+    margin: 0;
+}

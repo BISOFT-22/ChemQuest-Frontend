@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/1782b73ad8.js" crossorigin="anonymous"></script>
     <title>Título de tu Aplicación</title>
     <link rel="stylesheet" href="index.css"> <!-- Reemplaza con la ruta correcta a tu archivo CSS -->
     <style>
@@ -38,9 +39,9 @@
             <p class="secondary-text">Texto secundario en gris.</p>
 
             <!-- Botones -->
-            <button class="btn btn-continue">Continuar <span class="icon">-></span></button>
-            <button class="btn btn-cancel">Cancelar <span class="icon">X</span></button>
-            <button class="btn btn-save">Guardar <span class="icon">💾</span></button>
+            <button class="btn btn-continue">Continuar <i class="fa-solid fa-arrow-right"></i></button>
+            <button class="btn btn-cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
+            <button class="btn btn-save">Guardar <i class="fa-solid fa-floppy-disk"></i></button>
         </section>
 
         <section>
@@ -61,11 +62,14 @@
         <section>
             <h2>Formulario con Select Personalizado</h2>
             <form>
-                <select class="custom-select">
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                </select>
+                <label>&#12775;
+                    <select class="custom-select">
+                        <option value="opcion1">&#127760;Opción 1 <i class="fa-solid fa-flask"></i></option>
+                        <option value="opcion2">&#128293; Opción 2</option>
+                        <option value="opcion3">&#8322; Opción 3</option>
+                    </select>
+                </label>
+                <button>Botton</button>
             </form>
         </section>
     </main>
@@ -76,3 +80,9 @@
 
 </body>
 </html>
+
+
+<i class="fa-solid fa-xmark"></i> X 
+<i class="fa-solid fa-arrow-right"></i> FLECHA -> 
+<i class="fa-solid fa-floppy-disk"></i> GUARDAR
+<i class="fa-solid fa-fire"></i>

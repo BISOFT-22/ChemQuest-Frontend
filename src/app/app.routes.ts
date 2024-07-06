@@ -11,6 +11,7 @@ import { GuestGuard } from './guards/guest.guard';
 import { IRoleType } from './interfaces';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { GamesComponent } from './pages/games/games.component';
+import { ChemGuess7Component } from './components/ChemGuess/chem-guess7/chem-guess7.component';
 
 export const routes: Routes = [
   {
@@ -92,6 +93,19 @@ export const routes: Routes = [
           ],
           showInSidebar: true,
           name: 'games'
+        }
+      },
+      {
+        path: 'chemGuess7',
+        component: ChemGuess7Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess7'
         }
       }
     ],

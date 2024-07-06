@@ -31,6 +31,13 @@ export class ModalComponent {
       size: this.size ?? 'md',
     });
   }
+  public showChem() {
+    this.modalRef = this.modalService.open(this.modal, {
+      ariaLabelledBy: 'modal-component',
+      centered: true,
+      size: this.size ?? 'md',
+    });
+  }
 
   public hide() {
     this.modalRef?.dismiss();

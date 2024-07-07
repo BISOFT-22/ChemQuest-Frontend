@@ -14,6 +14,8 @@ import { GamesComponent } from './pages/games/games.component';
 import { ChemGuess7Component } from './components/ChemGuess/chem-guess7/chem-guess7.component';
 import { ChemGuess8Component } from './components/ChemGuess/chem-guess8/chem-guess8.component';
 import { ChemGuess9Component } from './components/ChemGuess/chem-guess9/chem-guess9.component';
+import { ChemGuess10Component } from './components/ChemGuess/chem-guess10/chem-guess10.component';
+import { ChemGuess11Component } from './components/ChemGuess/chem-guess11/chem-guess11.component';
 
 export const routes: Routes = [
   {
@@ -136,6 +138,34 @@ export const routes: Routes = [
           ],
           showInSidebar: true,
           name: 'chemGuess9'
+        }
+        
+      },
+      {
+        path: 'chemGuess10',
+        component: ChemGuess10Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess10'
+        }
+        
+      },
+      {
+        path: 'chemGuess11',
+        component: ChemGuess11Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess11'
         }
         
       },

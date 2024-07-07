@@ -12,6 +12,7 @@ import { IRoleType } from './interfaces';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { GamesComponent } from './pages/games/games.component';
 import { ChemGuess7Component } from './components/ChemGuess/chem-guess7/chem-guess7.component';
+import { ChemGuess8Component } from './components/ChemGuess/chem-guess8/chem-guess8.component';
 
 export const routes: Routes = [
   {
@@ -107,7 +108,22 @@ export const routes: Routes = [
           showInSidebar: true,
           name: 'chemGuess7'
         }
-      }
+        
+      },
+      {
+        path: 'chemGuess8',
+        component: ChemGuess8Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess8'
+        }
+        
+      },
     ],
   },
 ];

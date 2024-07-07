@@ -174,28 +174,19 @@ h1, h2, h3, h4, h5, h6 {
 /// 
 ///
 
-.pregunta{
-    font-family: sans-serif;
 
-}
-.botones{
-    margin: auto;
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-evenly;
-    border-radius: 60px;
-    
-}
+
 
 .big-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 8px 30px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     cursor: pointer; 
     background-color: #7fbf7b;
+    
   }
   .btn-cancel {
     background-color: #af8dc3; /* Morado oscuro */
@@ -245,3 +236,48 @@ h1, h2, h3, h4, h5, h6 {
   .advance{
     font-size: 30px;
   }
+  .tableRecongnizeElements{
+    display: flex;
+    align-items: baseline;
+    margin: auto;
+    margin-left: 5px;
+    
+  }
+
+/* styles.css */
+.styled-table {
+    margin-top: 60px;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-cell {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .table-header {
+    background-color: #af8dc3;;
+  }
+  
+  .table-body .table-row:nth-child(even) .table-cell {
+    background-color: #f9f9f9;
+  }
+  
+  .table-body .table-row:nth-child(odd) .table-cell {
+    background-color: #fff;
+  }
+  
+  .full-width {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .try{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  

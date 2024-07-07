@@ -2,10 +2,12 @@ import { Component, ViewChild  } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
 import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBComponent } from '../../../modal-b/modal-b.component';
+import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
+
 @Component({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ModalBComponent, NgbModule],
+  imports: [ModalBComponent, NgbModule, ChemGuessHangManComponent],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
@@ -14,9 +16,10 @@ export class ChemGuess7Component {
   imagePathAzules: string = 'assets/img/ojosazules.jpeg';
   imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
 
-
-
+  live: number = 8;
+  
   constructor(private modalService: NgbModal) {}
+
 
   open() {
     const modalRef = this.modalService.open(ModalBComponent);

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IGame } from '../../../interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ChemGuess7Component } from '../../ChemGuess/chem-guess7/chem-guess7.component';
+import { ChemGuessHangManComponent } from '../../ChemGuess/chem-guess-hang-man/chem-guess-hang-man.component';
 
 @Component({
   selector: 'app-game-form',

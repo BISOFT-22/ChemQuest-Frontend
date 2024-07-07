@@ -13,6 +13,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { GamesComponent } from './pages/games/games.component';
 import { ChemGuess7Component } from './components/ChemGuess/chem-guess7/chem-guess7.component';
 import { ChemGuess8Component } from './components/ChemGuess/chem-guess8/chem-guess8.component';
+import { ChemGuess9Component } from './components/ChemGuess/chem-guess9/chem-guess9.component';
 
 export const routes: Routes = [
   {
@@ -121,6 +122,20 @@ export const routes: Routes = [
           ],
           showInSidebar: true,
           name: 'chemGuess8'
+        }
+        
+      },
+      {
+        path: 'chemGuess9',
+        component: ChemGuess9Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess9'
         }
         
       },

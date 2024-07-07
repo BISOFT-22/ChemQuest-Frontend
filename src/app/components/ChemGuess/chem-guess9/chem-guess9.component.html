@@ -1,0 +1,42 @@
+<main>
+    <div>
+        <div class="Question-Timer">
+            
+              <div>
+                <p></p>
+                <h2 class="advance">Se mostraran diferentes compuestos, ¡COMPLETALOS!</h2>
+              </div>
+            
+            <h2 class="timer">12:00</h2>
+        </div>
+       
+    </div>
+
+    
+</main>
+
+
+<div class="cards">
+    @for (item of items; track $index) {
+    
+      <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
+            <h6 class="card-subtitle mb-4 text-body-secondary">Pista cada 2 errores</h6>
+            <p class="card-text ">OXIDO DE _____()</p>
+        </div>
+    </div>
+          
+    }
+  </div>
+
+  <div class="try">
+    <button class="big-button">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
+
+    
+</div>
+
+<p class="racha"><i class="fa-solid fa-fire"></i>100</p>
+
+<!-- app.component.html -->
+<button type="button" class="big-button" (click)="open()">Cambiar Pregunta</button>

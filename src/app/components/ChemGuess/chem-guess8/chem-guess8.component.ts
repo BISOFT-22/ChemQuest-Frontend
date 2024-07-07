@@ -10,5 +10,18 @@ import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-han
   styleUrl: './chem-guess8.component.scss'
 })
 export class ChemGuess8Component {
+
+  public items =  [
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+    
+  ];
+
 live:number = 8;
 }

@@ -164,3 +164,145 @@ h1, h2, h3, h4, h5, h6 {
 .footer p {
     margin: 0;
 }
+
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    background-color: #f7f7f7;
+    color: #333;
+    padding-top: 60px; /* Ajustar según la altura del navbar */
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #998ec3;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+.navbar-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 999;
+}
+
+.icon {
+    width: 25px;
+    height: 3px;
+    background-color: #f7f7f7;
+    margin: 5px 0;
+    transition: transform 0.3s ease;
+}
+
+.navbar-links {
+    list-style: none;
+    padding: 20px;
+}
+
+.navbar-links li {
+    margin-bottom: 10px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #f7f7f7;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #ccc;
+}
+
+.active {
+    transform: translateX(0);
+}
+
+/* Main content */
+main {
+    margin-left: 250px; /* Ajustar según el ancho del navbar */
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #998ec3;
+    color: #f7f7f7;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 10px;
+}
+
+.footer-section h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: #f7f7f7;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #ccc;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 999;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .active {
+        transform: translateX(0);
+    }
+}

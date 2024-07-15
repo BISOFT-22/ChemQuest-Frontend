@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesLogin.css">
+    <style>
+        /* Reset de estilos y estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            /* Usando la tipografía Montserrat */
+            background-color: #998ec3;
+            /* Color de fondo principal */
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-form {
+            background-color: #ffffff;
+            /* Color de fondo del formulario */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .login-form h2 {
+            font-family: 'Rozha One', serif;
+            /* Usando la tipografía Rozha One para títulos */
+            color: #998ec3;
+            /* Color para títulos */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #f1a340;
+            /* Color de fondo del botón de enviar */
+            color: #ffffff;
+            /* Color del texto del botón de enviar */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            /* Espacio superior */
+        }
+
+        .cancel-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #998ec3;
+            /* Color de fondo del botón de cancelar */
+            color: #ffffff;
+            /* Color del texto del botón de cancelar */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            /* Espacio superior */
+        }
+
+        .cancel-btn:hover {
+            background-color: #7d71a0;
+            /* Cambio de color al pasar el cursor sobre el botón de cancelar */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <form class="login-form">
+            <h2>Login</h2>
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="submit-btn">Iniciar sesión</button>
+            <button type="button" class="cancel-btn">Cancelar</button>
+        </form>
+    </div>
+</body>
+
+</html>

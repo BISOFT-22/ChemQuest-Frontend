@@ -1,0 +1,19 @@
+<!-- src/app/components/hangman/hangman.component.html -->
+ <br>
+<div class="hangman-container">
+   
+    <div class="word">
+        @for (item of displayedWord; track $index) {
+            <input class="inputSize" type="text">
+            @if (letter==='_') {
+                <input   type="text" maxlength="1" (input)="replaceBlank(item.length, letter)"  (input)="checkLetter(letter.toUpperCase())">
+            }
+        }
+        
+        @if ("letter !== '_'") {
+            <p>{{letter}}</p>
+        }
+        
+        
+    </div>
+</div>

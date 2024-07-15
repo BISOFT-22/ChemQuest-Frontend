@@ -1,0 +1,39 @@
+<main>
+    <div>
+        <div class="Question-Timer">
+            <select id="options" class="custom-select">
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+                <option value="opcion4">Opción 4</option>
+                <option value="opcion5">Opción 5</option>
+              </select> 
+              <div>
+                <p></p>
+                <h2 class="advance">{{8}}</h2>
+              </div>
+            
+            <h2 class="timer">12:00</h2>
+        </div>
+        <div class="imageQuestion">
+            <h2 class="pregunta">¡Pon la Formula de la imagen!</h2>
+            <img class="imgs" [src]="imagePathAbajo" alt="" >
+        </div>
+        <div >
+            <div class="enlas">
+                <p>Formula</p>
+                
+            </div>
+            <div class="inputEnlas">
+                <input type="text">
+                
+            </div>
+
+        </div>
+        <div class="try">
+            <button class="big-button">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
+        </div>
+        
+        <p class="racha"><i class="fa-solid fa-fire"></i>100</p>
+        <button type="button" class="big-button" (click)="open()">Cambiar Pregunta</button>
+    </div>

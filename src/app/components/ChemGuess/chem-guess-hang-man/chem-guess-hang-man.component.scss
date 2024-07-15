@@ -1,0 +1,17 @@
+.hangman-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .word {
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .inputSize{
+    width: 100px; 
+    padding: 5px; 
+    font-size: 12px; 
+  }

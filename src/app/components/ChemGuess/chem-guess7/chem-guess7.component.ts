@@ -3,6 +3,7 @@ import { ModalComponent } from '../../modal/modal.component';
 import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalBComponent } from '../../../modal-b/modal-b.component';
 import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
+import { RandomizerService } from '../../../services/randomizer.service';
 
 @Component({
   selector: 'app-chem-guess7',
@@ -18,9 +19,9 @@ export class ChemGuess7Component {
 
   live: number = 8;
   
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal,private random: RandomizerService) {}
 
-
+opcion: string='';
   open() {
     const modalRef = this.modalService.open(ModalBComponent);
     modalRef.result.then((result) => {
@@ -38,6 +39,10 @@ export class ChemGuess7Component {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  getWord(word:string){
+    this.opcion = word;
   }
 }
  

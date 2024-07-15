@@ -3,11 +3,9 @@
 <div class="hangman-container">
    
     <div class="word">
-        @for (item of displayedWord; track $index) {
+        @for (item of wordsArray; track $index) {
             <input class="inputSize" type="text">
-            @if (letter==='_') {
-                <input   type="text" maxlength="1" (input)="replaceBlank(item.length, letter)"  (input)="checkLetter(letter.toUpperCase())">
-            }
+           
         }
         
         @if ("letter !== '_'") {
@@ -17,3 +15,7 @@
         
     </div>
 </div>
+
+
+
+  

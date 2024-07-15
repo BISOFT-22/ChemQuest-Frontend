@@ -1,4 +1,5 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
+import { RandomizerService } from '../../../services/randomizer.service';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
@@ -9,23 +10,23 @@ import { Component, input, OnInit } from '@angular/core';
 export class ChemGuessHangManComponent implements OnInit {
 
   
-  private technologies =  [
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-    { word: "component", hint: "Building block of Angular applications" },
-    { word: "service", hint: "Used to encapsulate business logic in Angular" },
-    { word: "module", hint: "Container for a coherent block of code in Angular" }
-  ];
+ 
   
   word: string = '';
   displayedWord: string[] = [];
   guessedLetters: Set<string> = new Set(); // Para almacenar letras adivinadas
   letter: string = '';
-  constructor() { }
+  @Output() addFavoriteEvent = new EventEmitter<string>();
+
+  wordsArray: string[] = [];
+  constructor(private random: RandomizerService) {}
 
   ngOnInit() {
-    this.word = this.getRandomWord(this.technologies);
+    this.word = this.random.getRandomWord();
+    this.addFavoriteEvent.emit(this.word);
+    this.splitIntoWords(this.word);
     this.displayedWord = Array(this.word.length).fill('_');
+    
   }
 
   getRandomWord(technologies: any[]): string {
@@ -52,6 +53,10 @@ export class ChemGuessHangManComponent implements OnInit {
       this.displayedWord[index] = letter.toUpperCase(); // Reemplazar el guión bajo con la letra ingresada
     }
   }
+  splitIntoWords(input: string): void {
+    this.wordsArray = input.split('');
+  }
+
 }
 
 

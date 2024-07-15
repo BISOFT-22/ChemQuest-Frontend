@@ -1,41 +1,12 @@
-<div class="logo-wrapper">
-  <a routerLink="/">
-    <img
-      class="img-fluid"
-      src="../../../../../assets/icons/logo@2x.png"
-      width="50"
-      alt="Logo"
-    />
-  </a>
 
-  <div class="back-btn" (click)="layoutService.toggleSidebar()">
-    <i class="fa-solid fa-arrow-left"></i>
-  </div>
+ 
 
-  <div class="toggle-sidebar" (click)="layoutService.toggleSidebar()">
-    <i class="fa-solid fa fa-thumb-tack"></i>
-  </div>
-</div>
+ 
 
-<div class="logo-icon-wrapper">
-  <a href="javascript:void(0)">
-    <img
-      class="img-fluid"
-      src="../../../../../assets/icons/logo@2x.png"
-      width="35"
-      alt=""
-    />
-  </a>
-</div>
 
-<nav class="sidebar-main">
-  <div
-    id="left-arrow"
-    class="left-arrow"
-    [ngClass]="{ 'd-none': !showLeftArrow }"
-  >
-    <!-- <app-feather-icon icon="arrow-left"></app-feather-icon> -->
-  </div>
+
+<nav class="sidebar-main navbar" >
+  
 
   <div id="sidebar-menu" style="margin-left: 0px">
     <ul class="sidebar-links custom-scrollbar">

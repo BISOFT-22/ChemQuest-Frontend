@@ -20,7 +20,7 @@
   --balance-profie-bg: #e0dfef;
   --view-grid-bg: #ecf3fa80;
   --view-border-marker: #cfcdfc;
-
+  
   --fc-button-bg-color: var(--theme-default);
   --fc-button-active-bg-color: var(--theme-default);
   --fc-button-active-border-color: var(--theme-default);
@@ -43,6 +43,7 @@ body[class="dark-only"] {
   --course-light-btn: var(--light-bg);
   --view-grid-bg: var(--light-bg);
   --view-border-marker: #2c2c45d4;
+ 
 }
 // scss variables
 @import "./assets/utils/variables";

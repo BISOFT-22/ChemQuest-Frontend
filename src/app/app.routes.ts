@@ -16,6 +16,7 @@ import { ChemGuess8Component } from './components/ChemGuess/chem-guess8/chem-gue
 import { ChemGuess9Component } from './components/ChemGuess/chem-guess9/chem-guess9.component';
 import { ChemGuess10Component } from './components/ChemGuess/chem-guess10/chem-guess10.component';
 import { ChemGuess11Component } from './components/ChemGuess/chem-guess11/chem-guess11.component';
+import { ChemCrossComponent } from './components/ChemCross/chem-cross/chem-cross.component';
 
 export const routes: Routes = [
   {
@@ -158,17 +159,30 @@ export const routes: Routes = [
       {
         path: 'chemGuess11',
         component: ChemGuess11Component,
-        data: { 
+        data: {
           authorities: [
-            IRoleType.admin, 
+            IRoleType.admin,
             IRoleType.superAdmin,
             IRoleType.user
           ],
           showInSidebar: true,
           name: 'chemGuess11'
         }
-        
       },
+        {
+          path: 'chemcross',
+          component: ChemCrossComponent,
+          title:'ChemCross',
+          data: { 
+            authorities: [
+              IRoleType.admin, 
+              IRoleType.superAdmin,
+              IRoleType.user
+            ],
+            showInSidebar: true,
+            name: 'ChemCross'
+          }
+      }
     ],
   },
 ];

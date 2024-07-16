@@ -189,13 +189,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .big-button {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 30px 30px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     cursor: pointer; 
-    background-color: #7fbf7b;
+    background-color: #af8dc3;
+    font-size: large;
+    color: #ffffff;
   }
   .btn-cancel {
     background-color: #af8dc3; /* Morado oscuro */
@@ -211,7 +213,7 @@ h1, h2, h3, h4, h5, h6 {
   .Question-Timer{
     display: flex;
     margin-top: 20px;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .timer{
     display: flex;
@@ -272,3 +274,5 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: space-evenly;
 
   }
+
+ 

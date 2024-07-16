@@ -1,44 +1,73 @@
-.game-selection-container {
+/* game-selection.component.css */
+
+.game-selection-page {
+    padding: 20px;
+  }
+  
+  .page-title {
+    font-size: 3.5rem;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    color: #f1a340; /* Color que combina con los botones */
+  }
+  
+  .game-selection-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 100vh;
-    padding: 20px;
+    max-width: 1200px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
   }
   
   .card {
     width: 300px;
+    height: 300px; /* Ajusta la altura según tus necesidades */
     margin: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    background-color: #998ec3;
+    position: relative; /* Para manejar la superposición de elementos internos */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
   .card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
   
   .card-body {
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Alinea los elementos de forma equitativa */
+    height: 100%; /* Asegura que el cuerpo de la tarjeta ocupe toda su altura */
   }
   
   .card-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
+    color: #fff;
   }
   
-  .card-text {
-    color: #666;
+  .card-text,
+  .card-title {
+    color: #fff;
   }
   
   .btn-primary {
-    background-color: #f1a340;
+    margin-top: auto; /* Coloca el botón al final del contenedor */
+    width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+    background-color: #1a661a;
     color: #fff;
     border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.5rem;
   }
   
   .btn-primary:hover {
     background-color: #e0942e;
+    transform: translateY(-2px);
+    color: #000000;
   }
   

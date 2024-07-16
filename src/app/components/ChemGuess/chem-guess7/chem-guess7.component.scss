@@ -245,3 +245,30 @@ h1, h2, h3, h4, h5, h6 {
   .advance{
     font-size: 30px;
   }
+
+  footer {
+    background-color: #998ec3;
+    color: #f7f7f7;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2.5rem;            
+  }
+  .sendOrChange{
+    display: flex;
+    justify-content: space-evenly;
+
+  }

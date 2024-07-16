@@ -1,0 +1,115 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemTest - Educación en Química</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-toggle" onclick="toggleNavbar()">
+            <div class="icon"></div>
+            <div class="icon"></div>
+            <div class="icon"></div>
+        </div>
+        <ul class="navbar-links" id="navbar-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="#">Examenes</a></li>
+            <li><a href="#">Recursos</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <h1>Bienvenido a ChemTest</h1>
+        <p>Explore nuestra plataforma educativa interactiva de química.</p>
+        <main>
+            <section>
+                <h2>Sección Principal</h2>
+                <p class="secondary-text">Texto secundario en gris.</p>
+    
+                <!-- Botones -->
+                <button class="btn btn-continue">Continuar <i class="fa-solid fa-arrow-right"></i></button>
+                <button class="btn btn-cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
+                <button class="btn btn-save">Guardar <i class="fa-solid fa-floppy-disk"></i></button>
+            </section>
+    
+            <section>
+                <h2>Listado de Elementos</h2>
+                <ul>
+                    <li class="list-item">
+                        <img src="magoscuro.jpeg" alt="Descripción de la Imagen">
+                        Elemento 1
+                    </li>
+                    <li class="list-item">
+                        <img src="ojosazules.jpeg" alt="Descripción de la Imagen">
+                        Elemento 2
+                    </li>
+                    <!-- Agrega más elementos según sea necesario -->
+                </ul>
+            </section>
+    
+            <section>
+                <h2>Formulario con Select Personalizado</h2>
+                <form>
+                    <label>&#12775;
+                        <select class="custom-select">
+                            <option value="opcion1">&#127760;Opción 1 <i class="fa-solid fa-flask"></i></option>
+                            <option value="opcion2">&#128293; Opción 2</option>
+                            <option value="opcion3">&#8322; Opción 3</option>
+                        </select>
+                    </label>
+                    <button>Botton</button>
+                </form>
+            </section>
+        </main>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h2>Sobre Nosotros</h2>
+                <p>ChemTest es una plataforma educativa para aprender química de manera interactiva.</p>
+            </div>
+            <div class="footer-section links">
+                <h2>Enlaces Rápidos</h2>
+                <ul>
+                    <li><a href="#">Términos y Condiciones</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h2>Contacto</h2>
+                <span><i class="fas fa-envelope"></i> info@chemtest.com</span>
+                <span><i class="fas fa-phone"></i> +1234567890</span>
+            </div>
+            <div class="footer-section social">
+                <h2>Redes Sociales</h2>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2024 ChemTest | Diseñado por [Tu Nombre]
+        </div>
+    </footer>
+
+    <script>
+        function toggleNavbar() {
+            var navbarLinks = document.getElementById('navbar-links');
+            navbarLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

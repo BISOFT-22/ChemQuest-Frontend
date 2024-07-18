@@ -11,8 +11,15 @@ import { GuestGuard } from './guards/guest.guard';
 import { IRoleType } from './interfaces';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { GamesComponent } from './pages/games/games.component';
+import { LandingChemquestComponent } from './pages/landing-chemquest/landing-chemquest.component'; // Importa tu componente de landing page
+import { LandingNakamuraComponent } from './pages/landing-nakamura/landing-nakamura.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: LandingChemquestComponent, 
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     component: LoginComponent,
@@ -27,21 +34,18 @@ export const routes: Routes = [
     path: 'access-denied',
     component: AccessDeniedComponent,
   },
+
   {
-    path: '',
-    redirectTo: 'login',
+    path: 'landing-nakamura',
+    component: LandingNakamuraComponent, 
     pathMatch: 'full',
   },
+
   {
     path: 'app',
     component: AppLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: 'app',
-        redirectTo: 'users',
-        pathMatch: 'full',
-      },
       {
         path: 'users',
         component: UsersComponent,
@@ -78,7 +82,7 @@ export const routes: Routes = [
             IRoleType.user
           ],
           showInSidebar: false,
-          name: 'profile'
+          name: 'Profile'
         }
       },
       {
@@ -91,7 +95,7 @@ export const routes: Routes = [
             IRoleType.user
           ],
           showInSidebar: true,
-          name: 'games'
+          name: 'Games'
         }
       }
     ],

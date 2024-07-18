@@ -3,6 +3,8 @@
 <div class="hangman-container">
    
     <div class="word">
+        
+        <img [src]="convert" class="imgSize" alt="">
         @for (item of wordsArray; track $index) {
             <input class="inputSize" type="text">
            
@@ -11,9 +13,14 @@
         @if ("letter !== '_'") {
             <p>{{letter}}</p>
         }
-        
+        <img [src]="send" class="imgSize" alt="">
         
     </div>
+   
+    <br>
+    
+    
+   
 </div>
 
 

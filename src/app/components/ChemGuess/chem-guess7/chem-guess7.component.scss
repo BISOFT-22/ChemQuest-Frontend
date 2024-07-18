@@ -191,12 +191,12 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     padding: 30px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
     cursor: pointer; 
     background-color: #af8dc3;
-    font-size: large;
+    font-size: 20px;
     color: #ffffff;
   }
   .btn-cancel {
@@ -275,4 +275,10 @@ h1, h2, h3, h4, h5, h6 {
 
   }
 
- 
+  .imgSize{
+    width: 180px;
+  }
+  .imgLive{
+    width: 280px;
+    
+  }

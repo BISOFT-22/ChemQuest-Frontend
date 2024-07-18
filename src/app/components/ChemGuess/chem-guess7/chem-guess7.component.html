@@ -4,7 +4,7 @@
 <main>
     <div>
         <div class="Question-Timer">
-            <p class="big-button">Vidas:8</p>
+            <img class="imgLive" [src]="live100" alt="">
               <div>
                 <p></p>
                 
@@ -28,18 +28,11 @@
 <app-chem-guess-hang-man 
 (addFavoriteEvent)="getWord($event)"
 />
-
-    <div class="botones">
-        <button class="big-button">Homogenea</button>
-        <button class="big-button">Heterogenea</button>
-    </div>
-    <br>
-    
-    
-    <div class="sendOrChange">
-        <button type="button" class="big-button" (click)="open()">Probar Respuesta</button>
-        <button type="button" class="big-button" (click)="open()">Cambiar Pregunta</button>
-    </div>
+<div class="botones">
+    <button class="big-button">Homogenea</button>
+    <button class="big-button">Heterogenea</button>
+</div>
+   
 
 
 <p class="racha"><i class="fa-solid fa-fire"></i>100</p>

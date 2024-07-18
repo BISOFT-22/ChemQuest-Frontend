@@ -1,16 +1,20 @@
 import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../services/randomizer.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBComponent } from '../../../modal-b/modal-b.component';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
-  styleUrls: ['./chem-guess-hang-man.component.scss']
+  styleUrls: ['./chem-guess-hang-man.component.scss'],
+  imports:[ModalBComponent]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
+  send: string = 'assets/img/send.png';
+  convert: string = 'assets/img/convert.png';
   
- 
   
   word: string = '';
   displayedWord: string[] = [];
@@ -19,7 +23,7 @@ export class ChemGuessHangManComponent implements OnInit {
   @Output() addFavoriteEvent = new EventEmitter<string>();
 
   wordsArray: string[] = [];
-  constructor(private random: RandomizerService) {}
+  constructor(private modalService: NgbModal,private random: RandomizerService) {}
 
   ngOnInit() {
     this.word = this.random.getRandomWord();
@@ -55,6 +59,24 @@ export class ChemGuessHangManComponent implements OnInit {
   }
   splitIntoWords(input: string): void {
     this.wordsArray = input.split('');
+  }
+
+  open() {
+    const modalRef = this.modalService.open(ModalBComponent);
+    modalRef.result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(`Dismissed ${this.getDismissReason(reason)}`);
+    });
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === 'Cross click') {
+      return 'by clicking on a cross button';
+    } else if (reason === 'cancel') {
+      return 'by clicking on cancel button';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 }

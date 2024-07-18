@@ -13,6 +13,13 @@ import { RandomizerService } from '../../../services/randomizer.service';
   styleUrl: './chem-guess7.component.scss'
 })
 export class ChemGuess7Component {
+
+  live100: string = 'assets/img/live/live100.png';
+  live75: string = 'assets/img/live/live75.png';
+  live50: string = 'assets/img/live/live50.png';
+  live25: string = 'assets/img/live/live25.png';
+  live0: string = 'assets/img/live/live0.png';
+
   imagePath: string = 'assets/img/magoscuro.jpeg';
   imagePathAzules: string = 'assets/img/ojosazules.jpeg';
   imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';

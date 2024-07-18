@@ -13,7 +13,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según necesites */
+    background: #998ec3; 
     z-index: 1;
   }
   .login-card {
@@ -47,5 +47,14 @@
         padding: 0px;
       }
     }
+  }
+}
+
+.btn-primary {
+  background-color: #1a661a; // Cambia el color de fondo a verde
+  border-color: #218838; // Cambia el color del borde a verde
+  &:hover {
+    background-color: #df7f12; // Color más oscuro al pasar el cursor
+    border-color: #1e7e34; // Color más oscuro del borde al pasar el cursor
   }
 }

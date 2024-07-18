@@ -1,0 +1,61 @@
+/* Estilos para el temporizador */
+.timer-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté sobre otros elementos */
+  }
+  
+  #timer {
+    font-size: 24px;
+    margin-right: 10px;
+    overflow: hidden; /* Para ocultar cualquier desbordamiento */
+  }
+  
+  .timer-bar {
+    background-color: #f1a340;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: timer-progress 3600s linear forwards; /* 1 hora de duración */
+  }
+  
+  @keyframes timer-progress {
+    0% {
+      width: 100%;
+    }
+    100% {
+      width: 0%;
+    }
+  }
+  
+  /* Estilos para botones */
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    margin-right: 10px; /* Espacio entre botones */
+  }
+  
+  .btn.btn-cancel {
+    background-color: #998ec3; /* Morado oscuro */
+    color: #ffffff;
+  }
+  
+  .btn.btn-continue {
+    background-color: #f1a340; /* Naranja */
+    color: #ffffff;
+  }
+  
+  .btn.btn-save {
+    background-color: #f1a340; /* Naranja */
+    color: #ffffff;
+  }
+  

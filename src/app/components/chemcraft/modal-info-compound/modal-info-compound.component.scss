@@ -1,0 +1,65 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    position: relative;
+    width: 70%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+  }
+  
+  #fotoCompuesto {
+    max-width: 300px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 15px;
+  }
+  
+  .info {
+    max-width: 600px;
+  }
+  
+  #nombreCompuesto {
+    font-family: 'Rozha One', serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  #descripcionCompuesto {
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  #propiedadesCompuesto {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  #propiedadesCompuesto li {
+    margin-bottom: 10px;
+  }

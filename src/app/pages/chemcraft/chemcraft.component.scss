@@ -1,0 +1,342 @@
+body {
+    background-color: #f7f7f7;
+    color: #302e2e;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+.pantallaPrincipal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #4caf50;
+    padding: 10px;
+} */
+
+.back-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.mision {
+    background-color: #1a661a;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 100px;
+}
+
+.crafting-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.slot, .resultado {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #fff; */
+    background-color: #fff;
+    margin: 0 10px;
+    font-size: 24px;
+    position: relative;
+}
+
+.slot span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.counter {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #1a661a;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+
+
+
+.signo-mas, .signo-igual {
+    font-size: 24px;
+    margin: 0 10px;
+}
+
+.btn-container{
+    display: grid;
+}
+
+.btn {
+    font-size: 16px;
+    padding: 10px 20px;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    cursor: pointer;
+    margin: 5px;
+}
+
+
+
+.create-button, .clear-button{
+    padding: 10px 20px;
+    background-color: #1a661a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+
+.timer {
+    position: absolute;
+    top: 50px;
+    right: 70px;
+    border: 4px solid #1a661a;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 30px;
+}
+
+
+.info-game {
+    position: absolute;
+    top: 180px;
+    right: 70px;
+    background-color: #1a661a;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 100px;
+}
+
+.sound {
+    position: absolute;
+    top: 500px;
+    right: 100px;
+    background-color: #1a661a;
+    color: white;
+    padding: 10px 10px;
+    border-radius: 100px;
+}
+
+
+.next-compound {
+    position: absolute;
+    top: 580px;
+    left: 60px;
+    background-color: #1a661a;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 100px;
+}
+
+
+.difficulty {
+    position: absolute;
+    top: 120px;
+    left: 60px;
+    background-color: #1a661a;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 100px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    padding: 20px 40px;
+    position: relative;
+}
+
+.nav-left {
+    position: absolute;
+    left: 20px; /* Ajusta este valor según necesites */
+}
+
+.nav-left .logo {
+    height: 40px; /* Ajusta el tamaño de la imagen según necesites */
+}
+
+.nav-right {
+    position: absolute;
+    right: 20px; /* Ajusta este valor según necesites */
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.nav-right .profile {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right .profile-img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.nav-right .profile-name {
+    font-size: 16px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 14px 20px;
+    margin: 0 10px;
+}
+
+.navbar a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.nav-center {
+    display: flex;
+    justify-content: center;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 40px; /* Misma altura que la navbar */
+    margin-top: 55px; /* Para que el footer se mantenga en la parte inferior */
+    bottom: 0px;
+}
+
+.footer p {
+    margin: 0;
+    
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none; /* Ocultar el modal por defecto */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    position: relative;
+    width: 70%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.tuto-content {
+    position: relative;
+    width: 70%;
+    height: 60%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.tuto {
+    margin-left: 25%;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+#fotoCompuesto {
+    max-width: 300px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 15px;
+}
+
+
+#fotoTuto {
+    max-width: 500px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 15px;
+}
+
+.info {
+    max-width: 600px;
+}
+
+#nombreCompuesto {
+    font-family: 'Rozha One', serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#nombreTutorial {
+    font-family: 'Rozha One', serif;
+    font-size: 2em;
+    margin-bottom: 10px;
+    margin-left: 25%;
+}
+
+#descripcionCompuesto {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+#propiedadesCompuesto {
+    list-style-type: none;
+    padding: 0;
+}
+
+#propiedadesCompuesto li {
+    margin-bottom: 10px;
+}

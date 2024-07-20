@@ -25,7 +25,7 @@
               <label for="email" class="form-label mb-2">
                 Correo Electrónico
               </label>
-              <input #email="ngModel" type="text" class="form-control" id="email" name="email"
+              <input #email="ngModel" type="email" class="form-control" id="email" name="email"
                 placeholder="agent@gmail.com" [(ngModel)]="loginForm.email" [ngClass]="{
                   'is-invalid': email.invalid && email.touched,
                   'is-valid': email.valid && email.touched

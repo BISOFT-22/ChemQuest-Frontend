@@ -13,6 +13,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { GamesComponent } from './pages/games/games.component';
 import { LandingChemquestComponent } from './pages/landing-chemquest/landing-chemquest.component'; // Importa tu componente de landing page
 import { LandingNakamuraComponent } from './pages/landing-nakamura/landing-nakamura.component';
+import { ChemcraftComponent } from './pages/chemcraft/chemcraft.component';
 
 export const routes: Routes = [
   {
@@ -96,6 +97,19 @@ export const routes: Routes = [
           ],
           showInSidebar: true,
           name: 'Games'
+        }
+      },
+      {
+        path: 'chemcraft',
+        component: ChemcraftComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemcraft'
         }
       }
     ],

@@ -29,7 +29,7 @@
             <button (click)="ExportCrossW()">Export</button>
             <button (click)="ImportCrossW()">Import</button>
             <button (click)="LoadCrossWord()">Load</button>
-            <input type="number" name="" (change)="LoadCrossWord()" id="cross_id">
+            <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0" [max]="totalCrossWords-1">
             <!-- <button (click)="FilterWords()" >Hints</button> -->
         </div>
     </div>

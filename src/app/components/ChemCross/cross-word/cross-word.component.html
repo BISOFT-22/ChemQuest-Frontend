@@ -4,7 +4,12 @@
                 <div class="cell" *ngFor="let item of fakeArray;let index = index">
                     <div class="cell-heading">{{index + 1}}</div>
                     <div class="cell-content">
-                        <input class="txtChar" maxlength="1" type="text">
+                        <input class="txtChar" 
+                        (blur)=" OnBlur($event)" 
+                        (dblclick)="DblClick($event)"
+                        (keydown)="OnKeyPress($event)"
+                        id=""
+                        maxlength="1" type="text">
                     </div>
                 </div>
             </div>
@@ -18,14 +23,14 @@
             <input type="text" name="" id="filter" onkeyup="FilterWords()" placeholder="Filtro RegEx">
         </div>
         <div>
-            <button onclick="ClearCrossWord()">Clear</button>
-            <button onclick="FillCrossWord()">CrossWord</button>
-            <button onclick="RandomCrossWFill()">Random</button>
-            <button onclick="ExportCrossW()">Export</button>
-            <button onclick="ImportCrossW()">Import</button>
-            <button onclick="LoadCrossWord()">Load</button>
-            <input type="number" name="" id="cross_id">
-            <!-- <button onclick="FilterWords()" >Hints</button> -->
+            <button (click)="ClearCrossWord()">Clear</button>
+            <button (click)="FillCrossWord()">CrossWord</button>
+            <button (click)="RandomCrossWFill()">Random</button>
+            <button (click)="ExportCrossW()">Export</button>
+            <button (click)="ImportCrossW()">Import</button>
+            <button (click)="LoadCrossWord()">Load</button>
+            <input type="number" name="" (change)="LoadCrossWord()" id="cross_id">
+            <!-- <button (click)="FilterWords()" >Hints</button> -->
         </div>
     </div>
     
@@ -152,7 +157,7 @@
     </div>
 
     <div class="console">
-        <textarea name="" id="txtConsole"></textarea>
+        <textarea name="" id="txtConsole" ></textarea>
     </div>
 
     <div class="notes">

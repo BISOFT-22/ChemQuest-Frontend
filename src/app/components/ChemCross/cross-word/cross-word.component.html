@@ -1,8 +1,8 @@
-    <div class="main">
+    <div class="crosswordContainer">
         <div class="crossword">
-            <div class="row" *ngFor="let item of fakeArray">
-                <div class="cell" *ngFor="let item of fakeArray;let index = index">
-                    <div class="cell-heading">{{index + 1}}</div>
+            <div class="crossRow" *ngFor="let item of fakeArray">
+                <div class="crossCell" *ngFor="let item of fakeArray;let index = index">
+                    <div class="cell-heading" disabled>{{index + 1}}</div>
                     <div class="cell-content">
                         <input class="txtChar" 
                         (blur)=" OnBlur($event)" 
@@ -20,7 +20,7 @@
     </div>
     <div class="controlPanel">
         <div>
-            <input type="text" name="" id="filter" onkeyup="FilterWords()" placeholder="Filtro RegEx">
+            <input type="text" name="" id="filter" (keyup)="FilterWords()" placeholder="Filtro RegEx">
         </div>
         <div>
             <button (click)="ClearCrossWord()">Clear</button>
@@ -30,130 +30,136 @@
             <button (click)="ImportCrossW()">Import</button>
             <button (click)="LoadCrossWord()">Load</button>
             <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0" [max]="totalCrossWords-1">
-            <!-- <button (click)="FilterWords()" >Hints</button> -->
+            <input type="number" name="" (change)="CrossZoom($event)" id="cross_cell_size" min="30" value="{{initialCellHeight}}" max="100">
+            <button (click)="FilterWords()" >Hints</button>
+            <button (click)="ListWords()" >List</button>
         </div>
     </div>
     
-    <div id="wordHints">
-        <!-- Actinio
-        Aluminio
-        Americio
-        Antimonio
-        Argón
-        Arsénico
-        Ástato
-        Azufre
-        Bario
-        Berilio
-        Berkelio
-        Bismuto
-        Bohrio
-        Boro
-        Bromo
-        Cadmio
-        Calcio
-        Californio
-        Carbono
-        Cerio
-        Cesio
-        Cloro
-        Cobalto
-        Cobre
-        Copernicium
-        Cromo
-        Curio
-        Darmstadio
-        Disprosio
-        Dubnio
-        Einstenio
-        Erbio
-        Escandio
-        Estaño
-        Estroncio
-        Europio
-        Fermio
-        Flerovium
-        Fluor
-        Fósforo
-        Francio
-        Gadolinio
-        Galio
-        Germanio
-        Hafnio
-        Hassio
-        Helio
-        Hidrógeno
-        Hierro
-        Holmio
-        Indio
-        Iodo
-        Iridio
-        Iterbio
-        Itrio
-        Kryptón
-        Lantano
-        Lawrencio
-        Litio
-        livermorium
-        Lutecio
-        Magnesio
-        Manganeso
-        Meitnerio
-        Mendelevio
-        Mercurio
-        Molibdeno
-        Moscovium
-        Neodimio
-        Neón
-        Neptunio
-        Nihonium
-        Niobio
-        Níquel
-        Nitrógeno
-        Nobelio
-        Organesson
-        Oro
-        Osmio
-        Oxígeno
-        Paladio
-        Plata
-        Platino
-        Plomo
-        Plutonio
-        Polonio
-        Potasio
-        Praseodimio
-        Promecio
-        Protactinio
-        Radio
-        Radón
-        Renio
-        Rodio
-        Roentgenium
-        Rubidio
-        Rutenio
-        Rutherfordio
-        Samario
-        Seaborgio
-        Selenio
-        Sílice
-        Sodio
-        Talio
-        Tantalio
-        Tecnecio
-        Teluro
-        Tennessine
-        Terbio
-        Titanio
-        Torio
-        Tulio
-        Uranio
-        Vanadio
-        Wolframio
-        Xenón
-        Zinc
-        Zirconio -->
-
+    <div id="hints">
+        <div id="wordHints">
+            <!-- Actinio
+            Aluminio
+            Americio
+            Antimonio
+            Argón
+            Arsénico
+            Ástato
+            Azufre
+            Bario
+            Berilio
+            Berkelio
+            Bismuto
+            Bohrio
+            Boro
+            Bromo
+            Cadmio
+            Calcio
+            Californio
+            Carbono
+            Cerio
+            Cesio
+            Cloro
+            Cobalto
+            Cobre
+            Copernicium
+            Cromo
+            Curio
+            Darmstadio
+            Disprosio
+            Dubnio
+            Einstenio
+            Erbio
+            Escandio
+            Estaño
+            Estroncio
+            Europio
+            Fermio
+            Flerovium
+            Fluor
+            Fósforo
+            Francio
+            Gadolinio
+            Galio
+            Germanio
+            Hafnio
+            Hassio
+            Helio
+            Hidrógeno
+            Hierro
+            Holmio
+            Indio
+            Iodo
+            Iridio
+            Iterbio
+            Itrio
+            Kryptón
+            Lantano
+            Lawrencio
+            Litio
+            livermorium
+            Lutecio
+            Magnesio
+            Manganeso
+            Meitnerio
+            Mendelevio
+            Mercurio
+            Molibdeno
+            Moscovium
+            Neodimio
+            Neón
+            Neptunio
+            Nihonium
+            Niobio
+            Níquel
+            Nitrógeno
+            Nobelio
+            Organesson
+            Oro
+            Osmio
+            Oxígeno
+            Paladio
+            Plata
+            Platino
+            Plomo
+            Plutonio
+            Polonio
+            Potasio
+            Praseodimio
+            Promecio
+            Protactinio
+            Radio
+            Radón
+            Renio
+            Rodio
+            Roentgenium
+            Rubidio
+            Rutenio
+            Rutherfordio
+            Samario
+            Seaborgio
+            Selenio
+            Sílice
+            Sodio
+            Talio
+            Tantalio
+            Tecnecio
+            Teluro
+            Tennessine
+            Terbio
+            Titanio
+            Torio
+            Tulio
+            Uranio
+            Vanadio
+            Wolframio
+            Xenón
+            Zinc
+            Zirconio -->
+    
+        </div>
+        <div id="symbolHints">
+        </div>
     </div>
 
     <div class="console">
@@ -161,6 +167,10 @@
     </div>
 
     <div class="notes">
+        <H1>TODO</H1>
+        <P>Para el gap al inicio ver:</P>
+        <P>.crossRow </P>
+            // height: var(--cellHeight);
     </div>
     
     

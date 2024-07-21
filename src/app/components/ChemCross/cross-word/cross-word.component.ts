@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { CrossCellComponent } from "../cross-cell/cross-cell.component";
 import { CommonModule } from '@angular/common';
 import { Target } from '@angular/compiler';
@@ -11,41 +11,70 @@ import { crossWordCollection, wordCollection } from 'app/interfaces/elements';
   templateUrl: './cross-word.component.html',
   styleUrl: './cross-word.component.scss'
 })
-export class CrossWordComponent {
+export class CrossWordComponent implements OnInit {
 
-
-  cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];;
+  
+  
+  cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
   txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
   txtFilter = document.getElementById("filter") as HTMLInputElement;
   wordLog = document.getElementById("wordLog") as HTMLInputElement;
-
+  
   wordsSet = new Set();
   UsedWordsSet = new Set();
+  initialCellHeight = 50;
   crossSize = 10;
   blockChar = "@";
   positionMethod = 0; //Determina el metodo a usar para obtener la celda para probar las palabras
   filledCells = 0;    //Cantidad de celdas con letras o blockChar
   totalIterations = 0;
-
+  totalCrossWords = crossWordCollection.length;
+  
   // Direccion inicial para colocar palabras
   currentDirection = 0;
-
+  
   crossWord = new Array();
-
+  
   fakeArray: number[] = new Array(this.crossSize);
   idArray: number[] = new Array(this.crossSize * this.crossSize);
-
-
+  
+  @HostBinding('--cellHeight')
+  cellHeight = '100px';
+  
   constructor() {
-
+    
     // alert();
-
+    
     document.addEventListener("DOMContentLoaded", this.AsignId);
-
-
+    
+    
   }
+  
+  ngOnInit(): void {
+    // alert("OnInit");
+    this.GenerateCrossW();
+    this.FilterWords();
+  }
+  
+  CrossZoom(e: Event) {
+    let myInput = e.target as HTMLInputElement;
 
-  public GenerateCrossW(): void {
+    this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
+
+    let cellHeight: string = myInput.value + "px";
+    let fontSize: string = (Number(myInput.value) * 0.6) + "px";
+    let headingFontSize: string = (Number(myInput.value) * 0.2) + "px";
+
+    for (const c of this.cellsCollection) {
+      c.style.height = cellHeight;
+      c.style.width = cellHeight;
+      c.style.fontSize = fontSize;
+      (c.parentElement!.parentElement!.children[0] as HTMLDivElement).style.fontSize = headingFontSize;
+      c.parentElement!.parentElement!.style.height = cellHeight;
+    }
+  }
+  
+  GenerateCrossW(): void {
 
     //Generar matriz n x n
     this.crossWord = new Array(this.crossSize);
@@ -85,8 +114,6 @@ export class CrossWordComponent {
     for (const c of cellHeadings) {
       c.innerHTML = (id++).toString();
     }
-
-    this.GenerateCrossW();
   }
 
 
@@ -108,6 +135,88 @@ export class CrossWordComponent {
     }
   }
 
+  ExtractCrossWord() {
+    let i: number = 0;
+    let j: number = 0;
+
+    for (const c of this.cellsCollection) {
+      this.crossWord[i][j] = c.value;
+
+      j++;
+
+      if (j == this.crossSize) {
+          j = 0;
+          i++;
+      }
+  }
+  }
+
+  ListWords(separator:string = `</div><div class="hintWord">`) {
+    let i: number = 0;
+    let j: number = 0;
+    let letter: string;
+    let word: string = `<div class="hintWord">`;
+    let str: string = "";
+    let lastLetter = "";
+
+
+    //Extract the words from CrossWord
+    // this.ExtractCrossWord();
+
+    //Horizontal iteration
+    for (let i = 0; i < this.crossSize; i++) {
+      for (let j = 0; j < this.crossSize; j++) {
+        letter = this.crossWord[i][j];
+
+        if (letter == "" || letter == "@") {
+          // next cell
+          if (lastLetter != letter) word += separator;
+          // str += word;
+          lastLetter = letter;
+          continue;
+        }
+      
+        lastLetter = letter;
+        word += letter;
+
+        if (j + 1 == this.crossSize) {
+          word += separator;
+        }
+      
+      }
+    }
+
+    word += separator;
+   
+    //Vertical iteration
+    for (let j = 0; j < this.crossSize; j++) {
+      for (let i = 0; i < this.crossSize; i++) {
+        letter = this.crossWord[i][j];
+
+        if (letter == "" || letter == "@") {
+          // next cell
+          if (lastLetter != letter) word += separator;
+          // str += word;
+          lastLetter = letter;
+          continue;
+        }
+
+        lastLetter = letter;
+        word += letter;
+        
+        if (i + 1 == this.crossSize) {
+          word += separator;
+        }
+      
+      }
+    }
+
+    word = word.replaceAll(`<div class="hintWord"></div>`, "");
+
+    this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
+    this.wordLog.innerHTML = word;
+  }
+
 
   DrawCrossWord() {
 
@@ -118,6 +227,8 @@ export class CrossWordComponent {
     let i: number = 0;
     let j: number = 0;
     let k: number = 1;
+
+    this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
 
     for (const c of this.cellsCollection) {
@@ -164,8 +275,8 @@ export class CrossWordComponent {
 
 
   ImportCrossW(){
-    let str = this.txtConsole.value;
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
+    let str = this.txtConsole.value;
 
     //Eliminar [" y ]
     str = str.substring(2, str.length-2);
@@ -224,6 +335,8 @@ export class CrossWordComponent {
 
     console.log("Iniciando");
 
+    //this.GenerateCrossW();
+
     for (let i = 0; i < this.crossSize; i++) {
 
       for (let j = 0; j < this.crossSize; j++) {
@@ -245,14 +358,19 @@ export class CrossWordComponent {
     this.txtFilter = document.getElementById("filter") as HTMLInputElement;
     let letter = new RegExp(this.txtFilter.value,"i");
     let str = "";
+    let strSymbols = ""
 
     for (const c of wordCollection) {
         if ((c[0] as string).search(letter) != -1) {
-            str += `<div class="hintword">${c[0]}</div>`;
+            str += `<div class="hintWord">${c[0]}</div>`;
+        }
+        if ((c[2] as string).search(letter) != -1) {
+          strSymbols += `<div class="hintSymbol">${c[2]}</div>`;
         }
     }
 
     document.getElementById("wordHints")!.innerHTML = str;
+    document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
   }
   

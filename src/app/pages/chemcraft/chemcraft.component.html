@@ -1,67 +1,14 @@
+<div class="container">
+    <app-compound-request></app-compound-request>
 
-    <div class="pantallaPrincipal">
-      
-        
-        <div class="mision">
-            <h2>Creación de Compuesto</h2>
-            <p>Debes de crear agua, ¿qué elementos son necesarios?</p>
-        </div>
-
-        <!-- <div class="mision">
-            <h2>ChemCraft</h2>
-            <p>Crea gran variedad de compuestos y diviertete aprendiendo</p>
-        </div> -->
-
-        <h2 class="timer">12:00</h2>
-        <button id="info" class="info-game">Opciones</button>
-        <button id="next-compound" class="btn next-compound">Siguiente compuesto</button>
-        <!-- <select id="difficulty" class="difficulty">Selecciona la dificultad</select> -->
-        <!-- <button id="sound" class="sound">🔊</button> -->
-
-       
-        <div class="crafting-area">
-            <div class="slot" id="casilla-1"></div>
-            <div class="signo-mas">+</div>
-            <div class="slot" id="casilla-2"></div>
-            <!-- <div class="signo-igual">=</div> -->
-            <div class="resultado" id="resultado" style="display: none;"></div>
-            <div class="btn-container">
-                <button class="btn create-button" >Crear Compuesto</button>
-                <button class="btn clear-button" id="clear-button">Limpiar Casillas</button>
-            </div>
-        </div>
-      <app-element-list></app-element-list>
+    <div class="slots">
+      <app-slot></app-slot>
+      <app-slot></app-slot>
+      <app-slot></app-slot>
+      <app-slot></app-slot>
     </div>
 
-    <div class="modal" id="compuesto-modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <img id="fotoCompuesto" src="/ModalInfoCompuesto/Aguaa.jpg" alt="compuesto">
-            <div class="info">
-                <h2 id="nombreCompuesto">Agua</h2>
-                <p id="descripcionCompuesto">El agua es una sustancia compuesta por dos átomos de hidrógeno y uno de oxígeno, esencial para la vida y presente en abundancia en la Tierra.</p>
-                <ul id="propiedadesCompuesto">
-                    <li><strong>Fórmula química:</strong> <span id="formulaQuimica">H₂O</span></li>
-                    <li><strong>Masa molecular:</strong> <span id="masaMolecular">18.015 g/mol</span></li>
-                    <li><strong>Estado físico:</strong> <span id="estadoFisico">Líquido a temperatura ambiente</span></li>
-                    <li><strong>Color:</strong> <span id="color">Incoloro</span></li>
-                    <li><strong>Solubilidad:</strong> <span id="solubilidad">Alta solubilidad en muchos solventes</span></li>
-                    <li><strong>Usos comunes:</strong> <span id="usosComunes">Consumo humano, agricultura, industria, limpieza, entre otros</span></li>
-                    <li><strong>Precauciones de seguridad:</strong> <span id="precaucionesSeguridad">Ninguna en condiciones normales de uso</span></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="tutorial-modal">
-        <div class="tuto-content">
-            <div class="tuto">
-            <span id="close-tutorial" class="close-modal">&times;</span>
-            <h2 id="nombreTutorial">Tutorial</h2>
-            <img id="fotoTuto" src="/ModalTutorial/tuto.png" alt="compuesto">
-            <div class="info">
-                <p id="descripcionCompuesto">Bienvenido a ChemCraft, empecemos por un pequeño tutorial.</p>
-            </div>   
-            </div>
-        </div>
-    </div>
+    <app-element-list></app-element-list>
+    <app-modal-info-compound></app-modal-info-compound>
+    <app-modal-tutorial></app-modal-tutorial>
+  </div>

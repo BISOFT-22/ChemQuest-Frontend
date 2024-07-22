@@ -1,21 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ElementService } from '../../../services/element.service';
+import { IElement } from '../../../interfaces';
+import { effect } from '@angular/core';
 
 @Component({
   selector: 'app-element-list',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './element-list.component.html',
-  styleUrl: './element-list.component.scss'
+  styleUrls: ['./element-list.component.scss']
 })
 export class ElementListComponent implements OnInit {
-  elements = [
-    { id: 'H2', name: 'Hidrógeno' },
-    { id: 'O1', name: 'Oxígeno' },
-    { id: 'C1', name: 'Carbono' },
-    { id: 'Fe1', name: 'Hierro' }
-  ];
+  elementsList: IElement[] = [];
+  private service = inject(ElementService);
 
-  constructor() { }
+  // Esto para mostrar la lista en el orden correcto del primero al ultimo
+  private readonly elementListEffect = effect(() => {
+    this.elementsList = [...this.service.elements$()].reverse();
+  });
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.service.getAllSignal();
+    this.elementSearch();
+  }
+
+  private elementSearch(): void {
+    const elementSearch = document.getElementById('element-search') as HTMLInputElement;
+    elementSearch.addEventListener('input', () => {
+      const filter = elementSearch.value.toLowerCase();
+      const elementsList = document.querySelector('.elements-list ul') as HTMLElement;
+      const elements = elementsList.querySelectorAll<HTMLElement>('.element');
+
+      elements.forEach((element) => {
+        const symbol = element.getAttribute('data-symbol') || '';
+        const name = element.getAttribute('data-name') || '';
+        const atomicNumber = element.getAttribute('data-atomic-number') || '';
+
+        if (symbol.toLowerCase().includes(filter) || name.toLowerCase().includes(filter) || atomicNumber.includes(filter)) {
+          element.style.display = 'flex';
+        } else {
+          element.style.display = 'none';
+        }
+      });
+    });
+  }
 }

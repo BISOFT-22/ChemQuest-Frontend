@@ -1,45 +1,14 @@
 <div class="elements-list">
     <div class="head-list">
-    <h2>Lista de elementos:</h2>
-    <input type="text" id="element-search" placeholder="Ingresa el nombre del elemento...">
+        <h2>Lista de elementos:</h2>
+        <input type="text" id="element-search" placeholder="Ingresa el nombre del elemento, símbolo o número atómico...">
     </div>
     <ul class="elements-container">
-        <li class="element" draggable="true" id="element-H">H</li>
-        <li class="element" draggable="true" id="element-O">O</li>
-        <li class="element" draggable="true" id="element-Fe">Fe</li>
-        <li class="element" draggable="true" id="element-Au">Au</li>
-        <li class="element" draggable="true" id="element-Pt">Pt</li>
-        <li class="element" draggable="true" id="element-Cu">Cu</li>
-        <li class="element" draggable="true" id="element-C">C</li>
-        <li class="element" draggable="true" id="element-Na">Na</li>
-        <li class="element" draggable="true" id="element-Cl">Cl</li>
-        <li class="element" draggable="true" id="element-N">N</li>
-        <li class="element" draggable="true" id="element-S">S</li>
-        <li class="element" draggable="true" id="element-P">P</li>
-        <li class="element" draggable="true" id="element-K">K</li>
-        <li class="element" draggable="true" id="element-Mg">Mg</li>
-        <li class="element" draggable="true" id="element-Ca">Ca</li>
-        <li class="element" draggable="true" id="element-Ag">Ag</li>
-        <li class="element" draggable="true" id="element-Zn">Zn</li>
-        <li class="element" draggable="true" id="element-B">B</li>
-        <li class="element" draggable="true" id="element-Al">Al</li>
-        <li class="element" draggable="true" id="element-Si">Si</li>
-        <li class="element" draggable="true" id="element-Ti">Ti</li>
-        <li class="element" draggable="true" id="element-Cr">Cr</li>
-        <li class="element" draggable="true" id="element-Mn">Mn</li>
-        <li class="element" draggable="true" id="element-Ni">Ni</li>
-        <li class="element" draggable="true" id="element-Cd">Cd</li>
-        <li class="element" draggable="true" id="element-Pb">Pb</li>
-        <li class="element" draggable="true" id="element-Sn">Sn</li>
-        <li class="element" draggable="true" id="element-I">I</li>
-        <li class="element" draggable="true" id="element-Gd">Gd</li>
-        <li class="element" draggable="true" id="element-Tb">Tb</li>
-        <li class="element" draggable="true" id="element-Dy">Dy</li>
-        <li class="element" draggable="true" id="element-Ho">Ho</li>
-        <li class="element" draggable="true" id="element-Er">Er</li>
-        <li class="element" draggable="true" id="element-Tm">Tm</li>
-        <li class="element" draggable="true" id="element-Yb">Yb</li>
-        <br>
+        <li *ngFor="let element of elementsList" class="element" draggable="true" 
+            [attr.data-symbol]="element.symbol" 
+            [attr.data-name]="element.name" 
+            [attr.data-atomic-number]="element.atomicNumber">
+            {{ element.symbol }}
+        </li>
     </ul>
-    <br>
 </div>

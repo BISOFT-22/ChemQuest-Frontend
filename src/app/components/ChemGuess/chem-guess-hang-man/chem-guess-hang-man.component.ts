@@ -1,7 +1,10 @@
 import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { IElement } from '../../../interfaces';
 import { ModalBComponent } from '../../../modal-b/modal-b.component';
+import { get } from 'jquery';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
@@ -23,15 +26,21 @@ export class ChemGuessHangManComponent implements OnInit {
   @Output() addFavoriteEvent = new EventEmitter<string>();
 
   wordsArray: string[] = [];
+
+  Element: IElement[] = [];
+
   constructor(private modalService: NgbModal,private random: RandomizerService) {}
 
   ngOnInit() {
+    this.random.checkAndFetch();
     this.word = this.random.getRandomWord();
     this.addFavoriteEvent.emit(this.word);
     this.splitIntoWords(this.word);
     this.displayedWord = Array(this.word.length).fill('_');
     
   }
+ 
+
 
   getRandomWord(technologies: any[]): string {
     const randomIndex = Math.floor(Math.random() * technologies.length);
@@ -78,6 +87,115 @@ export class ChemGuessHangManComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
+
+/////////////////////////////////////DRAG AND DROP
+ngAfterViewInit(): void {
+  this.makeDraggable();
+}
+
+makeDraggable(): void {
+  const keys = document.querySelectorAll<HTMLElement>('.key');
+  const slots = document.querySelectorAll<HTMLElement>('.slot');
+
+  keys.forEach((element) => {
+    element.addEventListener('mousedown', (e: MouseEvent) => {
+      e.preventDefault();
+
+      // Crea una copia del elemento
+      const copy = element.cloneNode(true) as HTMLElement;
+      copy.style.position = 'absolute';
+      copy.style.left = `${e.clientX}px`;
+      copy.style.top = `${e.clientY}px`;
+      document.body.appendChild(copy);
+
+      // Leer la letra del atributo data-letter
+      const letter = (element.getAttribute('data-letter') || '').toUpperCase();
+      copy.setAttribute('data-letter', letter);
+
+      const offsetX = e.clientX - element.getBoundingClientRect().left;
+      const offsetY = e.clientY - element.getBoundingClientRect().top;
+
+      const onMouseMove = (e: MouseEvent) => {
+        copy.style.left = `${e.clientX - offsetX}px`;
+        copy.style.top = `${e.clientY - offsetY}px`;
+
+        // Detecta si la copia está sobre un slot
+        const copyRect = copy.getBoundingClientRect();
+        let isOverSlot = false;
+
+        slots.forEach((slot) => {
+          const slotRect = slot.getBoundingClientRect();
+          if (
+            copyRect.left < slotRect.right &&
+            copyRect.right > slotRect.left &&
+            copyRect.top < slotRect.bottom &&
+            copyRect.bottom > slotRect.top
+          ) {
+            isOverSlot = true;
+            slot.classList.add('over'); // Opcional: agregar clase para visualización
+          } else {
+            slot.classList.remove('over');
+          }
+        });
+
+        // Cambia el cursor si está sobre un slot
+        if (isOverSlot) {
+          document.body.style.cursor = 'pointer';
+        } else {
+          document.body.style.cursor = 'default';
+        }
+      };
+
+      const onMouseUp = () => {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+
+        document.body.style.cursor = 'default'; // Restaura el cursor
+
+        // Mueve la copia al slot si está sobre uno
+        let isPlaced = false;
+
+        slots.forEach((slot) => {
+          const slotRect = slot.getBoundingClientRect();
+          const copyRect = copy.getBoundingClientRect();
+
+          if (
+            copyRect.left < slotRect.right &&
+            copyRect.right > slotRect.left &&
+            copyRect.top < slotRect.bottom &&
+            copyRect.bottom > slotRect.top
+          ) {
+            // Coloca la letra en el slot
+            const letter = copy.getAttribute('data-letter');
+            if (letter) {
+              slot.textContent = letter; // Inserta la letra en el slot
+            }
+            slot.classList.remove('over');
+            copy.remove(); // Elimina la copia después de moverla
+            isPlaced = true;
+          }
+        });
+
+        // Si no se coloca en ningún slot, elimina la copia
+        if (!isPlaced) {
+          copy.remove();
+        }
+      };
+
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
+    });
+  });
+}
+
+
+ 
+
+
+
+
+
 
 }
 

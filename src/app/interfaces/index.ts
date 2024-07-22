@@ -58,3 +58,32 @@ export interface IGame {
   updatedAt?: string;
   status?: string;
 }
+
+export interface IGame {
+  id?: number;
+  description?: string;
+  name?: string;
+  imgURL?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: string;
+}
+export interface IElement {
+  id?: number;
+  name?: string;
+  description?: string;
+  atomicNumber?: number;
+  symbol?: string;
+  group?: number;
+  period?: number;
+  block?: string;
+  series?: string;
+  discover?: string;
+  discoveredBy?: string;
+  origin?: string;
+  image?: string;
+  source?: string;
+  proton?: string;
+  neutron?: string;
+  electron?: string;
+}

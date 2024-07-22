@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-modal-b',
@@ -11,4 +12,6 @@ import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalBComponent {
   constructor(public modal: NgbActiveModal) {}
+
+
 }

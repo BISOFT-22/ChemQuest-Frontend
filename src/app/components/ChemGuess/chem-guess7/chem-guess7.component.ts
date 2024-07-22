@@ -1,9 +1,11 @@
 import { Component, ViewChild  } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
 import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalBComponent } from '../../../modal-b/modal-b.component';
+
 import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
 import { RandomizerService } from '../../../services/randomizer.service';
+import { ModalBComponent } from '../../../modal-b/modal-b.component';
+
 
 @Component({
   selector: 'app-chem-guess7',
@@ -13,7 +15,7 @@ import { RandomizerService } from '../../../services/randomizer.service';
   styleUrl: './chem-guess7.component.scss'
 })
 export class ChemGuess7Component {
-
+  constructor(private modalService: NgbModal,private random: RandomizerService) {}
   live100: string = 'assets/img/live/live100.png';
   live75: string = 'assets/img/live/live75.png';
   live50: string = 'assets/img/live/live50.png';
@@ -24,9 +26,23 @@ export class ChemGuess7Component {
   imagePathAzules: string = 'assets/img/ojosazules.jpeg';
   imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
 
-  live: number = 8;
   
-  constructor(private modalService: NgbModal,private random: RandomizerService) {}
+
+/////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////
+  
+  
 
 opcion: string='';
   open() {
@@ -51,6 +67,9 @@ opcion: string='';
   getWord(word:string){
     this.opcion = word;
   }
+
+
+ 
 }
  
 

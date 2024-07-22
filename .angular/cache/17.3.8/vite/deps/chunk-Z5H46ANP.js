@@ -7,7 +7,7 @@ import {
   __spreadValues,
   first,
   map
-} from "./chunk-SXIXOCJ4.js";
+} from "./chunk-R7GQRDZ6.js";
 
 // node_modules/@angular/core/fesm2022/primitives/signals.mjs
 function defaultEquals(a, b) {
@@ -9809,7 +9809,7 @@ function createRootComponent(componentView, rootComponentDef, rootDirectives, ho
 }
 function setRootNodeAttributes(hostRenderer, componentDef, hostRNode, rootSelectorOrNode) {
   if (rootSelectorOrNode) {
-    setUpAttributes(hostRenderer, hostRNode, ["ng-version", "17.3.8"]);
+    setUpAttributes(hostRenderer, hostRNode, ["ng-version", "17.3.12"]);
   } else {
     const { attrs, classes } = extractAttrsAndClassesFromSelector(componentDef.selectors[0]);
     if (attrs) {
@@ -17149,7 +17149,7 @@ var Version = class {
     this.patch = parts.slice(2).join(".");
   }
 };
-var VERSION = new Version("17.3.8");
+var VERSION = new Version("17.3.12");
 var _Console = class _Console {
   log(message) {
     console.log(message);
@@ -21573,14 +21573,14 @@ export {
 
 @angular/core/fesm2022/primitives/signals.mjs:
   (**
-   * @license Angular v17.3.8
+   * @license Angular v17.3.12
    * (c) 2010-2024 Google LLC. https://angular.io/
    * License: MIT
    *)
 
 @angular/core/fesm2022/core.mjs:
   (**
-   * @license Angular v17.3.8
+   * @license Angular v17.3.12
    * (c) 2010-2024 Google LLC. https://angular.io/
    * License: MIT
    *)
@@ -21612,4 +21612,4 @@ export {
    * found in the LICENSE file at https://angular.io/license
    *)
 */
-//# sourceMappingURL=chunk-KRPM2RXB.js.map
+//# sourceMappingURL=chunk-Z5H46ANP.js.map

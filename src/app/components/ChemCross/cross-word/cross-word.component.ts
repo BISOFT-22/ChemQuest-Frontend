@@ -1,17 +1,19 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
 import { CrossCellComponent } from "../cross-cell/cross-cell.component";
 import { CommonModule } from '@angular/common';
 import { Target } from '@angular/compiler';
 import { crossWordCollection, wordCollection } from 'app/interfaces/elements';
+import { WordLogComponent } from "../word-log/word-log.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cross-word',
   standalone: true,
-  imports: [CrossCellComponent, CommonModule],
+  imports: [CrossCellComponent, CommonModule, WordLogComponent, FormsModule],
   templateUrl: './cross-word.component.html',
   styleUrl: './cross-word.component.scss'
 })
-export class CrossWordComponent implements OnInit {
+export class CrossWordComponent implements OnInit, AfterViewInit {
 
   
   
@@ -19,10 +21,12 @@ export class CrossWordComponent implements OnInit {
   txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
   txtFilter = document.getElementById("filter") as HTMLInputElement;
   wordLog = document.getElementById("wordLog") as HTMLInputElement;
+  wordLogList: string[] = [];
   
   wordsSet = new Set();
   UsedWordsSet = new Set();
-  initialCellHeight = 50;
+  initialCellHeight = 30;
+  @Input() cellHeight = this.initialCellHeight;
   crossSize = 10;
   blockChar = "@";
   positionMethod = 0; //Determina el metodo a usar para obtener la celda para probar las palabras
@@ -34,12 +38,14 @@ export class CrossWordComponent implements OnInit {
   currentDirection = 0;
   
   crossWord = new Array();
+
+  AvailabeWordsSet = new Set();
   
   fakeArray: number[] = new Array(this.crossSize);
   idArray: number[] = new Array(this.crossSize * this.crossSize);
   
-  @HostBinding('--cellHeight')
-  cellHeight = '100px';
+  // @HostBinding('--cellHeight')
+  // cellHeight = '100px';
   
   constructor() {
     
@@ -52,18 +58,31 @@ export class CrossWordComponent implements OnInit {
   
   ngOnInit(): void {
     // alert("OnInit");
+    this.LoadAvailableWords();
     this.GenerateCrossW();
+    this.LoadCrossWord(1);
     this.FilterWords();
   }
   
-  CrossZoom(e: Event) {
-    let myInput = e.target as HTMLInputElement;
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.CrossZoom();
+    
+  }
+
+  ChangeZoom(e: Event) {
+    this.CrossZoom(Number((e.target as HTMLInputElement).value))
+  }
+  
+  CrossZoom(zoom:number = 30) {
+    // let myInput = e?.target as HTMLInputElement;
 
     this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
-    let cellHeight: string = myInput.value + "px";
-    let fontSize: string = (Number(myInput.value) * 0.6) + "px";
-    let headingFontSize: string = (Number(myInput.value) * 0.2) + "px";
+    let cellHeight: string = zoom + "px";
+    let fontSize: string = (zoom * 0.6) + "px";
+    let headingFontSize: string = (zoom * 0.2) + "px";
 
     for (const c of this.cellsCollection) {
       c.style.height = cellHeight;
@@ -135,6 +154,8 @@ export class CrossWordComponent implements OnInit {
     }
   }
 
+
+
   ExtractCrossWord() {
     let i: number = 0;
     let j: number = 0;
@@ -151,17 +172,56 @@ export class CrossWordComponent implements OnInit {
   }
   }
 
-  ListWords(separator:string = `</div><div class="hintWord">`) {
+  /**
+   * Updates the list of words of the log
+   * 
+   */
+  UpdateWordLogList() {
+    this.wordLogList = this.GetUsedWodsList();
+    this.FilterWords();
+  }
+
+    /**
+   * Loads the set of available words
+   * 
+   */
+  LoadAvailableWords() {
+    wordCollection.forEach((c) => {
+      this.AvailabeWordsSet.add(c[0]);
+      this.AvailabeWordsSet.add(c[2]);
+    });
+  }
+
+      /**
+   * Verifies if word is in AvailableWordSet
+   * 
+   */
+  IsWord(s: string):boolean {
+    
+    return this.AvailabeWordsSet.has(s);
+
+  }
+
+  /**
+ * List words placed in the Cross Word.
+ * @param separator The parameter name.
+ * @returns An array of words in the Cross Word.
+ */
+  GetUsedWodsList(separator:string = ",", sorted:boolean=true): string[] {
     let i: number = 0;
     let j: number = 0;
     let letter: string;
-    let word: string = `<div class="hintWord">`;
+    let word: string = "";
     let str: string = "";
     let lastLetter = "";
+    let wordListSet = new Set();
+    let usedWordList: string[] = [];
 
+    //Clean UsedWordsSet
+    this.UsedWordsSet.clear();
 
     //Extract the words from CrossWord
-    // this.ExtractCrossWord();
+    this.ExtractCrossWord();
 
     //Horizontal iteration
     for (let i = 0; i < this.crossSize; i++) {
@@ -169,10 +229,10 @@ export class CrossWordComponent implements OnInit {
         letter = this.crossWord[i][j];
 
         if (letter == "" || letter == "@") {
-          // next cell
-          if (lastLetter != letter) word += separator;
-          // str += word;
-          lastLetter = letter;
+          if(this.IsWord(word)){
+            this.UsedWordsSet.add(word);
+          }
+          word = "";
           continue;
         }
       
@@ -180,24 +240,25 @@ export class CrossWordComponent implements OnInit {
         word += letter;
 
         if (j + 1 == this.crossSize) {
-          word += separator;
+          if(this.IsWord(word)){
+            this.UsedWordsSet.add(word);
+          }
+          word = "";
         }
       
       }
     }
 
-    word += separator;
-   
     //Vertical iteration
     for (let j = 0; j < this.crossSize; j++) {
       for (let i = 0; i < this.crossSize; i++) {
         letter = this.crossWord[i][j];
 
         if (letter == "" || letter == "@") {
-          // next cell
-          if (lastLetter != letter) word += separator;
-          // str += word;
-          lastLetter = letter;
+          if(this.IsWord(word)){
+            this.UsedWordsSet.add(word);
+          }
+          word = "";
           continue;
         }
 
@@ -205,17 +266,34 @@ export class CrossWordComponent implements OnInit {
         word += letter;
         
         if (i + 1 == this.crossSize) {
-          word += separator;
+          if(this.IsWord(word)){
+            this.UsedWordsSet.add(word);
+          }
+          word = "";
         }
       
       }
     }
 
-    word = word.replaceAll(`<div class="hintWord"></div>`, "");
 
-    this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
-    this.wordLog.innerHTML = word;
+    this.UsedWordsSet.forEach((c) => usedWordList.push(c as string));
+
+    // word = word.replaceAll(`<div class="hintWord"></div>`, "");
+
+    // this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
+    // this.wordLog.innerHTML = word;
+
+    return usedWordList.sort();
   }
+
+   /**
+ * List words placed in the Cross Word.
+ * @param separator The parameter name.
+ * @returns An array of words in the Cross Word.
+ */
+  DrawWordLog(wordList: string[]) {
+     
+   }
 
 
   DrawCrossWord() {
@@ -300,17 +378,24 @@ export class CrossWordComponent implements OnInit {
     }
 
     this.DrawCrossWord();
+    this.UpdateWordLogList();
+
 }
 
 
-  public LoadCrossWord() {
+  public LoadCrossWord(id?:number) {
 
     let i = 0;
     let j = 0;
+    let idCrossWord: number;
 
-    let cross_id = document.getElementById("cross_id") as HTMLInputElement;
+    if (!id) {
+      let cross_id = document.getElementById("cross_id") as HTMLInputElement;
+      idCrossWord = Number(cross_id.value);
+    } else {
+      idCrossWord = id;
+    }
 
-    let idCrossWord = Number(cross_id.value);
 
     this.crossSize = Math.sqrt(crossWordCollection[idCrossWord].length);
     this.GenerateCrossW();
@@ -327,6 +412,7 @@ export class CrossWordComponent implements OnInit {
     }
 
     this.DrawCrossWord();
+    this.UpdateWordLogList();
 
   }
 
@@ -356,21 +442,31 @@ export class CrossWordComponent implements OnInit {
 
   FilterWords() {
     this.txtFilter = document.getElementById("filter") as HTMLInputElement;
-    let letter = new RegExp(this.txtFilter.value,"i");
+    let letter = new RegExp(this.txtFilter.value, "i");
     let str = "";
     let strSymbols = ""
 
+    // Refresh UsedWordList
+    this.GetUsedWodsList();
+    // this.UpdateWordLogList(); //TODO: REVISAR
+
     for (const c of wordCollection) {
-        if ((c[0] as string).search(letter) != -1) {
-            str += `<div class="hintWord">${c[0]}</div>`;
-        }
-        if ((c[2] as string).search(letter) != -1) {
-          strSymbols += `<div class="hintSymbol">${c[2]}</div>`;
-        }
+
+      //If the word is already used i will not be shown
+      // if (this.UsedWordsSet.has(c[0]) || this.UsedWordsSet.has(c[2])) {
+      //   continue;
+      // }
+
+      if ((c[0] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[0])) {
+        str += `<div class="hintWord">${c[0]}</div>`;
+      }
+      if ((c[2] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[2])) {
+        str += `<div class="hintSymbol">${c[2]}</div>`;
+      }
     }
 
     document.getElementById("wordHints")!.innerHTML = str;
-    document.getElementById("symbolHints")!.innerHTML = strSymbols;
+    // document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
   }
   

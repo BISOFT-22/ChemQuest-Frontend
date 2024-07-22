@@ -1,0 +1,26 @@
+h1{
+  color: white;
+}
+
+#wordLog {
+    width: 100%;
+    background-color: orange;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    // flex-direction: column;
+    margin-top: 25px;
+  }
+
+  #wordLog > div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  // #wordLog div {
+  //   font-size: 70%;
+  //   margin: 0px 5px 0px 0px;
+  
+  // }

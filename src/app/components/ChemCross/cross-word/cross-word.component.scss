@@ -130,13 +130,13 @@
     justify-content: center;
   }
 
-  #wordHints{
-    width: 60%;
-  }
+  // #wordHints{
+  //   width: 60%;
+  // }
 
-  #symbolHints{
-    width: 40%;
-  }
+  // #symbolHints{
+  //   width: 40%;
+  // }
   
   #filter{
     flex-grow: 1;
@@ -157,21 +157,6 @@
     width: 50px;
   }
   
-  #wordLog {
-    width: 100%;
-    background-color: orange;
-    color: white;
-    padding: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 25px;
-  }
-  
-  #wordLog div {
-    font-size: 70%;
-    margin: 0px 5px 0px 0px;
-  
-  }
   
   .main{
     display: flex;

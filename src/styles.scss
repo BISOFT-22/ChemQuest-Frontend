@@ -60,3 +60,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: rgb(197, 49, 49) !important;
 }
 
+  
+.hintWord{
+  font-size: 80%;
+  width: 80px;
+  height: min-content;
+  background-color: cornflowerblue;
+  text-align: center;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+  color: white;
+}
+
+.hintSymbol{
+  font-size: 80%;
+  width: 30px;
+  height: min-content;
+  background-color:coral;
+  text-align: center;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 2px;
+  color: white;
+}

@@ -15,7 +15,7 @@
             </div>
             
         </div>
-        <div id="wordLog"></div>
+        <app-word-log [wordList]="wordLogList"></app-word-log>
     
     </div>
     <div class="controlPanel">
@@ -30,9 +30,9 @@
             <button (click)="ImportCrossW()">Import</button>
             <button (click)="LoadCrossWord()">Load</button>
             <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0" [max]="totalCrossWords-1">
-            <input type="number" name="" (change)="CrossZoom($event)" id="cross_cell_size" min="30" value="{{initialCellHeight}}" max="100">
+            <input type="number" name="" (change)="ChangeZoom($event)" [(ngModel)]="cellHeight" id="cross_cell_size" min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
             <button (click)="FilterWords()" >Hints</button>
-            <button (click)="ListWords()" >List</button>
+            <button (click)="UpdateWordLogList()" >List</button>
         </div>
     </div>
     

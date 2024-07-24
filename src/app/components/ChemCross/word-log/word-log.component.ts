@@ -10,5 +10,8 @@ import { Component, Input,  } from '@angular/core';
 })
 export class WordLogComponent {
 
+  @Input() dictionary: string[][] = [];
+  @Input() id_language: number = 0; //0: English 1:Spanish
+  @Input() id_message: number = 0; 
   @Input() wordList: string[] = [];
 }

@@ -1,22 +1,25 @@
-import { AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { afterRender, AfterRenderPhase, AfterViewChecked, AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
 import { CrossCellComponent } from "../cross-cell/cross-cell.component";
 import { CommonModule } from '@angular/common';
 import { Target } from '@angular/compiler';
 import { crossWordCollection, wordCollection } from 'app/interfaces/elements';
 import { WordLogComponent } from "../word-log/word-log.component";
 import { FormsModule } from '@angular/forms';
+import { Dictionary } from 'app/interfaces/language';
+import { LanguageSelectComponent } from "../../language-select/language-select.component";
 
 @Component({
   selector: 'app-cross-word',
   standalone: true,
-  imports: [CrossCellComponent, CommonModule, WordLogComponent, FormsModule],
+  imports: [CrossCellComponent, CommonModule, WordLogComponent, FormsModule, LanguageSelectComponent],
   templateUrl: './cross-word.component.html',
   styleUrl: './cross-word.component.scss'
 })
-export class CrossWordComponent implements OnInit, AfterViewInit {
+export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecked {
 
   
-  
+  msg = Dictionary;
+  id_language: number = 0; //0: English 1:Spanish
   cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
   txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
   txtFilter = document.getElementById("filter") as HTMLInputElement;
@@ -27,6 +30,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
   UsedWordsSet = new Set();
   initialCellHeight = 30;
   @Input() cellHeight = this.initialCellHeight;
+  cellHeightstr: string = "";
   crossSize = 10;
   blockChar = "@";
   positionMethod = 0; //Determina el metodo a usar para obtener la celda para probar las palabras
@@ -37,6 +41,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
   // Direccion inicial para colocar palabras
   currentDirection = 0;
   
+
   crossWord = new Array();
 
   AvailabeWordsSet = new Set();
@@ -46,43 +51,77 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
   
   // @HostBinding('--cellHeight')
   // cellHeight = '100px';
+
+  // True when the user changes the CrossWord size.
+  sizeChanged = false;
   
   constructor() {
     
     // alert();
     
-    document.addEventListener("DOMContentLoaded", this.AsignId);
+    document.addEventListener("DOMContentLoaded", ()=>this.AsignId());
     
+    // afterRender executes the callback 2 times when the CrossWord size is changed. So we need to make it run once. That's what sizeChanged is for.
+    afterRender(() => {
+      if (this.sizeChanged) {
+        this.AsignId();
+        this.CrossZoom();
+        this.sizeChanged = false;
+        console.log("afterRender");
+      }
+        
+     },{phase:AfterRenderPhase.Write});
+  }
+
+  onResize() {
+    this.sizeChanged = true;
+    this.GenerateCrossW();
+    this.cellsCollection = [];
+    this.fakeArray = new Array(this.crossSize);
+    this.cellHeightstr = this.cellHeight + "px";
+    // this.AsignId();
+
+    // this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
     
+    // afterRender() is called to update cell numbers and zoom
+  }
+
+  onLanguageChanged(id_language:number) {
+    this.id_language = id_language;
   }
   
   ngOnInit(): void {
     // alert("OnInit");
     this.LoadAvailableWords();
     this.GenerateCrossW();
-    this.LoadCrossWord(1);
+    // this.LoadCrossWord(1);
     this.FilterWords();
   }
   
   ngAfterViewInit(): void {
+    // alert("ngAfterViewInit");
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.CrossZoom();
     
   }
 
-  ChangeZoom(e: Event) {
-    this.CrossZoom(Number((e.target as HTMLInputElement).value))
+  ngAfterViewChecked(): void{
+    // alert("ngAfterViewChecked");
   }
+
+  // ChangeZoom(e: Event) {
+  //   // this.CrossZoom(Number((e.target as HTMLInputElement).value));
+  //   this.CrossZoom();
+  // }
   
-  CrossZoom(zoom:number = 30) {
+  CrossZoom() {
     // let myInput = e?.target as HTMLInputElement;
 
     this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
-    let cellHeight: string = zoom + "px";
-    let fontSize: string = (zoom * 0.6) + "px";
-    let headingFontSize: string = (zoom * 0.2) + "px";
+    let cellHeight: string = this.cellHeight + "px";
+    let fontSize: string = (this.cellHeight * 0.6) + "px";
+    let headingFontSize: string = (this.cellHeight * 0.2) + "px";
 
     for (const c of this.cellsCollection) {
       c.style.height = cellHeight;
@@ -91,6 +130,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
       (c.parentElement!.parentElement!.children[0] as HTMLDivElement).style.fontSize = headingFontSize;
       c.parentElement!.parentElement!.style.height = cellHeight;
     }
+
+    this.AsignId();
   }
   
   GenerateCrossW(): void {
@@ -107,6 +148,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getCellsCollection() {
+    
+  }
+
 
   // Asigna el ID a cada celda
   AsignId() {
@@ -121,11 +166,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
 
 
     for (const c of this.cellsCollection) {
-      if (c instanceof HTMLInputElement) {
-
-        c.id = (id++).toString();
-      }
-
+      c.id = (id++).toString();
+      
     }
 
     id = 1;
@@ -154,6 +196,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit {
     }
   }
 
+  temp() {
+    
+  }
 
 
   ExtractCrossWord() {
@@ -760,7 +805,7 @@ FillCrossWord_E1() {
   ClearCrossWord() {
     this.GenerateCrossW();
 
-    this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
+    // this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
     for (const c of this.cellsCollection) {
       c.value = "";

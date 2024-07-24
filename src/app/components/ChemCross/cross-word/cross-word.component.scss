@@ -5,6 +5,11 @@
   
 }
 
+label{
+  color: white;
+  padding: 0px 10px;
+}
+
 .crosswordContainer{
   background-color: var(--bckGround-color);
   display: flex;
@@ -127,7 +132,7 @@
     font-size: small;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: left;
   }
 
   // #wordHints{

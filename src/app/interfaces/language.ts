@@ -1,0 +1,16 @@
+export const Dictionary = [
+    ["Used words", "Palabras Utilizadas"],
+    ["Clear","Borrar"],
+    ["CrossWord","Auto"],
+    ["Random","Aleatorio"],
+    ["Export","Exportar"],
+    ["Import","Importar"],
+    ["Load","Cargar"],
+    ["Hints","Pistas"],
+    ["List","Lista"],
+    ["English","Ingles"],
+    ["Spanish","Español"],
+    ["Choose language","Escoger lenguaje"],
+    ["Zoom","Agrandar"],
+    ["Size","Tamaño"],
+];

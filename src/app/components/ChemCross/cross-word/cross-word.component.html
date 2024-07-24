@@ -1,44 +1,50 @@
-    <div class="crosswordContainer">
-        <div class="crossword">
-            <div class="crossRow" *ngFor="let item of fakeArray">
-                <div class="crossCell" *ngFor="let item of fakeArray;let index = index">
-                    <div class="cell-heading" disabled>{{index + 1}}</div>
-                    <div class="cell-content">
-                        <input class="txtChar" 
-                        (blur)=" OnBlur($event)" 
-                        (dblclick)="DblClick($event)"
-                        (keydown)="OnKeyPress($event)"
-                        id=""
-                        maxlength="1" type="text">
-                    </div>
+<app-language-select [dictionary]="msg" [id_language]="id_language"
+    (langChangd)="onLanguageChanged($event)"></app-language-select>
+<div class="crosswordContainer">
+    <div class="crossword">
+        <div class="crossRow" *ngFor="let item of fakeArray">
+            <div class="crossCell" *ngFor="let item of fakeArray;let index = index">
+                <div class="cell-heading" disabled></div>
+                <div class="cell-content">
+                    <input class="txtChar" (blur)="OnBlur($event)" (dblclick)="DblClick($event)"
+                        (keydown)="OnKeyPress($event)" maxlength="1" type="text">
                 </div>
             </div>
-            
         </div>
-        <app-word-log [wordList]="wordLogList"></app-word-log>
-    
+
     </div>
-    <div class="controlPanel">
-        <div>
-            <input type="text" name="" id="filter" (keyup)="FilterWords()" placeholder="Filtro RegEx">
-        </div>
-        <div>
-            <button (click)="ClearCrossWord()">Clear</button>
-            <button (click)="FillCrossWord()">CrossWord</button>
-            <button (click)="RandomCrossWFill()">Random</button>
-            <button (click)="ExportCrossW()">Export</button>
-            <button (click)="ImportCrossW()">Import</button>
-            <button (click)="LoadCrossWord()">Load</button>
-            <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0" [max]="totalCrossWords-1">
-            <input type="number" name="" (change)="ChangeZoom($event)" [(ngModel)]="cellHeight" id="cross_cell_size" min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
-            <button (click)="FilterWords()" >Hints</button>
-            <button (click)="UpdateWordLogList()" >List</button>
-        </div>
+
+
+</div>
+<div class="controlPanel">
+    <div>
+        <input type="text" name="" id="filter" (keyup)="FilterWords()" placeholder="Filtro RegEx">
     </div>
-    
-    <div id="hints">
-        <div id="wordHints">
-            <!-- Actinio
+    <div>
+        <button (click)="ClearCrossWord()">{{msg[1][id_language]}}</button>
+        <button (click)="FillCrossWord()">{{msg[2][id_language]}}</button>
+        <button (click)="RandomCrossWFill()">{{msg[3][id_language]}}</button>
+        <button (click)="ExportCrossW()">{{msg[4][id_language]}}</button>
+        <button (click)="ImportCrossW()">{{msg[5][id_language]}}</button>
+        <label for="size">{{msg[6][id_language]}}</label>
+        <!-- <button (click)="LoadCrossWord()">{{msg[6][id_language]}}</button> -->
+        <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0"
+            [max]="totalCrossWords-1">
+        <label for="zoom">{{msg[12][id_language]}}</label>
+        <input type="number" name="zoom" (change)="CrossZoom()" [(ngModel)]="cellHeight" id="cross_cell_size"
+            min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
+        <label for="size">{{msg[13][id_language]}}</label>
+        <input type="number" name="size" (change)="onResize()" [(ngModel)]="crossSize" id="cross_cell_size"
+            min="10" max="100">
+        <button (click)="FilterWords()">{{msg[7][id_language]}}</button>
+        <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button>
+    </div>
+</div>
+    <app-word-log [dictionary]="msg" [id_language]="id_language" [id_message]="0"
+        [wordList]="wordLogList"></app-word-log>
+<div id="hints">
+    <div id="wordHints">
+        <!-- Actinio
             Aluminio
             Americio
             Antimonio
@@ -156,21 +162,19 @@
             Xenón
             Zinc
             Zirconio -->
-    
-        </div>
-        <div id="symbolHints">
-        </div>
-    </div>
 
-    <div class="console">
-        <textarea name="" id="txtConsole" ></textarea>
     </div>
+    <div id="symbolHints">
+    </div>
+</div>
 
-    <div class="notes">
-        <H1>TODO</H1>
-        <P>Para el gap al inicio ver:</P>
-        <P>.crossRow </P>
-            // height: var(--cellHeight);
-    </div>
-    
-    
+<div class="console">
+    <textarea name="" id="txtConsole"></textarea>
+</div>
+
+<div class="notes">
+    <H1>TODO</H1>
+    <P>Para el gap al inicio ver:</P>
+    <P>.crossRow </P>
+    // height: var(--cellHeight);
+</div>

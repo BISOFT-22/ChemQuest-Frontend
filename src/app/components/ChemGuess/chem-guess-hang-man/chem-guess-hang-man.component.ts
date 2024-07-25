@@ -2,44 +2,53 @@ import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IElement } from '../../../interfaces';
+import { IElement, IHistory } from '../../../interfaces';
 import { ModalBComponent } from '../../../modal-b/modal-b.component';
-import { get } from 'jquery';
+
+import { Router } from '@angular/router';
+import { ModalComponent } from '../../modal/modal.component';
+import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports:[ModalBComponent]
+  imports:[ModalComponent, ChemGuessForm7Component]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
   send: string = 'assets/img/send.png';
   convert: string = 'assets/img/convert.png';
-  
-  
+ 
+  history: IHistory = {};
+  allHistory :IHistory[] =[];
   word: string = '';
-  displayedWord: string[] = [];
-  guessedLetters: Set<string> = new Set(); // Para almacenar letras adivinadas
   letter: string = '';
   @Output() addFavoriteEvent = new EventEmitter<string>();
+  displayedWord: string[] = [];
+  guessedLetters: Set<string> = new Set(); 
+  wordsArray: string[] = [];// tiene la letra por separado
+  
+  
+  ////////////////////////////
+  
 
-  wordsArray: string[] = [];
+  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router) {
+    
+  }
 
-  Element: IElement[] = [];
-
-  constructor(private modalService: NgbModal,private random: RandomizerService) {}
-
-  ngOnInit() {
+  ngOnInit():void {
+    this.initializeThings();
+    
+  }
+  initializeThings(): void {
     this.random.checkAndFetch();
     this.word = this.random.getRandomWord();
     this.addFavoriteEvent.emit(this.word);
     this.splitIntoWords(this.word);
     this.displayedWord = Array(this.word.length).fill('_');
-    
   }
- 
 
 
   getRandomWord(technologies: any[]): string {
@@ -50,15 +59,15 @@ export class ChemGuessHangManComponent implements OnInit {
 
   checkLetter(letter: string) {
     if (!this.guessedLetters.has(letter)) {
-      this.guessedLetters.add(letter); // Agregar la letra adivinada al conjunto de letras adivinadas
+      this.guessedLetters.add(letter);
       let found = false;
       for (let i = 0; i < this.displayedWord.length; i++) {
         if (this.letter === letter) {
-          this.displayedWord[i] = letter; // Actualizar el array displayedWord con la letra adivinada
+          this.displayedWord[i] = letter; 
           found = true;
         }
       }
-      // Si la letra no está en la palabra, aquí podrías manejar otro tipo de lógica (por ejemplo, contar los errores)
+    
     }
   }
   replaceBlank(index: number, letter: string) {
@@ -69,25 +78,73 @@ export class ChemGuessHangManComponent implements OnInit {
   splitIntoWords(input: string): void {
     this.wordsArray = input.split('');
   }
-
-  open() {
-    const modalRef = this.modalService.open(ModalBComponent);
-    modalRef.result.then((result) => {
-      console.log(`Closed with: ${result}`);
-    }, (reason) => {
-      console.log(`Dismissed ${this.getDismissReason(reason)}`);
-    });
+  //////////////////////////////////modal para cambiar pregunta
+  showDetailModal(modal: any) {
+    modal.show();
   }
-  private getDismissReason(reason: any): string {
-    if (reason === 'Cross click') {
-      return 'by clicking on a cross button';
-    } else if (reason === 'cancel') {
-      return 'by clicking on cancel button';
-    } else {
-      return `with: ${reason}`;
+
+  handleFormAction(response: boolean) {
+    if (response) {
+      this.onConvert();
     }
   }
+  /////////funciones para recargar la lista y para recargar la pagina para cambiar el elemento
+  onConvert(): void {
+    this.clearSlots();
+    this.router.navigate([this.router.url]).then(() => {
+      this.initializeThings();
+    });
+  }
 
+  clearSlots(): void {
+    const slots = document.querySelectorAll<HTMLElement>('.slot');
+    slots.forEach(slot => {
+      slot.textContent = '';
+    });
+    this.guessedLetters.clear();
+    this.displayedWord = Array(this.word.length).fill('_');
+  }
+/////////////////////////////Comprobar palabra
+CompareWord(): void {
+  let history: IHistory = { userWords: [], typeColor: [] };
+  const slots = document.querySelectorAll<HTMLElement>('.slot');
+  let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
+  let procesado: boolean[] = new Array(slots.length).fill(false);
+
+  // Primera iteración para coincidencias exactas
+  slots.forEach((slot, i) => {
+    if (slot.textContent === this.wordsArray[i]) {
+      history.userWords!.push(slot.textContent!);
+      history.typeColor!.push("#87F14A"); // Verde
+      wordArrayCorrectTemp[i] = null;
+      procesado[i] = true;
+    } else {
+      history.userWords!.push('');
+      history.typeColor!.push('');
+    }
+  });
+
+  // Segunda iteración para coincidencias parciales
+  slots.forEach((slot, i) => {
+    if (!procesado[i]) {
+      const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
+      if (index !== -1) {
+        history.userWords![i] = slot.textContent!;
+        history.typeColor![i] = "#FFFF00"; // Amarillo
+        wordArrayCorrectTemp[index] = null;
+      } else {
+        history.userWords![i] = slot.textContent!;
+        history.typeColor![i] = "#FF0000"; // Rojo
+      }
+    }
+  });
+
+ this.allHistory.push(history)
+}
+
+
+
+  
 
 /////////////////////////////////////DRAG AND DROP
 ngAfterViewInit(): void {
@@ -188,12 +245,6 @@ makeDraggable(): void {
     });
   });
 }
-
-
- 
-
-
-
 
 
 

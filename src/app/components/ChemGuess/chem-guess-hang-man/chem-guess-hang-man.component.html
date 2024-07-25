@@ -4,7 +4,7 @@
    
     <div class="word">
         <!--  -->
-        <img [src]="convert" (click)="ngOnInit()" class="imgSize" alt="">
+        <img [src]="convert"  (click)="showDetailModal(detailModal)" class="imgSize" alt="">
         @for (item of wordsArray; track $index) {
             <div  [attr.id]="'casilla-'" class="slot" id="casilla-1"></div>
            
@@ -13,7 +13,7 @@
         @if ("letter !== '_'") {
             <p>{{letter}}</p>
         }
-        <img [src]="send" class="imgSize" alt="">
+        <img [src]="send" (click)="CompareWord()" class="imgSize" alt="">
         <!-- src/app/components/hangman/hangman.component.html -->
     </div>
    
@@ -66,7 +66,14 @@
 
    
     
+    <app-modal #detailModal>
 
+        <app-chem-guess-form7
+        
+        (callParentEvent)="handleFormAction($event)"
+        />
+       
+      </app-modal>
 
 
   

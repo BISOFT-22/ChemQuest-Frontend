@@ -1,3 +1,5 @@
+import { ListFormat } from "typescript";
+
 export interface ILoginResponse {
   accessToken: string;
   expiresIn: number
@@ -86,4 +88,9 @@ export interface IElement {
   proton?: string;
   neutron?: string;
   electron?: string;
+}
+
+export interface IHistory{
+  userWords?: string[];
+  typeColor?: string[];
 }

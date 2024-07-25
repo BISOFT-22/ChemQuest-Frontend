@@ -16,7 +16,7 @@ import { ChemGuessHangManComponent } from '../../ChemGuess/chem-guess-hang-man/c
   styleUrl: './game-form.component.scss'
 })
 export class GameFormComponent {
-  @Input() game: IGame =  {};
+  @Input () game: IGame =  {};
   @Input() action = '';
   @Output() callParentEvent: EventEmitter<IGame> = new EventEmitter<IGame>()
 

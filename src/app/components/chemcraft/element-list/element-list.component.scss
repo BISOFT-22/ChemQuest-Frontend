@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: center;
     color: #1a661a;
-    /* background-color: #a5d6a7; */
     padding: 10px;
     border-radius: 10px;
     margin-top: 20px;
@@ -28,20 +27,8 @@
     padding: 10px 0;
     list-style-type: none;
     margin: 0;
-    padding: 0;
-
 }
 
-/* .elements-container::-webkit-scrollbar {
-    height: 8px;
-    margin-top: 5px;
-}
-
-.elements-container::-webkit-scrollbar-thumb {
-    background-color: #1a661a;
-    border-radius: 10px;
-    margin-top: 5px;
-} */
 
 .element {
     background-color: #1a661a;
@@ -59,6 +46,10 @@
     flex: 0 0 auto;
 }
 
+.element:hover {
+    transform: scale(1.1);
+}
+
 .element:active {
     background-color: #217a34;
 }
@@ -74,3 +65,9 @@
     margin-left: 10px;
 }
 
+.no-results {
+    text-align: center;
+    color: #1a661a;
+    font-weight: bold;
+    flex: 0 0 100%;
+  }

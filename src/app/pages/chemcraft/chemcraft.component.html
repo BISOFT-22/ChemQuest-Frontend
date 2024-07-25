@@ -1,14 +1,19 @@
 <div class="container">
-    <app-compound-request></app-compound-request>
+  <app-compound-request></app-compound-request>
 
-    <div class="slots">
-      <app-slot></app-slot>
-      <app-slot></app-slot>
-      <app-slot></app-slot>
-      <app-slot></app-slot>
-    </div>
+  <div class="slots">
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
 
-    <app-element-list></app-element-list>
-    <app-modal-info-compound></app-modal-info-compound>
-    <app-modal-tutorial></app-modal-tutorial>
   </div>
+
+  <app-element-list></app-element-list>
+  <app-modal-info-compound></app-modal-info-compound>
+  <app-modal-tutorial></app-modal-tutorial>
+  
+  <app-modal size="lg" #modalError>
+    <app-modal-error></app-modal-error>
+  </app-modal>
+</div>

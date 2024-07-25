@@ -1,14 +1,20 @@
 <div class="elements-list">
-    <div class="head-list">
-        <h2>Lista de elementos:</h2>
-        <input type="text" id="element-search" placeholder="Ingresa el nombre del elemento, símbolo o número atómico...">
-    </div>
-    <ul class="elements-container">
-        <li *ngFor="let element of elementsList" class="element" draggable="true" 
-            [attr.data-symbol]="element.symbol" 
-            [attr.data-name]="element.name" 
-            [attr.data-atomic-number]="element.atomicNumber">
-            {{ element.symbol }}
-        </li>
-    </ul>
+  <div class="head-list">
+    <h2>Lista de elementos:</h2>
+    <input type="text" id="element-search" placeholder="Ingresa el nombre del elemento..." (dragover)="preventDrop($event)" (drop)="preventDrop($event)">
+  </div>
+  <ul class="elements-container" (drop)="onDrop($event)" (dragover)="allowDrop($event)">
+    <li
+      *ngFor="let element of elementsList"
+      class="element"
+      draggable="true"
+      (dragstart)="onDragStart($event, element)"
+      [attr.data-symbol]="element.symbol"
+      [attr.data-name]="element.name"
+      [attr.data-atomic-number]="element.atomicNumber"
+    >
+      {{ element.symbol }}
+    </li>
+    <li *ngIf="noResults" class="no-results">No existen elementos en la tabla periódica que coincidan con el nombre, el símbolo o el número atómico ingresado</li>
+  </ul>
 </div>

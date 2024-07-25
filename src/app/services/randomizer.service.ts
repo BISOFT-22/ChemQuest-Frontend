@@ -52,9 +52,6 @@ export class RandomizerService extends BaseService<IElement> {
   public checkAndFetch() {
     if (this.Element.length === 0) {
       this.getAll();
-    } else {
-      const randomWord = this.getRandomWord();
-      console.log('Random word:', randomWord);
-    }
+    } 
   }
 }

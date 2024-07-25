@@ -1,21 +1,20 @@
-import { Component, ViewChild  } from '@angular/core';
+import { Component, viewChild, ViewChild  } from '@angular/core';
 import { ModalComponent } from '../../modal/modal.component';
 import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
-import { RandomizerService } from '../../../services/randomizer.service';
-import { ModalBComponent } from '../../../modal-b/modal-b.component';
-import { ChemGuessForm7Component} from '../chem-guess-form7/chem-guess-form7.component';
+
+import { ModalPruebasComponent } from '../../../modal-pruebas/modal-pruebas.component';
 
 @Component ({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ModalBComponent, NgbModule, ChemGuessHangManComponent, ChemGuessForm7Component ],
+  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent ],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
 export class ChemGuess7Component {
-
+  @ViewChild('modalPrueba') modalError!: ModalPruebasComponent;
   live100: string = 'assets/img/live/live100.png';
   live75: string = 'assets/img/live/live75.png';
   live50: string = 'assets/img/live/live50.png';
@@ -32,7 +31,10 @@ export class ChemGuess7Component {
 
 
 
-
+showHistory(): void {
+  let visible:boolean= true;
+  this.modalError.showModal(visible);
+}
 
 
 

@@ -4,7 +4,7 @@
    
     <div class="word">
         <!--  -->
-        <img [src]="convert"  (click)="showDetailModal(detailModal)" class="imgSize" alt="">
+        <img [src]="convert"  (click)="showDetailModal(detailModalChange)" class="imgSize" alt="">
         @for (item of wordsArray; track $index) {
             <div  [attr.id]="'casilla-'" class="slot" id="casilla-1"></div>
            
@@ -66,7 +66,7 @@
 
    
     
-    <app-modal #detailModal>
+    <app-modal #detailModalChange>
 
         <app-chem-guess-form7
         
@@ -76,4 +76,3 @@
       </app-modal>
 
 
-  

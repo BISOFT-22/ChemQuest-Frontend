@@ -1,0 +1,77 @@
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000;
+}
+
+.modal-error {
+    max-width: 40%;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 20px;
+    border-radius: 25px;
+    position: relative;
+    z-index: 1001;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#error {
+    max-width: 100px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.info{
+    margin-top: 20px;
+    margin-right: 12px;
+}
+
+#title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#text {
+    text-align: center;
+    font-size: 16px;
+}
+
+.action-button{
+    background-color: #1a661a;
+    border:#1a661a;
+    color: #fff;
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+}
+
+.buttons-container{
+text-align: end;
+}

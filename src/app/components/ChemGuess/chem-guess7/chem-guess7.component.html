@@ -4,7 +4,7 @@
 <main>
     <div>
         <div class="Question-Timer">
-            <button class="big-button">historial</button>
+            <a (click)="showHistory()" class="big-button">historial</a>
             <img class="imgLive" [src]="live100" alt="">
               <div>
                 <p></p>
@@ -19,9 +19,6 @@
             <br>
             <img class="imgs" [src]="imagePathAbajo" alt="" > <!----->
         </div>
-        
-            
-
     </div>
 
     
@@ -29,8 +26,6 @@
 <app-chem-guess-hang-man 
 (addFavoriteEvent)="getWord($event)"
 />
-
-   
 
 <div>
 
@@ -45,5 +40,12 @@
     }
 </script>
 
+
+
+    <app-modal-pruebas
+    size="lg" #modalPrueba>
+    />
+    
+  
 
 

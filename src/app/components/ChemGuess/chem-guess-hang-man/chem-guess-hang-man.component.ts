@@ -3,25 +3,29 @@ import { RandomizerService } from '../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IElement, IHistory } from '../../../interfaces';
-import { ModalBComponent } from '../../../modal-b/modal-b.component';
+
 
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
+import { ChemGuessHistoryComponent } from '../chem-guess-history/chem-guess-history.component';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports:[ModalComponent, ChemGuessForm7Component]
+  imports:[ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
   send: string = 'assets/img/send.png';
   convert: string = 'assets/img/convert.png';
  
-  history: IHistory = {};
+  history: IHistory = {
+    userWords: [],  
+    typeColor: []
+  };
   allHistory :IHistory[] =[];
   word: string = '';
   letter: string = '';
@@ -30,7 +34,7 @@ export class ChemGuessHangManComponent implements OnInit {
   guessedLetters: Set<string> = new Set(); 
   wordsArray: string[] = [];// tiene la letra por separado
   
-  
+  @Output() historyChange = new EventEmitter<IHistory[]>();
   ////////////////////////////
   
 
@@ -43,27 +47,27 @@ export class ChemGuessHangManComponent implements OnInit {
     
   }
   initializeThings(): void {
+    let randomWord;
     this.random.checkAndFetch();
-    this.word = this.random.getRandomWord();
-    this.addFavoriteEvent.emit(this.word);
+    randomWord = this.random.getRandomWord();
+    this.word=  this.removeAccents(randomWord.toUpperCase()); 
+     console.log(this.word)
     this.splitIntoWords(this.word);
     this.displayedWord = Array(this.word.length).fill('_');
   }
 
-
-  getRandomWord(technologies: any[]): string {
-    const randomIndex = Math.floor(Math.random() * technologies.length);
-    return technologies[randomIndex].word;
+  removeAccents(str: string): string {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/Ñ/g, "Ñ");
   }
 
 
-  checkLetter(letter: string) {
-    if (!this.guessedLetters.has(letter)) {
-      this.guessedLetters.add(letter);
+  checkLetter(letters: string) {
+    if (!this.guessedLetters.has(letters)) {
+      this.guessedLetters.add(letters);
       let found = false;
       for (let i = 0; i < this.displayedWord.length; i++) {
-        if (this.letter === letter) {
-          this.displayedWord[i] = letter; 
+        if (this.letter === letters) {
+          this.displayedWord[i] = letters; 
           found = true;
         }
       }
@@ -83,11 +87,13 @@ export class ChemGuessHangManComponent implements OnInit {
     modal.show();
   }
 
+
   handleFormAction(response: boolean) {
     if (response) {
       this.onConvert();
     }
   }
+  
   /////////funciones para recargar la lista y para recargar la pagina para cambiar el elemento
   onConvert(): void {
     this.clearSlots();
@@ -106,7 +112,7 @@ export class ChemGuessHangManComponent implements OnInit {
   }
 /////////////////////////////Comprobar palabra
 CompareWord(): void {
-  let history: IHistory = { userWords: [], typeColor: [] };
+  this.history
   const slots = document.querySelectorAll<HTMLElement>('.slot');
   let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
   let procesado: boolean[] = new Array(slots.length).fill(false);
@@ -114,13 +120,13 @@ CompareWord(): void {
   // Primera iteración para coincidencias exactas
   slots.forEach((slot, i) => {
     if (slot.textContent === this.wordsArray[i]) {
-      history.userWords!.push(slot.textContent!);
-      history.typeColor!.push("#87F14A"); // Verde
+      this.history.userWords!.push(slot.textContent!);
+      this.history.typeColor!.push("#87F14A"); // Verde
       wordArrayCorrectTemp[i] = null;
       procesado[i] = true;
     } else {
-      history.userWords!.push('');
-      history.typeColor!.push('');
+      this.history.userWords!.push('');
+      this.history.typeColor!.push('');
     }
   });
 
@@ -129,17 +135,18 @@ CompareWord(): void {
     if (!procesado[i]) {
       const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
       if (index !== -1) {
-        history.userWords![i] = slot.textContent!;
-        history.typeColor![i] = "#FFFF00"; // Amarillo
+        this.history.userWords![i] = slot.textContent!;
+        this.history.typeColor![i] = "#FFFF00"; // Amarillo
         wordArrayCorrectTemp[index] = null;
       } else {
-        history.userWords![i] = slot.textContent!;
-        history.typeColor![i] = "#FF0000"; // Rojo
+        this.history.userWords![i] = slot.textContent!;
+        this.history.typeColor![i] = "#FF0000"; // Rojo
       }
     }
   });
-
- this.allHistory.push(history)
+console.log(this.history)
+ this.allHistory.push(this.history)
+ this.historyChange.emit(this.allHistory)
 }
 
 

@@ -11,7 +11,7 @@ import { IElement } from '../../../interfaces';
 })
 export class SlotComponent {
   @Input() element: { symbol: string; count: number } | null = null;
-  @Output() error = new EventEmitter<{ title: string, text: string }>();
+  @Output() error = new EventEmitter<{ title: string, text: string, buttons: boolean }>();
 
   allowDrop(event: DragEvent): void {
     event.preventDefault();
@@ -27,7 +27,7 @@ export class SlotComponent {
           this.element.count += 1; 
         } else {
           console.log('No se pueden mezclar elementos diferentes en una misma casilla');
-          this.error.emit({ title: 'Uups!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.' });
+          this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', buttons: false});
         }
       } else {
         this.element = {

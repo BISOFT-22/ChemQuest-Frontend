@@ -14,12 +14,11 @@ import { effect } from '@angular/core';
 export class ElementListComponent implements OnInit {
   elementsList: IElement[] = [];
   noResults: boolean = false;
-  // hasResults: boolean = false; //no sirvio 
-  isSearching: boolean = false; 
+  isSearching: boolean = false;
+  clickElementIndex: number | null = null; 
 
   private service = inject(ElementService);
 
-  // Esto para mostrar la lista en el orden correcto 
   private readonly elementListEffect = effect(() => {
     this.elementsList = [...this.service.elements$()].reverse();
   });
@@ -29,24 +28,28 @@ export class ElementListComponent implements OnInit {
     this.elementSearch();
   }
 
+  showElementInfo(index: number): void {
+    this.clickElementIndex = index;
+  }
 
-  //........................Filtrado o busqueda de elementos............................//
+  hideElementInfo(event: MouseEvent): void {
+    event.stopPropagation();
+    this.clickElementIndex = null;
+  }
 
-  // Esta funcion es para evitar problemas al buscar elementos con elnombre con tildes, o mayusculas:
-  normalizeString(str: string): string {   
+  normalizeString(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
   }
 
-  // busqueda de elementos:
   private elementSearch(): void {
     const elementSearch = document.getElementById('element-search') as HTMLInputElement;
     elementSearch.addEventListener('input', () => {
       const filter = this.normalizeString(elementSearch.value);
-      this.isSearching = filter.length > 0; // Actualizar isSearching basado en el texto de entrada
+      this.isSearching = filter.length > 0;
       const elementsList = document.querySelector('.elements-list ul') as HTMLElement;
       const elements = elementsList.querySelectorAll<HTMLElement>('.element');
 
-      let hasResults = false; //la defino aqui pq si no me da problemas y intente mucho rato y no entiendo porque no funciona.
+      let hasResults = false;
 
       elements.forEach((element) => {
         const symbol = element.getAttribute('data-symbol') || '';
@@ -54,8 +57,8 @@ export class ElementListComponent implements OnInit {
         const atomicNumber = element.getAttribute('data-atomic-number') || '';
 
         if (
-          this.normalizeString(symbol).includes(filter) || 
-          this.normalizeString(name).includes(filter) || 
+          this.normalizeString(symbol).includes(filter) ||
+          this.normalizeString(name).includes(filter) ||
           this.normalizeString(atomicNumber).includes(filter)
         ) {
           element.style.display = 'flex';
@@ -65,13 +68,9 @@ export class ElementListComponent implements OnInit {
         }
       });
 
-      this.noResults = this.isSearching && !hasResults; // Actualiza noResults para que muestre el li de que no coincide el elemento
+      this.noResults = this.isSearching && !hasResults;
     });
   }
-
-
-
-  //........................funciones para el drag & drop............................//
 
   preventDrop(event: DragEvent): void {
     event.preventDefault();
@@ -93,5 +92,4 @@ export class ElementListComponent implements OnInit {
       console.log('Elemento soltado:', draggedElement);
     }
   }
-
 }

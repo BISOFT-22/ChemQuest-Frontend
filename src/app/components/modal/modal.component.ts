@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, TemplateRef, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -16,10 +16,10 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     </ng-template>
   `,
 })
+
 export class ModalComponent {
   @Input() size?: string;
   @Input() title?: string;
-  @Input() customClass?: string; // Nueva entrada para clase personalizada
   @ViewChild('modal') modal: any;
   private modalRef?: NgbModalRef;
 

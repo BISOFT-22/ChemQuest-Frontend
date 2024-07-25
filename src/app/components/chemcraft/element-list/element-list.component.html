@@ -1,20 +1,35 @@
 <div class="elements-list">
+  @if (clickElementIndex !== null) {
+    <div class="element-information">
+      <div class="container-element-info">
+        <div class="container-close-button">
+          <button class="close-button" (click)="hideElementInfo($event)">x</button>
+        </div>
+        <p style="text-align: center;">{{ elementsList[clickElementIndex]!.name }} ({{ elementsList[clickElementIndex]!.atomicNumber }})</p>
+      </div>
+    </div>
+  }
   <div class="head-list">
     <h2>Lista de elementos:</h2>
     <input type="text" id="element-search" placeholder="Ingresa el nombre del elemento..." (dragover)="preventDrop($event)" (drop)="preventDrop($event)">
   </div>
   <ul class="elements-container" (drop)="onDrop($event)" (dragover)="allowDrop($event)">
-    <li
-      *ngFor="let element of elementsList"
-      class="element"
-      draggable="true"
-      (dragstart)="onDragStart($event, element)"
-      [attr.data-symbol]="element.symbol"
-      [attr.data-name]="element.name"
-      [attr.data-atomic-number]="element.atomicNumber"
-    >
-      {{ element.symbol }}
-    </li>
-    <li *ngIf="noResults" class="no-results">No existen elementos en la tabla periódica que coincidan con el nombre, el símbolo o el número atómico ingresado</li>
+    @for (element of elementsList; track $index) {
+      <li
+        class="element"
+        draggable="true"
+        (dragstart)="onDragStart($event, element)"
+        [attr.data-symbol]="element.symbol"
+        [attr.data-name]="element.name"
+        [attr.data-atomic-number]="element.atomicNumber"
+        (click)="showElementInfo($index)"
+      >
+        {{ element.symbol }}
+
+      </li>
+    }
+    @if (noResults) {
+      <li class="no-results">No existen elementos en la tabla periódica que coincidan con el nombre, el símbolo o el número atómico ingresado</li>
+    }
   </ul>
 </div>

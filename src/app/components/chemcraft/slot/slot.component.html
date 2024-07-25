@@ -1,8 +1,12 @@
 <div class="slot" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
-    <div *ngIf="element" class="element" draggable="true" (dragstart)="onDragStart($event)">
+    @if(element){
+      <div class="element" draggable="true" (dragstart)="onDragStart($event)">
       {{ element.symbol }}
-    </div>
-    <div *ngIf="element" class="counter">
-      {{ element.count }}
       </div>
+    }
+    @if(element){
+      <div class="counter">
+        {{ element.count }}
+      </div>
+    }
   </div>

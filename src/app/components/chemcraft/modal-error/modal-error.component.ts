@@ -11,12 +11,18 @@ import { Component, Input } from '@angular/core';
 export class ModalErrorComponent {
   @Input() title: string = '';
   @Input() text: string = '';
-  isVisible: boolean = false;
+  isVisible: boolean = false;  
+  buttonsVisible: boolean = false;
 
-  showModal(title: string, text: string): void {
+
+
+  showModal(title: string, text: string, buttons: boolean): void {
     this.title = title;
     this.text = text;
     this.isVisible = true;
+    if(buttons){
+    this.buttonsVisible = true;
+    }
   }
 
   closeModal(): void {

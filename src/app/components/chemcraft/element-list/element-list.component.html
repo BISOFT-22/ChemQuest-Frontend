@@ -23,6 +23,7 @@
         [attr.data-name]="element.name"
         [attr.data-atomic-number]="element.atomicNumber"
         (click)="showElementInfo($index)"
+        (dblclick)="hideElementInfo($event)"
       >
         {{ element.symbol }}
 

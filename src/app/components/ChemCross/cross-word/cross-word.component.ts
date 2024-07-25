@@ -15,9 +15,9 @@ import { LanguageSelectComponent } from "../../language-select/language-select.c
   templateUrl: './cross-word.component.html',
   styleUrl: './cross-word.component.scss'
 })
-export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecked {
+export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-  
+
   msg = Dictionary;
   id_language: number = 0; //0: English 1:Spanish
   cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
@@ -25,7 +25,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   txtFilter = document.getElementById("filter") as HTMLInputElement;
   wordLog = document.getElementById("wordLog") as HTMLInputElement;
   wordLogList: string[] = [];
-  
+
   wordsSet = new Set();
   UsedWordsSet = new Set();
   initialCellHeight = 30;
@@ -37,40 +37,40 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   filledCells = 0;    //Cantidad de celdas con letras o blockChar
   totalIterations = 0;
   totalCrossWords = crossWordCollection.length;
-  
+
   // Direccion inicial para colocar palabras
   currentDirection = 0;
-  
+
 
   crossWord = new Array();
 
   AvailabeWordsSet = new Set();
-  
+
   fakeArray: number[] = new Array(this.crossSize);
   idArray: number[] = new Array(this.crossSize * this.crossSize);
-  
+
   // @HostBinding('--cellHeight')
   // cellHeight = '100px';
 
   // True when the user changes the CrossWord size.
   sizeChanged = false;
-  
+
   constructor() {
-    
+
     // alert();
-    
-    document.addEventListener("DOMContentLoaded", ()=>this.AsignId());
-    
+
+    document.addEventListener("DOMContentLoaded", () => this.AsignId());
+
     // afterRender executes the callback 2 times when the CrossWord size is changed. So we need to make it run once. That's what sizeChanged is for.
     afterRender(() => {
       if (this.sizeChanged) {
         this.AsignId();
         this.CrossZoom();
         this.sizeChanged = false;
-        console.log("afterRender");
+        // console.log("afterRender");
       }
-        
-     },{phase:AfterRenderPhase.Write});
+
+    }, { phase: AfterRenderPhase.Write });
   }
 
   onResize() {
@@ -82,14 +82,14 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     // this.AsignId();
 
     // this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
-    
+
     // afterRender() is called to update cell numbers and zoom
   }
 
-  onLanguageChanged(id_language:number) {
+  onLanguageChanged(id_language: number) {
     this.id_language = id_language;
   }
-  
+
   ngOnInit(): void {
     // alert("OnInit");
     this.LoadAvailableWords();
@@ -97,15 +97,15 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     // this.LoadCrossWord(1);
     this.FilterWords();
   }
-  
+
   ngAfterViewInit(): void {
     // alert("ngAfterViewInit");
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     this.CrossZoom();
-    
+
   }
 
-  ngAfterViewChecked(): void{
+  ngAfterViewChecked(): void {
     // alert("ngAfterViewChecked");
   }
 
@@ -113,7 +113,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   //   // this.CrossZoom(Number((e.target as HTMLInputElement).value));
   //   this.CrossZoom();
   // }
-  
+
   CrossZoom() {
     // let myInput = e?.target as HTMLInputElement;
 
@@ -133,7 +133,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
 
     this.AsignId();
   }
-  
+
   GenerateCrossW(): void {
 
     //Generar matriz n x n
@@ -149,7 +149,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   }
 
   getCellsCollection() {
-    
+
   }
 
 
@@ -167,7 +167,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
 
     for (const c of this.cellsCollection) {
       c.id = (id++).toString();
-      
+
     }
 
     id = 1;
@@ -182,7 +182,30 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     e.target.value = "";
   }
 
+  ValidateCell(cellValue:string): boolean {
+
+    //Verify is one letter
+    if (cellValue.length > 1) return false;
+    
+    //Verify is a letter
+    // if (Number(cellValue)) return false;
+
+    let regex = new RegExp("[a-zA-ZñÑ@]", "i");
+    
+    if (cellValue.search(regex) == -1) return false;
+
+    
+    return true;
+  }
+
   OnBlur(e: any) {
+
+    if (!this.ValidateCell(e.target.value)) {
+      e.target.value = "";
+      return;
+    }
+
+    
     e.target.value = e.target.value.toUpperCase();
 
     if (e.target.value === this.blockChar) {
@@ -197,7 +220,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   }
 
   temp() {
-    
+
   }
 
 
@@ -211,10 +234,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
       j++;
 
       if (j == this.crossSize) {
-          j = 0;
-          i++;
+        j = 0;
+        i++;
       }
-  }
+    }
   }
 
   /**
@@ -226,10 +249,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     this.FilterWords();
   }
 
-    /**
-   * Loads the set of available words
-   * 
-   */
+  /**
+ * Loads the set of available words
+ * 
+ */
   LoadAvailableWords() {
     wordCollection.forEach((c) => {
       this.AvailabeWordsSet.add(c[0]);
@@ -237,12 +260,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     });
   }
 
-      /**
-   * Verifies if word is in AvailableWordSet
-   * 
-   */
-  IsWord(s: string):boolean {
-    
+  /**
+* Verifies if word is in AvailableWordSet
+* 
+*/
+  IsWord(s: string): boolean {
+
     return this.AvailabeWordsSet.has(s);
 
   }
@@ -252,7 +275,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
  * @param separator The parameter name.
  * @returns An array of words in the Cross Word.
  */
-  GetUsedWodsList(separator:string = ",", sorted:boolean=true): string[] {
+  GetUsedWodsList(separator: string = ",", sorted: boolean = true): string[] {
     let i: number = 0;
     let j: number = 0;
     let letter: string;
@@ -274,23 +297,23 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
         letter = this.crossWord[i][j];
 
         if (letter == "" || letter == "@") {
-          if(this.IsWord(word)){
+          if (this.IsWord(word)) {
             this.UsedWordsSet.add(word);
           }
           word = "";
           continue;
         }
-      
+
         lastLetter = letter;
         word += letter;
 
         if (j + 1 == this.crossSize) {
-          if(this.IsWord(word)){
+          if (this.IsWord(word)) {
             this.UsedWordsSet.add(word);
           }
           word = "";
         }
-      
+
       }
     }
 
@@ -300,7 +323,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
         letter = this.crossWord[i][j];
 
         if (letter == "" || letter == "@") {
-          if(this.IsWord(word)){
+          if (this.IsWord(word)) {
             this.UsedWordsSet.add(word);
           }
           word = "";
@@ -309,14 +332,14 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
 
         lastLetter = letter;
         word += letter;
-        
+
         if (i + 1 == this.crossSize) {
-          if(this.IsWord(word)){
+          if (this.IsWord(word)) {
             this.UsedWordsSet.add(word);
           }
           word = "";
         }
-      
+
       }
     }
 
@@ -331,19 +354,19 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     return usedWordList.sort();
   }
 
-   /**
- * List words placed in the Cross Word.
- * @param separator The parameter name.
- * @returns An array of words in the Cross Word.
- */
+  /**
+* List words placed in the Cross Word.
+* @param separator The parameter name.
+* @returns An array of words in the Cross Word.
+*/
   DrawWordLog(wordList: string[]) {
-     
-   }
+
+  }
 
 
   DrawCrossWord() {
 
-    console.log("Iniciando");
+    // console.log("Iniciando");
 
     // RandomCrossWFill();
 
@@ -358,7 +381,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
       c.value = this.crossWord[i][j];
       c.parentElement?.parentElement?.children[0]?.setAttribute('innerHTML', k.toString());
 
-      if (c.value === this.blockChar) {
+      if (c.value === this.blockChar && c.value !="") {
         c.parentElement?.parentElement?.classList.add("blackCell");
         c.style.backgroundColor = "black";
       } else {
@@ -397,12 +420,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
   }
 
 
-  ImportCrossW(){
+  ImportCrossW() {
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
     let str = this.txtConsole.value;
 
     //Eliminar [" y ]
-    str = str.substring(2, str.length-2);
+    str = str.substring(2, str.length - 2);
     let crossArray = str.split('","');
 
     let i = 0;
@@ -412,23 +435,23 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     this.GenerateCrossW();
 
     for (const c of crossArray) {
-        this.crossWord[i][j] = c;
+      this.crossWord[i][j] = c;
 
-        j++;
+      j++;
 
-        if (j == this.crossSize) {
-            j = 0;
-            i++;
-        }
+      if (j == this.crossSize) {
+        j = 0;
+        i++;
+      }
     }
 
     this.DrawCrossWord();
     this.UpdateWordLogList();
 
-}
+  }
 
 
-  public LoadCrossWord(id?:number) {
+  public LoadCrossWord(id?: number) {
 
     let i = 0;
     let j = 0;
@@ -464,7 +487,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
 
   RandomCrossWFill() {
 
-    console.log("Iniciando");
+    // console.log("Iniciando");
 
     //this.GenerateCrossW();
 
@@ -514,9 +537,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     // document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
   }
-  
+
   FillCrossWord() {
-    
+
     let EmptyCells = 5;
     let totalCells = this.crossSize * this.crossSize;
     let str = "";
@@ -525,89 +548,89 @@ export class CrossWordComponent implements OnInit, AfterViewInit,AfterViewChecke
     let filledCells = 0;
 
     for (let index = 0; index < 50; index++) {
-        
-        if (totalCells - filledCells <= EmptyCells) {
-            str = `Existen menos de ${EmptyCells} vacias.`;
-            break;
-        }
-        this.FillCrossWord_E1();
-        
+
+      if (totalCells - filledCells <= EmptyCells) {
+        str = `Existen menos de ${EmptyCells} vacias.`;
+        break;
+      }
+      this.FillCrossWord_E1();
+
     }
 
     str += `Iteraciones: ${totalIterations}`;
     this.DrawCrossWord();
     alert(str);
-}
+  }
 
-FillCrossWord_E1() {
-  //Primer palabra al asar
-  let wordList = new Array();
-  // let direction = Math.trunc(2 * Math.random()); // 0 - Vertical 1 - Horizontal
-  // let direction = 0;
-  
-  let direction = this.currentDirection;
+  FillCrossWord_E1() {
+    //Primer palabra al asar
+    let wordList = new Array();
+    // let direction = Math.trunc(2 * Math.random()); // 0 - Vertical 1 - Horizontal
+    // let direction = 0;
 
-  if (this.currentDirection == 0) {
+    let direction = this.currentDirection;
+
+    if (this.currentDirection == 0) {
       this.currentDirection = 1;
-  } else {
+    } else {
       this.currentDirection = 0
-  }
+    }
 
-  /* */
-  
-  
-  let i = 0;
-  let j = 0;
-  let r = 0;
-  let c = 0;
-  let I0 = 0;
-  let J0 = 0;
+    /* */
 
-  let bPlaced = false;
-  let bChangeWord = false;
-  let bRepeatedWord = false;
-  let iteration = 1;
-  let currIndex = 0;
-  let currWord = "";
 
-  // Generar la matriz vacia. Descomentar.
-  // GenerateCrossW();
+    let i = 0;
+    let j = 0;
+    let r = 0;
+    let c = 0;
+    let I0 = 0;
+    let J0 = 0;
 
-  //TODO: Se puede seleccionar el tamaño de las palabras a usar para rellenar.
-  //Llenar lista de palabras disponibles.
-  for (const c of wordCollection) {
+    let bPlaced = false;
+    let bChangeWord = false;
+    let bRepeatedWord = false;
+    let iteration = 1;
+    let currIndex = 0;
+    let currWord = "";
+
+    // Generar la matriz vacia. Descomentar.
+    // GenerateCrossW();
+
+    //TODO: Se puede seleccionar el tamaño de las palabras a usar para rellenar.
+    //Llenar lista de palabras disponibles.
+    for (const c of wordCollection) {
       wordList.push(c[0]);
-  }
+    }
 
-  while (!bPlaced) {
+    while (!bPlaced) {
 
       if (iteration++ > 500000) {
-          // alert("Maximun quantity of iterations reached!");
-          break;
+        // alert("Maximun quantity of iterations reached!");
+        break;
       }
 
       //METODO 1
       //Si la palabra ya se ha usado se busca otra
       while (!bRepeatedWord) {
-          
-          //Palabra a colocar
-          currIndex = Math.trunc(wordList.length * Math.random());
-          
-          //Seleccionar la palabra para probar
-          currWord = /* blockChar + */ wordList[currIndex] /* + blockChar */;
-          // console.log(currWord);
 
-          bRepeatedWord = !this.UsedWordsSet.has(currWord);
-          
+        //Palabra a colocar
+        currIndex = Math.trunc(wordList.length * Math.random());
+
+        //Seleccionar la palabra para probar
+        currWord = /* blockChar + */ wordList[currIndex] /* + blockChar */;
+        // console.log(currWord);
+
+        bRepeatedWord = !this.UsedWordsSet.has(currWord);
+
       }
 
       //METODO 2
       //Si la palabra ya se ha usado se busca otra
       // while (!bRepeatedWord) {
-          
+
       //     //Palabra a colocar
       //     //currIndex = Math.trunc(wordList.length * Math.random());
-          
+
       //     //Seleccionar la palabra para probar
       //     currWord = /* blockChar + */ wordList[currIndex] /* + blockChar */;
       //     // console.log(currWord);
@@ -615,69 +638,69 @@ FillCrossWord_E1() {
       //     currIndex++;
 
       //     bRepeatedWord = !UsedWordsSet.has(currWord);
-          
+
       // }
 
       switch (this.positionMethod) {
-          case 0:
-              //Se empieza a iterar en todas las celdas en orden
-              
-              if (j + 1 == this.crossSize) {
-                  j = 0;
-                  i++;
-              } else {
-                  j++;
-              }
+        case 0:
+          //Se empieza a iterar en todas las celdas en orden
 
-              if (i + 1 == this.crossSize) {
-                  i = 0;
-                  j = 0;
-                  direction = (direction == 0 ? 1 : 0);
-              }
+          if (j + 1 == this.crossSize) {
+            j = 0;
+            i++;
+          } else {
+            j++;
+          }
 
-              break;
-          case 1:
-              //Se determina una posicion aleatoria para inicar la palabra
-              i = Math.trunc(this.crossSize * Math.random());
-              j = Math.trunc(this.crossSize * Math.random());
-              break;
-          case 2:
-              // TODO: Se usan las celdas que ya tengan letras colocdas
-              break;
-          case 3:
-              // TODO: Se usan las celdas que esten vacias
-              break;
+          if (i + 1 == this.crossSize) {
+            i = 0;
+            j = 0;
+            direction = (direction == 0 ? 1 : 0);
+          }
 
-          default:
-              break;
+          break;
+        case 1:
+          //Se determina una posicion aleatoria para inicar la palabra
+          i = Math.trunc(this.crossSize * Math.random());
+          j = Math.trunc(this.crossSize * Math.random());
+          break;
+        case 2:
+          // TODO: Se usan las celdas que ya tengan letras colocdas
+          break;
+        case 3:
+          // TODO: Se usan las celdas que esten vacias
+          break;
+
+        default:
+          break;
       }
-      
+
 
       /*PRUEBA 01 -----------------------------------------------------------------------------*/
-     
+
       // direction = 1;
       // currWord = "TECNECIO";
       // i = 2;
       // j = 1;
-      
-      
+
+
       /*PRUEBA 01 - FIN -----------------------------------------------------------------------*/
-      
-      
+
+
       I0 = i;
       J0 = j;
-      
+
 
       //Verifica que la palabra quepa en las celdas disponibles
       //dependiendo de la direccion de escritura
       if (direction == 0) {
-          if ((this.crossSize-i) < currWord.length) {
-              continue;   //Continuar con otra palabra
-          }
+        if ((this.crossSize - i) < currWord.length) {
+          continue;   //Continuar con otra palabra
+        }
       } else {
-          if ((this.crossSize-j) < currWord.length) {
-              continue;   //Continuar con otra palabra
-          }
+        if ((this.crossSize - j) < currWord.length) {
+          continue;   //Continuar con otra palabra
+        }
       }
 
       //TODO:Verificar que hay espacio disponible para colocar
@@ -687,18 +710,18 @@ FillCrossWord_E1() {
 
       for (const w of currWord) {
 
-          //Verificar las celdas disponibles de las palabras
-          if (this.crossWord[r][c] == "" || this.crossWord[r][c] == w && this.crossWord[r][c] != this.blockChar) {
-              //Todo ok --> verificar siguiente letra
-          } else {
-              bChangeWord = true; //Cambiar de palabra
-          }
+        //Verificar las celdas disponibles de las palabras
+        if (this.crossWord[r][c] == "" || this.crossWord[r][c] == w && this.crossWord[r][c] != this.blockChar) {
+          //Todo ok --> verificar siguiente letra
+        } else {
+          bChangeWord = true; //Cambiar de palabra
+        }
 
-          if (direction == 0) {
-              r++;
-          } else {
-              c++;
-          }
+        if (direction == 0) {
+          r++;
+        } else {
+          c++;
+        }
       }
 
       //Verificar la posicion anterior y posterior de la palabra
@@ -706,83 +729,83 @@ FillCrossWord_E1() {
       // Direccion vertical
       if (direction == 0) {
 
-          // Posicion anterior
-          if (I0 > 0) {
-              if (this.crossWord[I0 - 1][J0] != "" || this.crossWord[I0 - 1][J0] == this.blockChar) {
-                  bChangeWord = true; //Cambiar de palabra
-              }
+        // Posicion anterior
+        if (I0 > 0) {
+          if (this.crossWord[I0 - 1][J0] != "" || this.crossWord[I0 - 1][J0] == this.blockChar) {
+            bChangeWord = true; //Cambiar de palabra
           }
+        }
 
-          // Posicion posterior
-          if (I0 + currWord.length < this.crossSize) {
+        // Posicion posterior
+        if (I0 + currWord.length < this.crossSize) {
 
-              if (!(this.crossWord[I0 + currWord.length][J0] == "" || this.crossWord[I0 + currWord.length][J0] == this.blockChar)) {
-                  bChangeWord = true; //Cambiar de palabra
-              }
+          if (!(this.crossWord[I0 + currWord.length][J0] == "" || this.crossWord[I0 + currWord.length][J0] == this.blockChar)) {
+            bChangeWord = true; //Cambiar de palabra
           }
+        }
       }
 
       // Direccion horizontal
       if (direction == 1) {
 
-          // Posicion anterior
-          if (J0 < this.crossSize) {
-              if (this.crossWord[I0][J0 - 1] != "" || this.crossWord[I0][J0 - 1] == this.blockChar) {
-                  bChangeWord = true; //Cambiar de palabra
-              }
-
-              // Posicion posterior
-              if (J0 + currWord.length < this.crossSize) {
-
-                  if (this.crossWord[I0][J0 + currWord.length] != "" || this.crossWord[I0][J0 + currWord.length] != this.blockChar) {
-                      bChangeWord = true; //Cambiar de palabra
-                  }
-              }
+        // Posicion anterior
+        if (J0 < this.crossSize) {
+          if (this.crossWord[I0][J0 - 1] != "" || this.crossWord[I0][J0 - 1] == this.blockChar) {
+            bChangeWord = true; //Cambiar de palabra
           }
+
+          // Posicion posterior
+          if (J0 + currWord.length < this.crossSize) {
+
+            if (this.crossWord[I0][J0 + currWord.length] != "" || this.crossWord[I0][J0 + currWord.length] != this.blockChar) {
+              bChangeWord = true; //Cambiar de palabra
+            }
+          }
+        }
       }
 
       if (bChangeWord) {
-          bChangeWord = false; //Reiniciar la variable
-          continue;   //Continuar con otra palabra
+        bChangeWord = false; //Reiniciar la variable
+        continue;   //Continuar con otra palabra
       }
 
 
       //Escribe cada letra de la palabra en crossWord
       for (const w of currWord) {
-          this.crossWord[i][j] = w;
-          if (direction == 0) {
-              i++;
-          } else {
-              j++;
-          }
+        this.crossWord[i][j] = w;
+        if (direction == 0) {
+          i++;
+        } else {
+          j++;
+        }
 
-          this.filledCells++;
+        this.filledCells++;
       }
 
       //Se agrega la palabra colocada a la lista de palabras usadas
       this.UsedWordsSet.add(currWord);
 
       // Se agrega el blockChar al inicio y al final si se puede. Para evitar poner palabras que ocupen esos espacios.
-      
+
       //blockChair al inicio de la palabra
       if (direction == 0) {
-          if (I0 > 0) {
-              this.crossWord[I0 - 1][J0] = this.blockChar;
-              this.filledCells++;
-          }
-          if (i < this.crossSize) {
-              this.crossWord[i][J0] = this.blockChar;
-              this.filledCells++;
-          }
+        if (I0 > 0) {
+          this.crossWord[I0 - 1][J0] = this.blockChar;
+          this.filledCells++;
+        }
+        if (i < this.crossSize) {
+          this.crossWord[i][J0] = this.blockChar;
+          this.filledCells++;
+        }
       } else {
-          if (J0 > 0) {
-              this.crossWord[I0][J0 - 1] = this.blockChar;
-              this.filledCells++;
-          }
-          if (j < this.crossSize) {
-              this.crossWord[i][j] = this.blockChar;
-              this.filledCells++;
-          }
+        if (J0 > 0) {
+          this.crossWord[I0][J0 - 1] = this.blockChar;
+          this.filledCells++;
+        }
+        if (j < this.crossSize) {
+          this.crossWord[i][j] = this.blockChar;
+          this.filledCells++;
+        }
       }
 
 
@@ -794,12 +817,12 @@ FillCrossWord_E1() {
 
       //Si la palabra se pudo colocar se agrega a la lista de palabras usadas.
       this.wordsSet.add(currWord);
+    }
+
+    this.totalIterations = iteration;
+
+
   }
-
-  this.totalIterations = iteration;
-
-
-}
 
 
   ClearCrossWord() {
@@ -809,13 +832,14 @@ FillCrossWord_E1() {
 
     for (const c of this.cellsCollection) {
       c.value = "";
-      c.setAttribute("style", "");
+      // c.setAttribute("style", "");
       // c.parentElement.parentElement.className = "cell";
 
     }
 
     this.filledCells = 0;
-    this.wordLog!.innerHTML = "";
+    this.DrawCrossWord();
+    // this.wordLog!.innerHTML = "";
   }
 
   //Moverse por las celdas usando las flechas
@@ -859,9 +883,9 @@ FillCrossWord_E1() {
   }
 
 
-
-  RefreshWordLog(word:string) {
+  //TODO: Delete this method
+  RefreshWordLog(word: string) {
     this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
     this.wordLog.innerHTML += `<div>${word}</div>`;
-}
+  }
 }

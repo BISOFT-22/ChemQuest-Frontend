@@ -11,6 +11,6 @@ export const Dictionary = [
     ["English","Ingles"],
     ["Spanish","Español"],
     ["Choose language","Escoger lenguaje"],
-    ["Zoom","Agrandar"],
+    ["Zoom","Ampliar"],
     ["Size","Tamaño"],
 ];

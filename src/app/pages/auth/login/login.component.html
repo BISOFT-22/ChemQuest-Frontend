@@ -29,7 +29,9 @@
                 placeholder="agent@gmail.com" [(ngModel)]="loginForm.email" [ngClass]="{
                   'is-invalid': email.invalid && email.touched,
                   'is-valid': email.valid && email.touched
-                }" required />
+                }" required
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" 
+              />
               <div *ngIf="email.invalid" class="invalid-feedback">
                 Por favor ingresa un correo válido
               </div>

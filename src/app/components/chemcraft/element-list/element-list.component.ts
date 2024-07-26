@@ -12,23 +12,25 @@ import { effect } from '@angular/core';
   styleUrls: ['./element-list.component.scss']
 })
 export class ElementListComponent implements OnInit {
-  elementsList: IElement[] = [];
-  noResults: boolean = false;
-  isSearching: boolean = false;
-  clickElementIndex: number | null = null; 
-
+  public elementsList: IElement[] = [];
+  public noResults: boolean = false;
+  public isSearching: boolean = false;
+  public clickElementIndex: number | null = null; 
   private service = inject(ElementService);
 
+
+  constructor() {
+    this.service.getAllSignal();
+    effect(() => {      
+      this.elementsList = [...this.service.elements$()].reverse();
+    });
+  }
 
   ngOnInit(): void {
     this.service.getAllSignal();
     this.elementSearch();
-    this.updateElementList();
   }
 
-  updateElementList(): void {
-    this.elementsList = [...this.service.elements$()].reverse();
-  }
 
   showElementInfo(index: number): void {
     this.clickElementIndex = index;

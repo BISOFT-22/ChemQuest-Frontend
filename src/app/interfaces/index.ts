@@ -78,3 +78,21 @@ export interface IElement {
   neutron?: string;
   electron?: string;
 }
+
+export interface ICompound {
+  id?: number;
+  name?: string;
+  commonName?: string;
+  description?: string;
+  formula?: string;
+  molecularMass?: string;
+  color?: string;
+  state?: string;
+  commonUses?: string;
+  risks?: string;
+  image?: string;
+  structure?: string;
+  sigma?: string;
+  pi?: string;
+  sp?: string;
+}

@@ -7,6 +7,10 @@
   align-items: center;
   z-index: 1000; /* Asegura que esté sobre otros elementos */
 }
+.timer-container input[type="number"] {
+  width: 60px; /* Ajusta el tamaño de los campos de entrada */
+  margin-right: 5px; /* Espacio entre los campos */
+}
 
 #timer {
   font-size: 24px;
@@ -50,11 +54,11 @@
 }
 
 .btn.btn-continue {
-  background-color: #f1a340; /* Naranja */
+  background-color: #4caf50; /* Naranja */
   color: #ffffff;
 }
 
 .btn.btn-set {
-  background-color: #4caf50; /* Verde */
+  background-color: #f1a340; /* Verde */
   color: #ffffff;
 }

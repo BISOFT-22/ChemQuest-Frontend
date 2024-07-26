@@ -48,32 +48,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'users',
-        component: UsersComponent,
-        canActivate:[AdminRoleGuard],
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin
-          ],
-          showInSidebar: true,
-          name: 'Users'
-        }
-      },
-      {
-        path: 'dashboard',
-        component: DashboardComponent,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: true,
-          name: 'Dashboard'
-        }
-      },
-      {
         path: 'profile',
         component: ProfileComponent,
         data: { 
@@ -87,19 +61,6 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'games',
-        component: GamesComponent,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: true,
-          name: 'Games'
-        }
-      },
-      {
         path: 'chemcraft',
         component: ChemcraftComponent,
         data: { 
@@ -109,7 +70,46 @@ export const routes: Routes = [
             IRoleType.user
           ],
           showInSidebar: true,
-          name: 'chemcraft'
+          name: 'ChemCraft'
+        }
+      },
+      {
+        path: 'games',
+        component: GamesComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'Juegos'
+        }
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        canActivate:[AdminRoleGuard],
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin
+          ],
+          showInSidebar: true,
+          name: 'Usuarios'
+        }
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'Dashboard'
         }
       }
     ],

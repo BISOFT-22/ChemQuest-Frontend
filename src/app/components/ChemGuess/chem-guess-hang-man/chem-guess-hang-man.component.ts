@@ -24,10 +24,7 @@ export class ChemGuessHangManComponent implements OnInit {
   send: string = 'assets/img/send.png';
   convert: string = 'assets/img/convert.png';
  
-  history: IHistory = {
-    userWords: [],  
-    typeColor: []
-  };
+  
   allHistory :IHistory[] =[];
   word: string = '';
   letter: string = '';

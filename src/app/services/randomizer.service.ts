@@ -21,7 +21,7 @@ export class RandomizerService extends BaseService<IElement> {
       console.error('Element is empty or not defined');
       return '';
     }
-    const randomIndex = Math.floor(Math.random() * 118);
+    const randomIndex = Math.floor(Math.random() * this.elementsSubject.getValue().length);
     
     const item = this.elementsSubject.getValue()[randomIndex];
     if (!item || !item.name) {
@@ -29,6 +29,17 @@ export class RandomizerService extends BaseService<IElement> {
       return ''; // O maneja el error de otra manera según tus necesidades
     }
     return item.name;
+  }
+  getRandomElement(): IElement | undefined {
+    if (this.elementsSubject.getValue().length === 0) {
+      console.error('Element is empty or not defined');
+      return undefined;
+    }
+    const randomIndex = Math.floor(Math.random() * 118);
+  
+    const item = this.elementsSubject.getValue()[randomIndex];
+  
+    return item;
   }
 
   public getAll() {

@@ -19,13 +19,15 @@ export class ElementListComponent implements OnInit {
 
   private service = inject(ElementService);
 
-  private readonly elementListEffect = effect(() => {
-    this.elementsList = [...this.service.elements$()].reverse();
-  });
 
   ngOnInit(): void {
     this.service.getAllSignal();
     this.elementSearch();
+    this.updateElementList();
+  }
+
+  updateElementList(): void {
+    this.elementsList = [...this.service.elements$()].reverse();
   }
 
   showElementInfo(index: number): void {

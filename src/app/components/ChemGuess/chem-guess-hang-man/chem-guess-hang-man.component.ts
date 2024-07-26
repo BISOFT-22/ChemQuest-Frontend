@@ -9,13 +9,15 @@ import { Router } from '@angular/router';
 import { ModalComponent } from '../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
 import { ChemGuessHistoryComponent } from '../chem-guess-history/chem-guess-history.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports:[ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent]
+  imports:[ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
@@ -42,6 +44,12 @@ export class ChemGuessHangManComponent implements OnInit {
     
   }
   //////////////////////////////////modal para cambiar pregunta
+
+  callEvent() {
+    this.historyChange.emit(this.allHistory);
+    console.log("estoy emitiendo");
+  }
+
   showDetailModal(modal: any) {
     modal.show();
   }
@@ -173,7 +181,7 @@ console.log(history)
 this.clearSlots();
  this.allHistory.push(history)
  console.log(this.allHistory)
- this.historyChange.emit(this.allHistory)
+ this.callEvent();
 
  
 }

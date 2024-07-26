@@ -21,12 +21,12 @@ export class ChemGuessHistoryComponent {
     this.callHistoryEvent.emit(true);
   }
 
-  handleHistoryChange(newHistory: Observable<IHistory[]>) {
-    newHistory.subscribe(historyArray => {
-      this.allHistory = historyArray;
-      console.log("Historial actualizado");
-      console.log(this.allHistory);
-    });
+  handleHistoryChange(newHistory: IHistory[]) {
+    this.see();
+  }
+
+  see(){
+    console.log(this.allHistory)
   }
   
 }

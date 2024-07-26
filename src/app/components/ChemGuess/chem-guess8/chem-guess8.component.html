@@ -1,23 +1,46 @@
 <main>
     <div>
         <div class="Question-Timer">
-            <select id="options" class="custom-select">
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-                <option value="opcion5">Opción 5</option>
-              </select> 
+            <img [src]="convert" class="imgSize" alt="">
               <div>
                 <p></p>
-                <h2 class="advance">Completa los elementos faltante, El tiempo es limitado!!</h2>
+                <h2 class="advance">Completa los elementos faltantes, ¡¡El tiempo es limitado!!</h2>
               </div>
             
             <h2 class="timer">2:00</h2>
         </div>
         <br>
-        <table class="styled-table ">
+        <table id="table1" class="styled-table ">
             <thead class="table-header">
+              <tr class="table-row">
+                <th class="table-cell">Elemento</th>
+                <th class="table-cell">Simbolo 1</th>
+                <th class="table-cell">Z</th>
+                <th class="table-cell">A</th>
+                <th class="table-cell">p+</th>
+                <th class="table-cell">n</th>
+                <th class="table-cell">e-</th>
+              </tr>
+            </thead>
+            <tbody class="table-body">
+              
+                <tr class="table-row">
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  
+                </tr>
+              
+             
+       
+            </tbody>
+          </table>
+          <table id="table2" class="styled-table ">
+            <thead class="table-header2">
               <tr class="table-row">
                 <th class="table-cell">Elemento</th>
                 <th class="table-cell">Simbolo 2</th>
@@ -29,18 +52,18 @@
               </tr>
             </thead>
             <tbody class="table-body">
-              @for (item of items; track $index) {
+              
                 <tr class="table-row">
                   <td class="table-cell slot"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
-                  <td class="table-cell"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
+                  <td class="table-cell slot"><input type="text" class="full-width"></td>
                   
                 </tr>
-              }
+              
              
        
             </tbody>
@@ -48,6 +71,6 @@
         
         
 <div class="try">
-    <button class="big-button">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
+    <button class="info-send">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
 </div>
         

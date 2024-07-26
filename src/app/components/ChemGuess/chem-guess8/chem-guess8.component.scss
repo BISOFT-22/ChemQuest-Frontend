@@ -157,13 +157,6 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
 }
 
-.footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 20px 40px; /* Misma altura que la navbar */
-    margin-top: auto; /* Para que el footer se mantenga en la parte inferior */
-}
 
 
 
@@ -177,17 +170,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 
-.big-button {
-    display: inline-block;
-    padding: 8px 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
-    cursor: pointer; 
-    background-color: #7fbf7b;
-    
-  }
+
   .btn-cancel {
     background-color: #af8dc3; /* Morado oscuro */
     color: #ffffff;
@@ -252,9 +235,10 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .table-cell {
-    border: 1px solid #000;
+    
     padding: 10px;
     text-align: center;
+    border: 2px dashed #000;
   }
   
   .table-header {
@@ -270,7 +254,8 @@ h1, h2, h3, h4, h5, h6 {
   }
   
   .full-width {
-    width: 100%;
+    width: 100px;
+    height: 80px;
     box-sizing: border-box;
   }
 
@@ -284,9 +269,8 @@ h1, h2, h3, h4, h5, h6 {
     height: 70px;
     border: 2px dashed #ccc;
     border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
+   
  
     background-color: #fff;
     margin: 0 10px;
@@ -304,3 +288,33 @@ h1, h2, h3, h4, h5, h6 {
     font-size: inherit;
     color: inherit;
   }
+
+  //////////////////////table 2
+  /// 
+  .table-header2 {
+    
+    background-color: #7fbf7b;;
+  }
+  .info-send {
+    display: inline-block;
+    top: 180px;
+    right: 70px;
+    background-color: #449d3d;
+    color: white;
+    padding: 23px 30px;
+    border-radius: 100px;
+    font-size: 26px;
+    margin-top: 30px;
+}
+
+
+.imgSize{
+  width: 100px;
+    height: 85px;
+ 
+}
+#table2{
+  margin: auto;
+  margin-top: 150px;
+ 
+}

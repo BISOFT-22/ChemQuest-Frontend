@@ -4,12 +4,20 @@
     </div>
     <div class="row">
       Si haces esto corres el riesgo de perder tu racha
-      @for (item of allHistory; track $index) {
-        <p>{{item.userWords}}</p>
-      }
       
+      <button (click)="see()"></button>
       <div class="col-6 position" >
      
       </div>
     </div>
   </form>
+
+
+
+    <app-chem-guess-hang-man
+    (historyChange)="handleHistoryChange($event)"
+    />
+    
+    
+    
+   

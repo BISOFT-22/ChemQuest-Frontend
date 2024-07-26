@@ -10,7 +10,7 @@ import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-han
   styleUrl: './chem-guess8.component.scss'
 })
 export class ChemGuess8Component {
-
+  convert: string = 'assets/img/convert.png';
   public items =  [
     { word: "angular", hint: "A popular front-end framework" },
     { word: "typescript", hint: "A superset of JavaScript" },

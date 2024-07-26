@@ -34,26 +34,55 @@ export class ChemGuessHangManComponent implements OnInit {
   guessedLetters: Set<string> = new Set(); 
   wordsArray: string[] = [];// tiene la letra por separado
   
-  @Output() historyChange = new EventEmitter<IHistory[]>();
+  @Output() historyChange: EventEmitter<IHistory[]> = new EventEmitter<IHistory[]>();
   ////////////////////////////
   
 
   constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router) {
     
   }
+  //////////////////////////////////modal para cambiar pregunta
+  showDetailModal(modal: any) {
+    modal.show();
+  }
 
+
+  
+  handleFormUpdate(response: boolean) {
+    if (response) {
+      this.onConvert();
+    }
+  }
   ngOnInit():void {
     this.initializeThings();
     
   }
   initializeThings(): void {
-    let randomWord;
+    // Ensure data is fetched
     this.random.checkAndFetch();
-    randomWord = this.random.getRandomWord();
-    this.word=  this.removeAccents(randomWord.toUpperCase()); 
-     console.log(this.word)
-    this.splitIntoWords(this.word);
-    this.displayedWord = Array(this.word.length).fill('_');
+
+    //  Se suscribe a un signal para cagar la data de despues
+    this.random.items$.subscribe({
+      next: () => {
+        // Data has been fetched; proceed to get random word
+        const randomWord = this.random.getRandomWord();
+        if (randomWord) {
+          this.word = this.removeAccents(randomWord.toUpperCase());
+          console.log(this.word);
+          this.splitIntoWords(this.word);
+          this.displayedWord = Array(this.word.length).fill('_');
+          
+        } else {
+          // Handle the case where no random word is available
+          console.warn('No random word available');
+          
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching items', error);
+        
+      }
+    });
   }
 
   removeAccents(str: string): string {
@@ -81,18 +110,10 @@ export class ChemGuessHangManComponent implements OnInit {
   }
   splitIntoWords(input: string): void {
     this.wordsArray = input.split('');
-  }
-  //////////////////////////////////modal para cambiar pregunta
-  showDetailModal(modal: any) {
-    modal.show();
+    console.log("split");
+    console.log(this.wordsArray.length);
   }
 
-
-  handleFormAction(response: boolean) {
-    if (response) {
-      this.onConvert();
-    }
-  }
   
   /////////funciones para recargar la lista y para recargar la pagina para cambiar el elemento
   onConvert(): void {
@@ -112,7 +133,11 @@ export class ChemGuessHangManComponent implements OnInit {
   }
 /////////////////////////////Comprobar palabra
 CompareWord(): void {
-  this.history
+  let history: IHistory = {
+    userWords: [],  
+    typeColor: []
+  };
+  
   const slots = document.querySelectorAll<HTMLElement>('.slot');
   let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
   let procesado: boolean[] = new Array(slots.length).fill(false);
@@ -120,13 +145,13 @@ CompareWord(): void {
   // Primera iteración para coincidencias exactas
   slots.forEach((slot, i) => {
     if (slot.textContent === this.wordsArray[i]) {
-      this.history.userWords!.push(slot.textContent!);
-      this.history.typeColor!.push("#87F14A"); // Verde
+      history.userWords!.push(slot.textContent!);
+      history.typeColor!.push("#87F14A"); // Verde
       wordArrayCorrectTemp[i] = null;
       procesado[i] = true;
     } else {
-      this.history.userWords!.push('');
-      this.history.typeColor!.push('');
+      history.userWords!.push('');
+      history.typeColor!.push('');
     }
   });
 
@@ -135,18 +160,22 @@ CompareWord(): void {
     if (!procesado[i]) {
       const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
       if (index !== -1) {
-        this.history.userWords![i] = slot.textContent!;
-        this.history.typeColor![i] = "#FFFF00"; // Amarillo
+        history.userWords![i] = slot.textContent!;
+        history.typeColor![i] = "#FFFF00"; // Amarillo
         wordArrayCorrectTemp[index] = null;
       } else {
-        this.history.userWords![i] = slot.textContent!;
-        this.history.typeColor![i] = "#FF0000"; // Rojo
+        history.userWords![i] = slot.textContent!;
+        history.typeColor![i] = "#FF0000"; // Rojo
       }
     }
   });
-console.log(this.history)
- this.allHistory.push(this.history)
+console.log(history)
+this.clearSlots();
+ this.allHistory.push(history)
+ console.log(this.allHistory)
  this.historyChange.emit(this.allHistory)
+
+ 
 }
 
 

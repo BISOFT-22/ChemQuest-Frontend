@@ -19,5 +19,6 @@ export class ChemGuessForm7Component {
 
   callEvent() {
     this.callParentEvent.emit(true);
+    console.log("estoy emitiendo");
   }
 }

@@ -14,12 +14,7 @@ export class ChemGuess8Component {
   public items =  [
     { word: "angular", hint: "A popular front-end framework" },
     { word: "typescript", hint: "A superset of JavaScript" },
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
+ 
     
   ];
 

@@ -37,11 +37,6 @@ showHistory(): void {
 }
 
 
-
-
-
-
-
 ////////////////////////
   
   
@@ -49,14 +44,10 @@ showHistory(): void {
 opcion: string='';
 
 
- 
-
   getWord(word:string){
     this.opcion = word;
   }
 
-
- 
 }
  
 

@@ -3,24 +3,30 @@ import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-han
 import { IHistory } from '../../../interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chem-guess-history',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ChemGuessHangManComponent],
   templateUrl: './chem-guess-history.component.html',
   styleUrl: './chem-guess-history.component.scss'
 })
 export class ChemGuessHistoryComponent {
-  @Output() callParentEvent: EventEmitter<boolean> = new EventEmitter<boolean>()
+  @Output() callHistoryEvent: EventEmitter<boolean> = new EventEmitter<boolean>()
   
-  allHistory :IHistory[] =[];
+  allHistory: IHistory[] = [];
 
   callEvent() {
-    this.callParentEvent.emit(true);
+    this.callHistoryEvent.emit(true);
   }
 
-  handleHistoryChange(newHistory: IHistory[]) {
-    this.allHistory = newHistory;
+  handleHistoryChange(newHistory: Observable<IHistory[]>) {
+    newHistory.subscribe(historyArray => {
+      this.allHistory = historyArray;
+      console.log("Historial actualizado");
+      console.log(this.allHistory);
+    });
   }
+  
 }

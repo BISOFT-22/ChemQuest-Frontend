@@ -3,56 +3,62 @@
     <label for="module">Título del examen</label>
     <input id="module" formControlName="module" type="text">
   </div>
-  
+
   <div formArrayName="questions">
     <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
       <div>
-        <label for="type">Question Type</label>
+        <label for="type">Tipo de pregunta</label>
         <select id="type" formControlName="type" (change)="onTypeChange($event, i)">
-          <option value="single-choice">Single Choice</option>
-          <option value="matching">Matching</option>
-          <option value="short-answer">Short Answer</option>
+          <option value="single-choice">Opción única</option>
+          <option value="matching">Emparejamiento</option>
+          <option value="short-answer">Respuesta corta</option>
         </select>
       </div>
-  
+
       <div>
-        <label for="questionText">Question Text</label>
+        <label for="questionText">Texto de la pregunta</label>
         <input id="questionText" formControlName="questionText" type="text">
       </div>
-  
+
       <div *ngIf="questions.at(i)?.get('type')?.value === 'single-choice'">
         <div formArrayName="options">
-          <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
-            <input formControlName="text" placeholder="Option text">
-            <input type="radio" [value]="j" [formControl]="getCorrectAnswerControl(i)"> Correct
-            <button type="button" (click)="removeOption(i, j)">Remove Option</button>
+          <div class="option-container" *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
+            <input formControlName="text" placeholder="Texto de la opción">
+            <input type="radio" [value]="j" [formControl]="getCorrectAnswerControl(i)"> Correcta
+            <button type="button" (click)="removeOption(i, j)" class="remove-option-btn">
+              Eliminar opción <i class="fas fa-trash"></i> <!-- Icono de basurero -->
+            </button>
           </div>
-          <button type="button" (click)="addOption(i)">Add Option</button>
+          <button type="button" (click)="addOption(i)" class="button-Width">Añadir opción</button>
         </div>
       </div>
-  
+
       <div *ngIf="questions.at(i)?.get('type')?.value === 'matching'">
         <div formArrayName="options">
-          <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
-            <input formControlName="text" placeholder="Pair text">
-            <input formControlName="match" placeholder="Match pair">
-            <button type="button" (click)="removeOption(i, j)">Remove Pair</button>
+          <div class="option-container" *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
+            <input formControlName="text" placeholder="Texto del par">
+            <input formControlName="match" placeholder="Par a emparejar">
+            <button type="button" (click)="removeOption(i, j)" class="remove-option-btn">
+              Eliminar opción <i class="fas fa-trash"></i> <!-- Icono de basurero -->
+            </button>
           </div>
-          <button type="button" (click)="addOption(i)">Add Pair</button>
+          <button type="button" (click)="addOption(i)" class="button-Width">Añadir par</button>
         </div>
       </div>
-  
+
       <div *ngIf="questions.at(i)?.get('type')?.value === 'short-answer'">
         <div>
-          <label for="correctAnswer">Correct Answer</label>
+          <label for="correctAnswer">Respuesta correcta</label>
           <input id="correctAnswer" formControlName="correctAnswer" type="text">
         </div>
       </div>
-  
-      <button type="button" (click)="removeQuestion(i)">Remove Question</button>
+
+      <button type="button" (click)="removeQuestion(i)" class="button-Width remove-question-btn">
+        Eliminar pregunta
+      </button>
     </div>
   </div>
-  
-  <button type="button" (click)="addQuestion()">Add Question</button>
-  <button type="submit">Create ChemTest</button>
+
+  <button type="button" (click)="addQuestion()" class="button-Width">Añadir pregunta</button>
+  <button type="submit" class="button-Width">Crear examen de química</button>
 </form>

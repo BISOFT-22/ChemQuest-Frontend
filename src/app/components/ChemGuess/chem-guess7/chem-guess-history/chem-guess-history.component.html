@@ -1,11 +1,22 @@
 <form class="container">
-    <div>
-      <h2>¿Quieres cambiar el elemento?</h2>
+  <div>
+    <h2>Respuestas Anteriores</h2>
+  </div>
+  <div class="row">
+  @for (history of allHistory; track $index) {
+    <div class="history-item">
+    
+    @for (item of history.userWords; track $index) {
+      <div class="item">
+        <div  [attr.id]="'casilla-'" class="slot" id="casilla-1"></div>
+      <!-- Display the fields of each item here -->
+      </div>
+    }
     </div>
-    <div class="row">
-      Si haces esto corres el riesgo de perder tu racha
+  }
+ 
       
-      <button (click)="see()"></button>
+      <button (click)="showHistory()"></button>
       <div class="col-6 position" >
      
       </div>

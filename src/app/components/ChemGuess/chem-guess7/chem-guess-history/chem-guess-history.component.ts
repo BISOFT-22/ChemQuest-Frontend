@@ -17,14 +17,16 @@ export class ChemGuessHistoryComponent {
   @Output() callHistoryEvent: EventEmitter<boolean> = new EventEmitter<boolean>()
   @Input() allHistory: IHistory[] = [];
 
-
+  showHistory() {
+    this.allHistory.forEach((history: IHistory) => {
+      console.log(history);
+    });
+  }
   callEvent() {
     this.callHistoryEvent.emit(true);
   }
 
-  handleHistoryChange(newHistory: IHistory[]) {
-    this.see();
-  }
+  
 
   see(){
     console.log(this.allHistory)

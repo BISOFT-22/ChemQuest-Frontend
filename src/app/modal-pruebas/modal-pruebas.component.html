@@ -1,8 +1,5 @@
-@if (isVisible) {
-    <div class="content" >
-        <div class="modal-error"  >
-            <button class="close-button" (click)="closeModal()">x</button>
-         <app-chem-guess-history></app-chem-guess-history>
-        </div>
-      </div>
-}
+<ng-template #modal>
+     <button type="button" (click)="hide()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <ng-content></ng-content> 
+</ng-template>
+    

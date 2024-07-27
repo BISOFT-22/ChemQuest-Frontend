@@ -85,8 +85,8 @@ export interface IElement {
   origin?: string;
   image?: string;
   source?: string;
-  proton?: string;
-  neutron?: string;
+  proton?: string ;
+  neutron?: string ;
   electron?: string;
 }
 

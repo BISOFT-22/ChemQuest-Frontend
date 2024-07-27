@@ -1,23 +1,24 @@
-import { Component, EventEmitter, input, OnInit, Output } from '@angular/core';
-import { RandomizerService } from '../../../services/randomizer.service';
+import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IElement, IHistory } from '../../../interfaces';
+import { IElement, IHistory } from '../../../../interfaces';
 
 
 import { Router } from '@angular/router';
-import { ModalComponent } from '../../modal/modal.component';
+import { ModalComponent } from '../../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
 import { ChemGuessHistoryComponent } from '../chem-guess-history/chem-guess-history.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ModalPruebasComponent } from "../../../../modal-pruebas/modal-pruebas.component";
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports:[ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule]
+  imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
@@ -25,7 +26,7 @@ export class ChemGuessHangManComponent implements OnInit {
   convert: string = 'assets/img/convert.png';
  
   
-  allHistory :IHistory[] =[];
+  @Input() allHistory: IHistory[] = [];
   word: string = '';
   letter: string = '';
   @Output() addFavoriteEvent = new EventEmitter<string>();

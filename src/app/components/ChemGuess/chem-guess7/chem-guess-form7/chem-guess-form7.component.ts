@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IGame } from '../../../interfaces';
+import { IGame } from '../../../../interfaces';
 
 @Component({
   selector: 'app-chem-guess-form7',

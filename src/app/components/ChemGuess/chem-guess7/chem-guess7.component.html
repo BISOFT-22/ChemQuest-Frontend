@@ -1,13 +1,12 @@
 
 
-
 <main>
     <div>
         <div class="Question-Timer">
-            <a (click)="showHistory()" class="big-button">historial</a>
+            <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
             <img class="imgLive" [src]="live100" alt="">
               <div>
-                <p></p>
+               
                 
               </div>
             
@@ -24,6 +23,7 @@
     
 </main>
 <app-chem-guess-hang-man 
+[allHistory]="allHistory"
 (addFavoriteEvent)="getWord($event)"
 />
 
@@ -42,9 +42,16 @@
 
 
 
-    <app-modal-pruebas
-    size="lg" #modalPrueba>
-    />
+    <app-modal-pruebas size="lg" #modalPrueba>
+        <div class="content" >
+            <div class="modal-error"  >
+                
+             <app-chem-guess-history [allHistory]="allHistory"
+             ></app-chem-guess-history>  
+            </div>
+          </div>
+    </app-modal-pruebas>
+    
     
   
 

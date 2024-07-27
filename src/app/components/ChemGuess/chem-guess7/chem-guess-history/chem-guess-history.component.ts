@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
-import { IHistory } from '../../../interfaces';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
+import { IHistory } from '../../../../interfaces';
 
 @Component({
   selector: 'app-chem-guess-history',
@@ -14,8 +15,8 @@ import { Observable } from 'rxjs';
 })
 export class ChemGuessHistoryComponent {
   @Output() callHistoryEvent: EventEmitter<boolean> = new EventEmitter<boolean>()
-  
-  allHistory: IHistory[] = [];
+  @Input() allHistory: IHistory[] = [];
+
 
   callEvent() {
     this.callHistoryEvent.emit(true);

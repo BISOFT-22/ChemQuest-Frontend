@@ -1,5 +1,8 @@
 <div class="container">
-  <app-compound-request></app-compound-request>
+  <app-compound-request
+  [compoundsList]="compoundsList"
+  >
+  </app-compound-request>
 
   <div class="slots">
     <app-slot (error)="showError($event)"></app-slot>

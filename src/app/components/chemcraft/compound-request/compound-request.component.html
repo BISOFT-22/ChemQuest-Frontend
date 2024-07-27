@@ -1,6 +1,7 @@
 <div class="compound-request">
   <h2>Creación de Compuesto</h2>
- 
-  <p>Debes de crear "{{ compound.name }}", ¿qué elementos son necesarios?</p>
+  <p>{{ text }}</p>
+  <p style="display: none;">{{ compound.formula }}</p>
   <p style="display: none;">{{ difficultyLevel }}</p>
+  <button (click)="generateCompoundRequest()"></button>
 </div>

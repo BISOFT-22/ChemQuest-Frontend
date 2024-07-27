@@ -1,6 +1,5 @@
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompoundService } from '../../../services/compound.service';
 import { ICompound } from '../../../interfaces';
 
 @Component({
@@ -11,27 +10,18 @@ import { ICompound } from '../../../interfaces';
   styleUrls: ['./compound-request.component.scss']
 })
 export class CompoundRequestComponent implements OnInit {
-  public compoundsList: ICompound[] = []
+  @Input() compoundsList: ICompound[] = []
   public difficultyLevel: string = '';
-  private service = inject(CompoundService);
   public compound: ICompound = {};
+  public compoundName: string = '';
+  public lastCompound: string = '';
   public text: string = '';
-  public textList: string[] = [
-    'Debes de crear el compuesto "' + this.compound.name + '" ¿Que elementos necesitas?',
-    'Recuerdas la fórmula quimíca del compuesto"' + this.compound.name + '" Genial, ¿De que elementos esta compuesta la fórmula?',
-    'Así que eres un químico profesional.. Genial! que elementos componen la fórmula del siguiente compuesto?: "' + this.compound.name  ,
-  ];
+  public textList: string[] = [];
 
-  constructor() {
-    this.service.getAll();
-    effect(() => {      
-      this.compoundsList = this.service.compounds$();
-    });
-  }
 
   ngOnInit(): void {
-   this.setDifficultyLevel();
   }
+
 
   getRamdonCompound(): void {
     if (this.compoundsList.length === 0) {
@@ -39,15 +29,13 @@ export class CompoundRequestComponent implements OnInit {
     }
     const randomIndex = Math.floor(Math.random() * this.compoundsList.length);
     this.compound = this.compoundsList[randomIndex];
+    console.log(this.compound);
   }
 
   getRandomText(): string {
     const randomIndex = Math.floor(Math.random() * this.textList.length);
     return this.textList[randomIndex];
   }
-  
-
-
 
 
    setDifficultyLevel(): void {
@@ -61,5 +49,26 @@ export class CompoundRequestComponent implements OnInit {
     } else {
       this.difficultyLevel = 'Difícil';
     }
+  }
+
+
+  generateCompoundRequest(): void {
+    let isSameCompound = true;
+    while (isSameCompound) {
+      this.getRamdonCompound();
+      if (this.compound.name !== this.lastCompound) {
+        isSameCompound = false;
+      }
+    }
+    console.log(this.compound.name);
+    this.compoundName = this.compound.name!;
+    this.textList = [
+     'Debes de crear el compuesto "' + this.compoundName + '" ¿Que elementos necesitas?',
+    'Recuerdas la fórmula quimíca del compuesto "' + this.compoundName + '" Genial, ¿De que elementos esta compuesta la fórmula?',
+    'Así que eres un químico profesional.. Genial! que elementos componen la fórmula del siguiente compuesto?: "' + this.compoundName + '".',
+    ];
+    this.text = this.getRandomText();
+    this.setDifficultyLevel();
+    this.lastCompound = this.compound.name!;
   }
 }

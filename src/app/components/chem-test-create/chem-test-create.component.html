@@ -1,0 +1,58 @@
+<form [formGroup]="chemTestForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="module">Título del examen</label>
+    <input id="module" formControlName="module" type="text">
+  </div>
+  
+  <div formArrayName="questions">
+    <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
+      <div>
+        <label for="type">Question Type</label>
+        <select id="type" formControlName="type" (change)="onTypeChange($event, i)">
+          <option value="single-choice">Single Choice</option>
+          <option value="matching">Matching</option>
+          <option value="short-answer">Short Answer</option>
+        </select>
+      </div>
+  
+      <div>
+        <label for="questionText">Question Text</label>
+        <input id="questionText" formControlName="questionText" type="text">
+      </div>
+  
+      <div *ngIf="questions.at(i)?.get('type')?.value === 'single-choice'">
+        <div formArrayName="options">
+          <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
+            <input formControlName="text" placeholder="Option text">
+            <input type="radio" [value]="j" [formControl]="getCorrectAnswerControl(i)"> Correct
+            <button type="button" (click)="removeOption(i, j)">Remove Option</button>
+          </div>
+          <button type="button" (click)="addOption(i)">Add Option</button>
+        </div>
+      </div>
+  
+      <div *ngIf="questions.at(i)?.get('type')?.value === 'matching'">
+        <div formArrayName="options">
+          <div *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
+            <input formControlName="text" placeholder="Pair text">
+            <input formControlName="match" placeholder="Match pair">
+            <button type="button" (click)="removeOption(i, j)">Remove Pair</button>
+          </div>
+          <button type="button" (click)="addOption(i)">Add Pair</button>
+        </div>
+      </div>
+  
+      <div *ngIf="questions.at(i)?.get('type')?.value === 'short-answer'">
+        <div>
+          <label for="correctAnswer">Correct Answer</label>
+          <input id="correctAnswer" formControlName="correctAnswer" type="text">
+        </div>
+      </div>
+  
+      <button type="button" (click)="removeQuestion(i)">Remove Question</button>
+    </div>
+  </div>
+  
+  <button type="button" (click)="addQuestion()">Add Question</button>
+  <button type="submit">Create ChemTest</button>
+</form>

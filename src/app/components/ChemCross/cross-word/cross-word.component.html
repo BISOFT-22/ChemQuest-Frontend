@@ -6,8 +6,8 @@
             <div class="crossCell" *ngFor="let item of fakeArray;let index = index">
                 <div class="cell-heading" disabled></div>
                 <div class="cell-content">
-                    <input class="txtChar" (blur)="OnBlur($event)" (dblclick)="DblClick($event)" (drop)="OnDropOnCross($event)"
-                        (keydown)="OnKeyPress($event)" maxlength="1" type="text">
+                    <input class="txtChar" (blur)="OnBlur($event)" (dblclick)="OnDoubleClick($event)" (drop)="OnDropOnCross($event)"
+                        (keydown)="OnKeyPress($event)" (change)="OnChange($event)" maxlength="1" type="text">
                 </div>
             </div>
         </div>
@@ -21,10 +21,11 @@
         <input type="text" name="" id="filter" (keyup)="FilterWords()" (dragover)="onDragOver($event)" (drop)="onDrop($event)" placeholder="Filtro RegEx">
     </div>
     <div>
-        <button (click)="ClearCrossWord()">{{msg[1][id_language]}}</button>
-        <button (click)="FillCrossWord()">{{msg[2][id_language]}}</button>
-        <button (click)="RandomCrossWFill()">{{msg[3][id_language]}}</button>
-        <button (click)="ExportCrossW()">{{msg[4][id_language]}}</button>
+        <button (click)="BlockCells()" id="blockCells">{{msg[14][id_language]}}</button>
+        <button (click)="ClearCrossWord()" id="ClearCrossWord">{{msg[1][id_language]}}</button>
+        <button (click)="FillCrossWord()" id="FillCrossWord">{{msg[2][id_language]}}</button>
+        <button (click)="RandomCrossWFill()" id="RandomCrossWFill">{{msg[3][id_language]}}</button>
+        <button (click)="ExportCrossW()" id="ExportCrossW">{{msg[4][id_language]}}</button>
         <button (click)="ImportCrossW()">{{msg[5][id_language]}}</button>
         <label for="size">{{msg[6][id_language]}}</label>
         <!-- <button (click)="LoadCrossWord()">{{msg[6][id_language]}}</button> -->

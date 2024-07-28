@@ -16,8 +16,6 @@ import { LanguageSelectComponent } from "../../language-select/language-select.c
 })
 export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
-
-
   msg = Dictionary;
   id_language: number = 0; //0: English 1:Spanish
   cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
@@ -73,6 +71,28 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     }, { phase: AfterRenderPhase.Write });
   }
 
+  /**
+   * Blocks all cells in the crossword
+   */
+  BlockCells() {
+
+    // ask for confirmation
+    if (!confirm(this.msg[15][this.id_language])) {
+      return;
+    }
+
+    /// all cells with a "" value will be blocked
+    for (let i = 0; i < this.crossSize; i++) {
+      for (let j = 0; j < this.crossSize; j++) {
+        if (this.crossWord[i][j] == "") {
+          this.crossWord[i][j] = this.blockChar;
+        }
+      }
+    }
+
+    this.DrawCrossWord();
+  }
+
 
   /**
    * Handles the drop event on the cross-word component.
@@ -82,8 +102,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     e.preventDefault();
     let data = e.dataTransfer?.getData("text");
 
-    let columnIndex = Number((e.target as HTMLInputElement).id) % this.crossSize - 1;
-    let rowIndex = Math.trunc(Number((e.target as HTMLInputElement).id) / this.crossSize);
+    // let columnIndex = Number((e.target as HTMLInputElement).id) % this.crossSize - 1;
+    // let rowIndex = Math.trunc(Number((e.target as HTMLInputElement).id) / this.crossSize);
+
+    let columnIndex = Number((e.target as HTMLInputElement).getAttribute("y"));
+    let rowIndex = Number((e.target as HTMLInputElement).getAttribute("x"));
+
 
 
     if (e.ctrlKey) {
@@ -96,13 +120,16 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     //
     if (data && data?.length > this.crossSize - (this.currentDirection == 1 ? columnIndex : rowIndex)) {
-      alert(`The word is too long for this ${this.currentDirection ? "row" : "column"}.`);
+      alert(this.msg[19][this.id_language] + (this.currentDirection ? this.msg[16][this.id_language] : this.msg[17][this.id_language]));
       return;
     }
     // alert(columnIndex);
 
+    // Check if there is available space to place the word
+    // if there is no available space, show an alert and return
+    // There is no available space to place the word.
     if (this.IsThereAvailableSpace(data as string, rowIndex, columnIndex, this.currentDirection) == false) {
-      alert("There is no available space to place the word.");
+      alert(this.msg[18][this.id_language]);
       return;
     }
 
@@ -122,7 +149,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let c = columnIndex;
 
     for (const w of word) {
-      if (this.crossWord[r][c] != "" && this.crossWord[r][c] != w) {
+      if (this.crossWord[r][c] != "" && (this.crossWord[r][c] as string).toUpperCase() != w.toUpperCase()) {
         return false;
       }
 
@@ -298,6 +325,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     // alert("Asigna el ID a cada celda");
 
     let id: number = 1;
+    let i: number = 0;
+    let j: number = 0;
 
     this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
@@ -306,7 +335,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     for (const c of this.cellsCollection) {
       c.id = (id++).toString();
+      c.setAttribute("x", (i).toString());
+      c.setAttribute("y", (j++).toString());
 
+      if (j == this.crossSize) {
+        j = 0;
+        i++;
+      }
     }
 
     id = 1;
@@ -323,11 +358,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * 
    * @param e - The event object.
    */
-  DblClick(e: any) {
+  OnDoubleClick(e: any) {
     e.target.value = "";
-    let columnIndex = Number((e.target as HTMLInputElement).id) % this.crossSize - 1;
-    let rowIndex = Math.trunc(Number((e.target as HTMLInputElement).id) / this.crossSize);
+    let columnIndex = Number((e.target as HTMLInputElement).getAttribute("y"));
+    let rowIndex = Number((e.target as HTMLInputElement).getAttribute("x"));
     this.crossWord[rowIndex][columnIndex] = "";
+    this.UpdateWordLogList();
   }
 
 
@@ -359,6 +395,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    */
   OnBlur(e: any) {
 
+    
     if (!this.ValidateCell(e.target.value)) {
       e.target.value = "";
       return;
@@ -376,6 +413,16 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       e.target.style.backgroundColor = "white";
       // c.style.color = "";
     }
+
+    this.UpdateWordLogList();
+    
+  }
+
+  OnChange(e: Event) {
+    let i = (e.target as HTMLElement).getAttribute("x");
+    let j = (e.target as HTMLElement).getAttribute("y");
+    this.crossWord[Number(i)][Number(j)] = (e.target as HTMLInputElement).value.toUpperCase();
+    this.UpdateWordLogList();
   }
 
   temp() {

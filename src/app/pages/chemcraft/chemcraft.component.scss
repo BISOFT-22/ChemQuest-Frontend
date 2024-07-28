@@ -367,3 +367,11 @@ body {
       z-index: 1000;
     }
   }
+
+
+  @media (min-width: 768px) {
+    .compound-request {
+        max-width: 50%;
+    }
+  }
+  

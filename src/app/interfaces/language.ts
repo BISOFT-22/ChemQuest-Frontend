@@ -17,6 +17,6 @@ export const Dictionary = [
     ["Are you sure you want to block all cells?", "¿Estás seguro de que quieres bloquear todas las celdas?"],
     ["row", "fila"],
     ["column", "columna"],
-    ["There is no available space to place the word.", "No hay espacio disponible para colocar la palabra."],
+    ["There is no available space to place the word", "No hay espacio disponible para colocar la palabra"],
     ["The word is too long for this ", "La palabra es demasiado larga para esta "],
 ];

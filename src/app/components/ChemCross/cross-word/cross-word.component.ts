@@ -42,7 +42,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   crossWord = new Array();
 
-  AvailabeWordsSet = new Set();
+  AvailableWordsSet = new Set();
 
   fakeArray: number[] = new Array(this.crossSize);
   idArray: number[] = new Array(this.crossSize * this.crossSize);
@@ -77,9 +77,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   BlockCells() {
 
     // ask for confirmation
-    if (!confirm(this.msg[15][this.id_language])) {
-      return;
-    }
+    // if (!confirm(this.msg[15][this.id_language])) {
+    //   return;
+    // }
 
     /// all cells with a "" value will be blocked
     for (let i = 0; i < this.crossSize; i++) {
@@ -470,18 +470,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     return true;
   }
 
-  
-  /**
-   * Handles the double click event on a word.
-   * Randomly places the word in the crossword grid and updates the UI.
-   * @param e - The event object.
-   */
-  OnWordDoubleCLick(e: any) {
-    let word = e.target.textContent;
+
+  PlaceWord(word: string, i: number, j: number, direction: number): boolean {
+    
     let wordPlaced = false;
-    let i = 0;
-    let j = 0;
-    let direction = 0;
 
     try {
       for (let c of this.cellsCollection) {
@@ -503,15 +495,30 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
           break;
         }
       }
-
-      if (i == this.crossSize - 1 && j == this.crossSize - 1) {
-        alert(this.msg[18][this.id_language]);
-      }
     } catch (error) {
-      alert(error);
+      console.error("An error occurred while placing the word:", error);
 
     }
 
+    return wordPlaced;
+
+  }
+
+  
+  /**
+   * Handles the double click event on a word.
+   * Randomly places the word in the crossword grid and updates the UI.
+   * @param e - The event object.
+   */
+  OnWordDoubleCLick(e: any) {
+    let word = e.target.textContent;
+    let i = 0;
+    let j = 0;
+    let direction = 0;
+    
+    if (!this.PlaceWord(word, i, j, direction)) {
+      alert(`${this.msg[18][this.id_language]} ${word}`);
+    }
 
 
   }
@@ -603,7 +610,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * Updates the list of words of the log
    */
   UpdateWordLogList() {
-    this.wordLogList = this.GetUsedWodsList();
+    this.wordLogList = this.GetUsedWordsList();
     this.FilterWords();
   }
 
@@ -612,8 +619,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
  */
   LoadAvailableWords() {
     wordCollection.forEach((c) => {
-      this.AvailabeWordsSet.add(c[0]);
-      this.AvailabeWordsSet.add(c[2]);
+      this.AvailableWordsSet.add(c[0]);
+      this.AvailableWordsSet.add(c[2]);
     });
   }
 
@@ -622,7 +629,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 */
   IsWord(s: string): boolean {
 
-    return this.AvailabeWordsSet.has(s);
+    return this.AvailableWordsSet.has(s);
 
   }
 
@@ -631,7 +638,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
  * @param separator The parameter name.
  * @returns An array of words in the Cross Word.
  */
-  GetUsedWodsList(separator: string = ",", sorted: boolean = true): string[] {
+  GetUsedWordsList(separator: string = ",", sorted: boolean = true): string[] {
     let i: number = 0;
     let j: number = 0;
     let letter: string;
@@ -892,7 +899,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let strSymbols = ""
 
     // Refresh UsedWordList
-    this.GetUsedWodsList();
+    this.GetUsedWordsList();
     // this.UpdateWordLogList(); //TODO: REVISAR
 
     for (const c of wordCollection) {
@@ -927,10 +934,30 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+  PlaceRandomWord(): boolean { 
+    let word = wordCollection[Math.trunc(wordCollection.length * Math.random())][0] as string;
+    let i = Math.trunc(this.crossSize * Math.random());
+    let j = Math.trunc(this.crossSize * Math.random());
+    let direction = Math.trunc(2 * Math.random()); // 0 - Vertical 1 - Horizontal
+
+    return this.PlaceWord(word, i, j, direction);
+  }
+
+  FillCrossWord() {
+
+    this.PlaceRandomWord();
+
+    this.AvailableWordsSet.forEach((c) => {
+      this.PlaceWord(c as string, 0, 0, 0);
+    });
+
+    this.BlockCells();
+  }
+
   /**
    * Fills the crossword puzzle with words.
    */
-  FillCrossWord() {
+  FillCrossWord_E2() {
 
     let EmptyCells = 5;
     let totalCells = this.crossSize * this.crossSize;

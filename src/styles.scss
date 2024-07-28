@@ -52,7 +52,7 @@ body[class="dark-only"] {
 //end template styles
 
 html, body { 
-  height: 100%; 
+  height: 100%;
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -71,6 +71,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 3px;
   margin: 2px;
   color: white;
+}
+
+.hintWord:hover, .hintSymbol:hover{
+  background-color: yellow;
+  color: black;
 }
 
 .hintSymbol{

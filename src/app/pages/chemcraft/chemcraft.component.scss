@@ -368,10 +368,23 @@ body {
     }
   }
 
+  app-compound-request {
+    max-width: 50%;
+  }
 
-  @media (min-width: 768px) {
+  @media (max-width: 768px) {
     .compound-request {
-        max-width: 50%;
+        max-width: 100%;
+    }
+
+    .app-element-list {
+        max-width: 80%;
     }
   }
+
+//   @media (max-width: 768px) {
+//     .element-list {
+//         max-width: 80%;
+//     }
+//   }
   

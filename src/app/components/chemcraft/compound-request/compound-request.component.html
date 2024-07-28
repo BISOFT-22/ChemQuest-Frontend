@@ -1,7 +1,11 @@
 <div class="compound-request">
+  <div class="compound-request-info">
   <h2>Creación de Compuesto</h2>
   <p>{{ text }}</p>
   <p style="display: none;">{{ compound.formula }}</p>
   <p style="display: none;">{{ difficultyLevel }}</p>
-  <button (click)="generateCompoundRequest()"></button>
+</div>
+  <button class="change-button" (click)="generateCompoundRequest()">
+    <img src="../../../../assets/img/chemcraft/change.png" alt="">
+  </button>
 </div>

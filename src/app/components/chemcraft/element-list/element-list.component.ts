@@ -11,7 +11,7 @@ import { effect } from '@angular/core';
   templateUrl: './element-list.component.html',
   styleUrls: ['./element-list.component.scss']
 })
-export class ElementListComponent implements OnInit {
+export class ElementListComponent implements OnInit{
   public elementsList: IElement[] = [];
   public noResults: boolean = false;
   public isSearching: boolean = false;
@@ -30,7 +30,6 @@ export class ElementListComponent implements OnInit {
     this.service.getAllSignal();
     this.elementSearch();
   }
-
 
   showElementInfo(index: number): void {
     this.clickElementIndex = index;

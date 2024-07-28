@@ -65,7 +65,7 @@ export class CompoundRequestComponent implements OnInit {
     this.textList = [
      'Debes de crear el compuesto "' + this.compoundName + '" ¿Que elementos necesitas?',
     'Recuerdas la fórmula quimíca del compuesto "' + this.compoundName + '" Genial, ¿De que elementos esta compuesta la fórmula?',
-    'Así que eres un químico profesional.. Genial! que elementos componen la fórmula del siguiente compuesto?: "' + this.compoundName + '".',
+    'Así que eres un químico profesional.. Genial! ¿Que elementos componen la fórmula del siguiente compuesto?: "' + this.compoundName + '".',
     ];
     this.text = this.getRandomText();
     this.setDifficultyLevel();

@@ -386,15 +386,20 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.UpdateWordLogList();
   }
 
+  /**
+   * Verifies if a word can be placed in a transversal direction starting from a given position.
+   * 
+   * @param i - The row index of the starting position.
+   * @param j - The column index of the starting position.
+   * @param direction - The direction of the transversal (0 for horizontal, 1 for vertical).
+   * @param word - The word to be placed.
+   * @returns A boolean value indicating whether the word can be placed in the transversal direction.
+   */
   VerifyTransversal(i: number, j: number, direction: number, word: string): boolean {
     let r = i;
     let c = j;
     let dr = (direction == 0 ? 0 : 1);
     let dc = (direction == 0 ? 1 : 0);
-
-    if (i == 8 && j == 5) {
-      console.log("debug");
-    }
 
     // Verificar que no haya letras en las celdas transversales
     for (const w of word) {

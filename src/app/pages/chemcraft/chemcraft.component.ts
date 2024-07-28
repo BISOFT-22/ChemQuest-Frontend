@@ -7,6 +7,7 @@ import { CompoundRequestComponent } from "../../components/chemcraft/compound-re
 import { ModalErrorComponent } from '../../components/chemcraft/modal-error/modal-error.component';
 import { CompoundService } from '../../services/compound.service';
 import { ICompound } from '../../interfaces';
+import { BackgroundService } from '../../services/background.service';
 
 @Component({
   selector: 'app-chemcraft',
@@ -17,18 +18,24 @@ import { ICompound } from '../../interfaces';
 })
 export class ChemcraftComponent implements OnInit{
   private compoundService = inject(CompoundService);
+  // private backgroundService = inject(BackgroundService);
   public compoundsList: ICompound[] = [];
   @ViewChild('modalError') modalError!: ModalErrorComponent;
 
-  constructor() {
+
+  
+  constructor(private backgroundService: BackgroundService) {
     this.compoundService.getAll();
     effect(() => {      
       this.compoundsList = [...this.compoundService.compounds$()].reverse();
     });
   }
 
+
+
   ngOnInit(): void {
     this.compoundService.getAll();
+    this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
   }
 
 

@@ -1,7 +1,6 @@
-import { afterRender, AfterRenderPhase, AfterViewChecked, AfterViewInit, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { afterRender, AfterRenderPhase, AfterViewChecked, AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { CrossCellComponent } from "../cross-cell/cross-cell.component";
 import { CommonModule } from '@angular/common';
-import { Target } from '@angular/compiler';
 import { crossWordCollection, wordCollection } from 'app/interfaces/elements';
 import { WordLogComponent } from "../word-log/word-log.component";
 import { FormsModule } from '@angular/forms';
@@ -16,6 +15,7 @@ import { LanguageSelectComponent } from "../../language-select/language-select.c
   styleUrl: './cross-word.component.scss'
 })
 export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewChecked {
+
 
 
   msg = Dictionary;
@@ -33,12 +33,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   cellHeightstr: string = "";
   crossSize = 10;
   blockChar = "@";
-  positionMethod = 0; //Determina el metodo a usar para obtener la celda para probar las palabras
+  positionMethod = 0; //Determina el método a usar para obtener la celda para probar las palabras
   filledCells = 0;    //Cantidad de celdas con letras o blockChar
   totalIterations = 0;
   totalCrossWords = crossWordCollection.length;
 
-  // Direccion inicial para colocar palabras
+  // Dirección inicial para colocar palabras
   currentDirection = 0;
 
 
@@ -73,6 +73,127 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     }, { phase: AfterRenderPhase.Write });
   }
 
+
+  /**
+   * Handles the drop event on the cross-word component.
+   * @param {DragEvent} e - The drag event object.
+   */
+  OnDropOnCross(e: DragEvent) {
+    e.preventDefault();
+    let data = e.dataTransfer?.getData("text");
+
+    let columnIndex = Number((e.target as HTMLInputElement).id) % this.crossSize - 1;
+    let rowIndex = Math.trunc(Number((e.target as HTMLInputElement).id) / this.crossSize);
+
+
+    if (e.ctrlKey) {
+      // Horizontal direction
+      this.currentDirection = 1;
+    } else {
+      // Vertical direction
+      this.currentDirection = 0;
+    }
+
+    //
+    if (data && data?.length > this.crossSize - (this.currentDirection == 1 ? columnIndex : rowIndex)) {
+      alert(`The word is too long for this ${this.currentDirection ? "row" : "column"}.`);
+      return;
+    }
+    // alert(columnIndex);
+
+    if (this.IsThereAvailableSpace(data as string, rowIndex, columnIndex, this.currentDirection) == false) {
+      alert("There is no available space to place the word.");
+      return;
+    }
+
+
+    this.InsertWord(data as string, rowIndex, columnIndex, this.currentDirection);
+
+    // set direction to default
+    this.currentDirection = 0;
+
+    this.DrawCrossWord();
+    this.UsedWordsSet.add(data as string);
+    this.UpdateWordLogList();
+  }
+
+  IsThereAvailableSpace(word: string, rowIndex: number, columnIndex: number, direction: number): boolean {
+    let r = rowIndex;
+    let c = columnIndex;
+
+    for (const w of word) {
+      if (this.crossWord[r][c] != "" && this.crossWord[r][c] != w) {
+        return false;
+      }
+
+      if (direction == 0) {
+        r++;
+      } else {
+        c++;
+      }
+    }
+
+    return true;
+  }
+  
+
+    
+
+  /**
+   * Handles the drag over event for the component.
+   * Prevents the default behavior of the event.
+   * 
+   * @param e - The drag over event.
+   */
+  onDragOver(e:Event){
+    e.preventDefault();
+  }
+
+  
+  /**
+   * Inserts a word into the crossword puzzle grid.
+   * 
+   * @param word - The word to be inserted.
+   * @param i - The starting row index.
+   * @param j - The starting column index.
+   * @param direction - The direction of insertion (0 for vertical, 1 for horizontal).
+   */
+  InsertWord(word: string, i: number, j: number, direction: number) {
+    let r = i;
+    let c = j;
+
+    for (const w of word) {
+      this.crossWord[r][c] = w;
+      if (direction == 0) {
+        r++;
+      } else {
+        c++;
+      }
+    }
+  }
+
+  /**
+   * Handles the drop event for the component.
+   * Prevents the default behavior of the event.
+   * 
+   * @param e - The drop event.
+   */
+  onDrop(e:DragEvent){
+    e.preventDefault();
+    let data = e.dataTransfer?.getData("text");
+    (e.target as HTMLInputElement).value = data as string;
+  }
+
+  onDragStart(e: DragEvent) {
+    e.dataTransfer?.setData("text", (e.target as HTMLElement).textContent as string);
+  }
+
+
+
+  /**
+   * Handles the resize event of the component.
+   * Updates the cross-word size and other related properties.
+   */
   onResize() {
     this.sizeChanged = true;
     this.GenerateCrossW();
@@ -86,6 +207,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     // afterRender() is called to update cell numbers and zoom
   }
 
+  /**
+   * Handles the event when the language is changed.
+   * @param id_language - The ID of the selected language.
+   */
   onLanguageChanged(id_language: number) {
     this.id_language = id_language;
   }
@@ -98,6 +223,11 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.FilterWords();
   }
 
+  /**
+   * Lifecycle hook that is called after Angular has fully initialized the component's view.
+   * This hook is called only once after the first ngAfterContentInit.
+   * Use this hook to perform any additional initialization tasks that require the component's view to be fully initialized.
+   */
   ngAfterViewInit(): void {
     // alert("ngAfterViewInit");
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
@@ -114,6 +244,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   //   this.CrossZoom();
   // }
 
+  /**
+   * Applies zoom effect to the crossword cells and adjusts their sizes and fonts.
+   */
   CrossZoom() {
     // let myInput = e?.target as HTMLInputElement;
 
@@ -134,6 +267,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.AsignId();
   }
 
+  /**
+   * Generates a cross word puzzle by creating an n x n matrix and initializing all cells with an empty string.
+   */
   GenerateCrossW(): void {
 
     //Generar matriz n x n
@@ -153,7 +289,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
-  // Asigna el ID a cada celda
+
+  /**
+   * Assigns an ID to each cell.
+   */
   AsignId() {
 
     // alert("Asigna el ID a cada celda");
@@ -178,26 +317,46 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Handles the double click event.
+   * Clears the value of the target element.
+   * 
+   * @param e - The event object.
+   */
   DblClick(e: any) {
     e.target.value = "";
+    let columnIndex = Number((e.target as HTMLInputElement).id) % this.crossSize - 1;
+    let rowIndex = Math.trunc(Number((e.target as HTMLInputElement).id) / this.crossSize);
+    this.crossWord[rowIndex][columnIndex] = "";
   }
 
-  ValidateCell(cellValue:string): boolean {
+
+
+  /**
+   * Validates a cell value.
+   * @param cellValue - The value of the cell to validate.
+   * @returns A boolean indicating whether the cell value is valid or not.
+   */
+  ValidateCell(cellValue: string): boolean {
 
     //Verify is one letter
     if (cellValue.length > 1) return false;
-    
+
     //Verify is a letter
     // if (Number(cellValue)) return false;
 
     let regex = new RegExp("[a-zA-ZñÑ@]", "i");
-    
+
     if (cellValue.search(regex) == -1) return false;
 
-    
+
     return true;
   }
 
+  /**
+   * Handles the blur event for the input element.
+   * @param e - The event object.
+   */
   OnBlur(e: any) {
 
     if (!this.ValidateCell(e.target.value)) {
@@ -205,7 +364,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       return;
     }
 
-    
+
     e.target.value = e.target.value.toUpperCase();
 
     if (e.target.value === this.blockChar) {
@@ -224,6 +383,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Extracts the crossword values from the cells collection and populates the crossWord array.
+   */
   ExtractCrossWord() {
     let i: number = 0;
     let j: number = 0;
@@ -242,7 +404,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   /**
    * Updates the list of words of the log
-   * 
    */
   UpdateWordLogList() {
     this.wordLogList = this.GetUsedWodsList();
@@ -251,7 +412,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   /**
  * Loads the set of available words
- * 
  */
   LoadAvailableWords() {
     wordCollection.forEach((c) => {
@@ -262,7 +422,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   /**
 * Verifies if word is in AvailableWordSet
-* 
 */
   IsWord(s: string): boolean {
 
@@ -364,6 +523,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Draws the crossword puzzle on the UI based on the provided data.
+   */
   DrawCrossWord() {
 
     // console.log("Iniciando");
@@ -381,7 +543,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       c.value = this.crossWord[i][j];
       c.parentElement?.parentElement?.children[0]?.setAttribute('innerHTML', k.toString());
 
-      if (c.value === this.blockChar && c.value !="") {
+      if (c.value === this.blockChar && c.value != "") {
         c.parentElement?.parentElement?.classList.add("blackCell");
         c.style.backgroundColor = "black";
       } else {
@@ -400,7 +562,11 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
-  public ExportCrossW() {
+
+  /**
+   * Exports the crossword data as a string array.
+   */
+  ExportCrossW() {
     let str = "[";
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
 
@@ -420,6 +586,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Imports the cross word from the input field and generates the crossword puzzle.
+   */
   ImportCrossW() {
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
     let str = this.txtConsole.value;
@@ -451,7 +620,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
-  public LoadCrossWord(id?: number) {
+  /**
+   * Loads a crossword puzzle by its ID and generates the crossword grid.
+   * If no ID is provided, it retrieves the ID from the "cross_id" input element.
+   * @param id - The ID of the crossword puzzle to load (optional).
+   */
+  LoadCrossWord(id?: number) {
 
     let i = 0;
     let j = 0;
@@ -485,6 +659,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Fills the crossWord array with random characters.
+   */
   RandomCrossWFill() {
 
     // console.log("Iniciando");
@@ -508,6 +685,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
 
 
+  /**
+   * Filters and displays words and symbols based on the filter input value.
+   */
   FilterWords() {
     this.txtFilter = document.getElementById("filter") as HTMLInputElement;
     let letter = new RegExp(this.txtFilter.value, "i");
@@ -526,18 +706,30 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       // }
 
       if ((c[0] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[0])) {
-        str += `<div class="hintWord">${c[0]}</div>`;
+        str += `<div class="hintWord" draggable="true">${c[0]}</div>`;
       }
       if ((c[2] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[2])) {
-        str += `<div class="hintSymbol">${c[2]}</div>`;
+        str += `<div class="hintSymbol" draggable="true">${c[2]}</div>`;
       }
     }
 
+    
     document.getElementById("wordHints")!.innerHTML = str;
     // document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
+    //Agregar event listeners a las palabras de pista
+    for (let c of Array.from(document.getElementsByClassName("hintWord"))  ) {
+      c.addEventListener("dragstart",(e)=> this.onDragStart(e as DragEvent));
+    }
+    for (let c of Array.from(document.getElementsByClassName("hintSymbol"))  ) {
+      c.addEventListener("dragstart",(e)=> this.onDragStart(e as DragEvent));
+    }
+
   }
 
+  /**
+   * Fills the crossword puzzle with words.
+   */
   FillCrossWord() {
 
     let EmptyCells = 5;
@@ -825,6 +1017,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Clears the crossword by resetting the values of the cells and redrawing the crossword.
+   */
   ClearCrossWord() {
     this.GenerateCrossW();
 
@@ -839,10 +1034,14 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     this.filledCells = 0;
     this.DrawCrossWord();
+    this.UpdateWordLogList();
     // this.wordLog!.innerHTML = "";
   }
 
-  //Moverse por las celdas usando las flechas
+  /**
+   * Handles the key press event for the crossword component.
+   * @param e - The key press event.
+   */
   OnKeyPress(e: Event) {
 
     let myHTMLInput = e.target as HTMLInputElement;

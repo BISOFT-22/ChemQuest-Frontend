@@ -13,5 +13,11 @@ export class WordLogComponent {
   @Input() dictionary: string[][] = [];
   @Input() id_language: number = 0; //0: English 1:Spanish
   @Input() id_message: number = 0; 
-  @Input() wordList: string[] = [];
+  @Input() wordList: string[] = ["word1", "word2", "word3"];
+
+  get heading(): string { 
+    return this.dictionary[this.id_language][this.id_message];
+  }
+
+  constructor() { }
 }

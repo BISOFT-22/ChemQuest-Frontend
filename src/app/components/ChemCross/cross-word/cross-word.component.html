@@ -6,7 +6,7 @@
             <div class="crossCell" *ngFor="let item of fakeArray;let index = index">
                 <div class="cell-heading" disabled></div>
                 <div class="cell-content">
-                    <input class="txtChar" (blur)="OnBlur($event)" (dblclick)="DblClick($event)"
+                    <input class="txtChar" (blur)="OnBlur($event)" (dblclick)="DblClick($event)" (drop)="OnDropOnCross($event)"
                         (keydown)="OnKeyPress($event)" maxlength="1" type="text">
                 </div>
             </div>
@@ -18,7 +18,7 @@
 </div>
 <div class="controlPanel">
     <div>
-        <input type="text" name="" id="filter" (keyup)="FilterWords()" placeholder="Filtro RegEx">
+        <input type="text" name="" id="filter" (keyup)="FilterWords()" (dragover)="onDragOver($event)" (drop)="onDrop($event)" placeholder="Filtro RegEx">
     </div>
     <div>
         <button (click)="ClearCrossWord()">{{msg[1][id_language]}}</button>
@@ -40,6 +40,7 @@
         <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button>
     </div>
 </div>
+
     <app-word-log [dictionary]="msg" [id_language]="id_language" [id_message]="0"
         [wordList]="wordLogList"></app-word-log>
 <div id="hints">

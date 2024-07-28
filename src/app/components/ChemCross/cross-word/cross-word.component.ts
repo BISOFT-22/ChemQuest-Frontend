@@ -148,16 +148,30 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let r = rowIndex;
     let c = columnIndex;
 
-    for (const w of word) {
-      if (this.crossWord[r][c] != "" && (this.crossWord[r][c] as string).toUpperCase() != w.toUpperCase()) {
-        return false;
-      }
+    if (rowIndex == 8 && columnIndex == 0) {
+      console.log("debug");
+    }
 
-      if (direction == 0) {
-        r++;
-      } else {
-        c++;
+    try {
+      for (const w of word) {
+
+        if (r >= this.crossSize || c >= this.crossSize) {
+          return false;
+        }
+
+        if (this.crossWord[r][c] != "" && (this.crossWord[r][c] as string).toUpperCase() != w.toUpperCase()) {
+          return false;
+        }
+
+        if (direction == 0) {
+          r++;
+        } else {
+          c++;
+        }
       }
+    } catch (error) {
+      console.error("An error occurred while verifying the transversal:", error);
+      return false;
     }
 
     return true;
@@ -185,9 +199,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * @param j - The starting column index.
    * @param direction - The direction of insertion (0 for vertical, 1 for horizontal).
    */
-  InsertWord(word: string, i: number, j: number, direction: number) {
+  InsertWord(word: string, i: number, j: number, direction: number):boolean {
     let r = i;
     let c = j;
+
+    if (word.length + i > this.crossSize && direction == 0) { return false; }
+    
+    if (word.length + j > this.crossSize && direction == 1) { return false; }
 
     for (const w of word) {
       this.crossWord[r][c] = w;
@@ -197,6 +215,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
         c++;
       }
     }
+
+    return true;
   }
 
   /**
@@ -364,6 +384,131 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let rowIndex = Number((e.target as HTMLInputElement).getAttribute("x"));
     this.crossWord[rowIndex][columnIndex] = "";
     this.UpdateWordLogList();
+  }
+
+  VerifyTransversal(i: number, j: number, direction: number, word: string): boolean {
+    let r = i;
+    let c = j;
+    let dr = (direction == 0 ? 0 : 1);
+    let dc = (direction == 0 ? 1 : 0);
+
+    if (i == 8 && j == 5) {
+      console.log("debug");
+    }
+
+    // Verificar que no haya letras en las celdas transversales
+    for (const w of word) {
+
+      //Verify if the before cell is empty or block
+      if (i - 1 >= 0 && direction == 0) {
+        if ((this.crossWord[i - 1][j] != "" && this.crossWord[i - 1][j] != this.blockChar)) {
+          return false;
+        }
+      }
+
+      if (j - 1 >= 0 && direction == 1) {
+        if ((this.crossWord[i][j-1] != "" && this.crossWord[i][j-1] != this.blockChar)) {
+          return false;
+        }
+      }
+
+
+      //Verify if the after cell is empty or block
+      if (i + word.length < this.crossSize && direction == 0) {
+        if ((this.crossWord[i + word.length][j] != "" && this.crossWord[i + word.length][j] != this.blockChar)) {
+          return false;
+        }
+      }
+
+      if (j + word.length < this.crossSize && direction == 1) {
+        if ((this.crossWord[i][j + word.length] != "" && this.crossWord[i][j + word.length] != this.blockChar)) {
+          return false;
+        }
+      }
+      
+      // Si la celda no es la misma letra o "" regresar false
+      if ((this.crossWord[r][c] == w)) {
+        if (direction == 0) {
+          r++;
+        } else {
+          c++;
+        }
+        continue;
+      } 
+
+      // Verificar que no se salga de los límites
+      if (r + dr < this.crossSize && c + dc < this.crossSize) {
+        
+        // Verificar que la celda continua sea vacía o un bloque
+        if (this.crossWord[r + dr][c + dc] != "" && this.crossWord[r + dr][c + dc] != this.blockChar) {
+          return false;
+        }
+      }
+
+      // Verificar que no se salga de los límites
+      if (r - dr >= 0 && c - dc >= 0) {
+        
+        // Verificar que la celda continua sea vacía o un bloque
+        if (this.crossWord[r - dr][c - dc] != "" && this.crossWord[r - dr][c - dc] != this.blockChar) {
+          return false;
+        }
+      }
+
+      if (direction == 0) {
+        r++;
+      } else {
+        c++;
+      }
+
+    }
+
+    return true;
+  }
+
+  
+  /**
+   * Handles the double click event on a word.
+   * Randomly places the word in the crossword grid and updates the UI.
+   * @param e - The event object.
+   */
+  OnWordDoubleCLick(e: any) {
+    let word = e.target.textContent;
+    let wordPlaced = false;
+    let i = 0;
+    let j = 0;
+    let direction = 0;
+
+    try {
+      for (let c of this.cellsCollection) {
+        i = Number(c.getAttribute("x"));
+        j = Number(c.getAttribute("y"));
+
+        for (direction = 0; direction < 2; direction++) {
+          if (this.IsThereAvailableSpace(word, i, j, direction) && this.VerifyTransversal(i, j, direction, word)) {
+          // if (this.VerifyTransversal(i, j, direction, word)) {
+            wordPlaced = this.InsertWord(word, i, j, direction);
+            this.DrawCrossWord();
+            this.UsedWordsSet.add(word as string);
+            this.UpdateWordLogList();
+            break;
+          }
+        }
+
+        if (wordPlaced) {
+          break;
+        }
+      }
+
+      if (i == this.crossSize - 1 && j == this.crossSize - 1) {
+        alert(this.msg[18][this.id_language]);
+      }
+    } catch (error) {
+      alert(error);
+
+    }
+
+
+
   }
 
 
@@ -766,10 +911,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     //Agregar event listeners a las palabras de pista
     for (let c of Array.from(document.getElementsByClassName("hintWord"))  ) {
-      c.addEventListener("dragstart",(e)=> this.onDragStart(e as DragEvent));
+      c.addEventListener("dragstart", (e) => this.onDragStart(e as DragEvent));
+      c.addEventListener("dblclick", (e) => this.OnWordDoubleCLick(e as Event));
+      
     }
     for (let c of Array.from(document.getElementsByClassName("hintSymbol"))  ) {
       c.addEventListener("dragstart",(e)=> this.onDragStart(e as DragEvent));
+      c.addEventListener("dblclick", (e) => this.OnWordDoubleCLick(e as Event));
     }
 
   }

@@ -934,6 +934,11 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+  /**
+   * Places a random word on the crossword puzzle.
+   * 
+   * @returns A boolean indicating whether the word was successfully placed.
+   */
   PlaceRandomWord(): boolean { 
     let word = wordCollection[Math.trunc(wordCollection.length * Math.random())][0] as string;
     let i = Math.trunc(this.crossSize * Math.random());
@@ -943,12 +948,19 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     return this.PlaceWord(word, i, j, direction);
   }
 
+  /**
+   * Fills the crossword puzzle with words.
+   */
   FillCrossWord() {
+
+    let TempAvailableWordsSet = new Set(this.AvailableWordsSet);
 
     this.PlaceRandomWord();
 
-    this.AvailableWordsSet.forEach((c) => {
-      this.PlaceWord(c as string, 0, 0, 0);
+    TempAvailableWordsSet.forEach((c) => {
+      if (this.PlaceWord(c as string, 0, 0, 0)) {
+        TempAvailableWordsSet.delete(c);
+      }
     });
 
     this.BlockCells();

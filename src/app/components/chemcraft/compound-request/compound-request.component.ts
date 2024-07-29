@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICompound } from '../../../interfaces';
 
@@ -11,15 +11,12 @@ import { ICompound } from '../../../interfaces';
 })
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
-  public difficultyLevel: string = '';
-  public compound: ICompound = {};
-  public compoundName: string = '';
-  public compoundFormula: string = '';
-  public lastCompound: string = '';
   @Output() compoundGenerated = new EventEmitter<string>();
+  public compound: ICompound = {};
+  public lastCompound: string = '';
+  public difficultyLevel: string = '';
   public text: string = '';
   public textList: string[] = [];
-
 
   ngOnInit(): void {
 
@@ -27,8 +24,8 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
 
  //Cada que haya un cambio en la lista de compuestos, se genera una solicitud de compuesto
  //Y como el unico cambio que se genera es el recibir la lista de compuestos generada en chemcraft
- //y se actualiza la de compound-request, entonces es el unico cambio y genera la solicitud de compouesto
- //con el Oninit no funciono porque la lista de compuestos estaria vacia
+ //y se actualiza la de compound-request, entonces es el unico cambio y genera la solicitud de compouesto.
+ //con el Oninit no funciono porque la lista de compuestos estaria vacia al iniciar
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['compoundsList'] && changes['compoundsList'].currentValue.length > 0) {
@@ -52,9 +49,8 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
 
 
   setDifficultyLevel(): void {
-    const formula = this.compound.formula || '';
     const elementSymbolPar = /[A-Z][a-z]?/g; // esto funciona de manera que primero seleciona una letra mayuscula y luego una minuscula para elementos como el Al o el Fe, Mg, etc..
-    const elements = formula.match(elementSymbolPar) || []; //aca revisa que la formula tenga elementos y si no los tiene, devuelve un array vacio
+    const elements = this.compound.formula || ''.match(elementSymbolPar) || []; //aca revisa que la formula tenga elementos y si no los tiene, devuelve un array vacio
     const uniqueElements = new Set(elements);
     const elementCount = uniqueElements.size;
 
@@ -67,30 +63,35 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     }
 }
 
-
+//Genera la solicitud de compuesto aleatorio, si se repite el compuesto con el anterior genera otro.
   generateCompoundRequest(): void {
     let isSameCompound = true;
     try {
     while (isSameCompound) {
       this.getRamdonCompound();
-      console.log(this.compound);
+      // console.log(this.compound);
       if (this.compound.name !== this.lastCompound) {
         isSameCompound = false;
       }
     }
-    console.log(this.compound.name);
-    this.compoundName = this.compound.name!;
-    this.compoundFormula = this.compound.formula!;
-    this.compoundGenerated.emit(this.compoundFormula);
+
+    if (!this.compound) {
+      throw new Error("Compound is empty.");
+    }
+    // console.log(this.compound.name);
+    if (!this.compound.name || !this.compound.formula) {
+      throw new Error("Compound.name or compound.formula is empty.");
+    }
+    this.compoundGenerated.emit(this.compound.formula);
     this.textList = [
-     'Debes de crear el compuesto "' + this.compoundName + '" ¿Que elementos necesitas?',
-    'Recuerdas la fórmula quimíca del compuesto "' + this.compoundName + '" Genial, ¿De que elementos esta compuesta la fórmula?',
-    'Así que eres un químico profesional.. Genial! ¿Que elementos componen la fórmula del siguiente compuesto?: "' + this.compoundName + '".',
+      'Debes crear el compuesto "' + this.compound.name + '". ¿Qué elementos son necesarios para ello?',
+      '¿Recuerdas la fórmula química del compuesto "' + this.compound.name + '"? Genial, ¿de qué elementos está compuesta la fórmula?',
+      'Así que eres un químico profesional... ¡Genial! ¿Qué elementos componen la fórmula del siguiente compuesto: "' + this.compound.name + '"?',
     ];
     this.text = this.getRandomText();
     this.setDifficultyLevel();
-    console.log(this.difficultyLevel);
-    this.lastCompound = this.compound.name!;
+    // console.log(this.difficultyLevel);
+    this.lastCompound = this.compound.name;
   } catch (error) {
     console.error((error as Error).message);
   }

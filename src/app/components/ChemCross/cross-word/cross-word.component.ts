@@ -195,7 +195,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * 
    * @param e - The drag over event.
    */
-  onDragOver(e:Event){
+  OnDragOver(e:Event){
     e.preventDefault();
   }
 
@@ -234,7 +234,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * 
    * @param e - The drop event.
    */
-  onDrop(e:DragEvent){
+  OnDrop(e:DragEvent){
     e.preventDefault();
     let data = e.dataTransfer?.getData("text");
     (e.target as HTMLInputElement).value = data as string;
@@ -248,7 +248,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * 
    * @param e - The drag event object.
    */
-  onDragStart(e: DragEvent) {
+  OnDragStart(e: DragEvent) {
     e.dataTransfer?.setData("text", (e.target as HTMLElement).textContent as string);
   }
 
@@ -258,7 +258,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * Handles the resize event of the component.
    * Updates the cross-word size and other related properties.
    */
-  onResize() {
+  OnResize() {
     this.sizeChanged = true;
     this.GenerateCrossW();
     this.cellsCollection = [];
@@ -270,7 +270,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * Handles the event when the language is changed.
    * @param id_language - The ID of the selected language.
    */
-  onLanguageChanged(id_language: number) {
+  OnLanguageChanged(id_language: number) {
     this.id_language = id_language;
   }
 
@@ -962,12 +962,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     //Agregar event listeners a las palabras de pista
     for (let c of Array.from(document.getElementsByClassName("hintWord"))  ) {
-      c.addEventListener("dragstart", (e) => this.onDragStart(e as DragEvent));
+      c.addEventListener("dragstart", (e) => this.OnDragStart(e as DragEvent));
       c.addEventListener("dblclick", (e) => this.OnWordDoubleCLick(e as Event));
       
     }
     for (let c of Array.from(document.getElementsByClassName("hintSymbol"))  ) {
-      c.addEventListener("dragstart",(e)=> this.onDragStart(e as DragEvent));
+      c.addEventListener("dragstart",(e)=> this.OnDragStart(e as DragEvent));
       c.addEventListener("dblclick", (e) => this.OnWordDoubleCLick(e as Event));
     }
 

@@ -17,8 +17,9 @@
 
 </div>
 <div class="controlPanel">
-    <div>
-        <input type="text" name="" id="filter" (keyup)="FilterWords()" (dragover)="OnDragOver($event)" (drop)="OnDrop($event)" placeholder="Filtro RegEx">
+    <div *ngIf="showHints">
+        <label for="filter">{{msg[21][id_language]}}</label>
+        <input type="text" name="filter" id="filter" (keyup)="FilterWords()" (dragover)="OnDragOver($event)" (drop)="OnDrop($event)" placeholder="Filtro RegEx" >
     </div>
     <div>
         <button (click)="BlockCells()" id="blockCells">{{msg[14][id_language]}}</button>
@@ -29,7 +30,7 @@
         <button (click)="ImportCrossW()">{{msg[5][id_language]}}</button>
         <label for="size">{{msg[6][id_language]}}</label>
         <!-- <button (click)="LoadCrossWord()">{{msg[6][id_language]}}</button> -->
-        <input type="number" name="" (change)="LoadCrossWord()" id="cross_id" min="0" value="0"
+        <input type="number" name="cross_id" (change)="LoadCrossWord()" id="cross_id" min="0" value="0"
             [max]="totalCrossWords-1">
         <label for="zoom">{{msg[12][id_language]}}</label>
         <input type="number" name="zoom" (change)="CrossZoom()" [(ngModel)]="cellHeight" id="cross_cell_size"
@@ -37,8 +38,10 @@
         <label for="size">{{msg[13][id_language]}}</label>
         <input type="number" name="size" (change)="OnResize()" [(ngModel)]="crossSize" id="cross_cell_size"
             min="10" max="100">
-        <button (click)="FilterWords()">{{msg[7][id_language]}}</button>
-        <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button>
+        <!-- <button (click)="FilterWords()">{{msg[7][id_language]}}</button> -->
+        <!-- <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button> -->
+        <label for="showHints">{{msg[20][id_language]}}</label>
+        <input type="checkbox" name="showHints" id="showHints" (click)="ShowHints($event)" [(ngModel)]="showHints" checked>
     </div>
 </div>
 

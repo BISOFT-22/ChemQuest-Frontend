@@ -24,6 +24,7 @@ label{
     align-items: center;
     // padding: 10px;
     // margin: auto;
+    margin: 10px;
   }
   
   .crossRow {
@@ -134,6 +135,7 @@ label{
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
+    resize: both;
   }
 
   // #wordHints{

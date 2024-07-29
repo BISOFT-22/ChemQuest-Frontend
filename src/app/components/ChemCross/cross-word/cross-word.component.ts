@@ -50,6 +50,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   // @HostBinding('--cellHeight')
   // cellHeight = '100px';
 
+  showHints = true;
   // True when the user changes the CrossWord size.
   sizeChanged = false;
 
@@ -884,6 +885,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
 
     this.crossSize = Math.sqrt(crossWordCollection[idCrossWord].length);
+    this.fakeArray = new Array(this.crossSize);
     this.GenerateCrossW();
 
     for (const c of crossWordCollection[idCrossWord]) {
@@ -1364,6 +1366,17 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     }
 
 
+  }
+
+  ShowHints(e: Event){
+
+     if(this.showHints){
+       this.showHints = false;
+       document.getElementById("hints")!.style.display = "none";
+      } else {
+        this.showHints = true;
+        document.getElementById("hints")!.style.display = "flex";
+    }
   }
 
 

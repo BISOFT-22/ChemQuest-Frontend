@@ -93,4 +93,5 @@ export interface IElement {
 export interface IHistory{
   userWords?: string[];
   typeColor?: string[];
+  wrong?: number;
 }

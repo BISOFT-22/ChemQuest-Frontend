@@ -57,12 +57,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     // alert();
 
-    document.addEventListener("DOMContentLoaded", () => this.AsignId());
+    document.addEventListener("DOMContentLoaded", () => this.AssignId());
 
     // afterRender executes the callback 2 times when the CrossWord size is changed. So we need to make it run once. That's what sizeChanged is for.
     afterRender(() => {
       if (this.sizeChanged) {
-        this.AsignId();
+        this.AssignId();
         this.CrossZoom();
         this.sizeChanged = false;
         // console.log("afterRender");
@@ -144,6 +144,15 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.UpdateWordLogList();
   }
 
+
+  /**
+   * Checks if there is available space in the crossword grid to place a word.
+   * @param word - The word to be placed in the crossword grid.
+   * @param rowIndex - The starting row index for placing the word.
+   * @param columnIndex - The starting column index for placing the word.
+   * @param direction - The direction in which the word will be placed. 0 for vertical, 1 for horizontal.
+   * @returns A boolean indicating whether there is available space to place the word.
+   */
   IsThereAvailableSpace(word: string, rowIndex: number, columnIndex: number, direction: number): boolean {
     let r = rowIndex;
     let c = columnIndex;
@@ -231,6 +240,14 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     (e.target as HTMLInputElement).value = data as string;
   }
 
+  
+  
+  /**
+   * Handles the drag start event for the component.
+   * Sets the data to be transferred during the drag operation.
+   * 
+   * @param e - The drag event object.
+   */
   onDragStart(e: DragEvent) {
     e.dataTransfer?.setData("text", (e.target as HTMLElement).textContent as string);
   }
@@ -247,11 +264,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.cellsCollection = [];
     this.fakeArray = new Array(this.crossSize);
     this.cellHeightstr = this.cellHeight + "px";
-    // this.AsignId();
-
-    // this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
-
-    // afterRender() is called to update cell numbers and zoom
   }
 
   /**
@@ -262,6 +274,12 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.id_language = id_language;
   }
 
+  
+  /**
+   * Initializes the component.
+   * This lifecycle hook is called after Angular has initialized all data-bound properties of a directive.
+   * It is a good place to perform initialization logic for the component.
+   */
   ngOnInit(): void {
     // alert("OnInit");
     this.LoadAvailableWords();
@@ -282,15 +300,18 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+  
+  
+  /**
+   * Lifecycle hook that is called after every check of the component's view.
+   * It is called immediately after the `ngAfterViewInit` and `ngAfterContentChecked` hooks.
+   * Use this hook to perform any additional actions after the view has been checked.
+   */
   ngAfterViewChecked(): void {
     // alert("ngAfterViewChecked");
   }
 
-  // ChangeZoom(e: Event) {
-  //   // this.CrossZoom(Number((e.target as HTMLInputElement).value));
-  //   this.CrossZoom();
-  // }
-
+  
   /**
    * Applies zoom effect to the crossword cells and adjusts their sizes and fonts.
    */
@@ -311,7 +332,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       c.parentElement!.parentElement!.style.height = cellHeight;
     }
 
-    this.AsignId();
+    this.AssignId();
   }
 
   /**
@@ -340,7 +361,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   /**
    * Assigns an ID to each cell.
    */
-  AsignId() {
+  AssignId() {
 
     // alert("Asigna el ID a cada celda");
 
@@ -471,6 +492,15 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
+  /**
+   * Places a word on the crossword grid.
+   * 
+   * @param word - The word to be placed.
+   * @param i - The starting row index for placing the word.
+   * @param j - The starting column index for placing the word.
+   * @param direction - The direction in which the word will be placed. (0 for horizontal, 1 for vertical)
+   * @returns A boolean indicating whether the word was successfully placed or not.
+   */
   PlaceWord(word: string, i: number, j: number, direction: number): boolean {
     
     let wordPlaced = false;
@@ -524,7 +554,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
-
   /**
    * Validates a cell value.
    * @param cellValue - The value of the cell to validate.
@@ -545,6 +574,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     return true;
   }
+
 
   /**
    * Handles the blur event for the input element.
@@ -575,6 +605,11 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     
   }
 
+
+  /**
+   * Handles the change event for the crossword component.
+   * @param e - The event object.
+   */
   OnChange(e: Event) {
     let i = (e.target as HTMLElement).getAttribute("x");
     let j = (e.target as HTMLElement).getAttribute("y");
@@ -606,6 +641,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     }
   }
 
+
   /**
    * Updates the list of words of the log
    */
@@ -613,6 +649,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.wordLogList = this.GetUsedWordsList();
     this.FilterWords();
   }
+
 
   /**
  * Loads the set of available words
@@ -624,6 +661,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     });
   }
 
+
   /**
 * Verifies if word is in AvailableWordSet
 */
@@ -633,6 +671,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+  
   /**
  * List words placed in the Cross Word.
  * @param separator The parameter name.
@@ -716,6 +755,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     return usedWordList.sort();
   }
+
 
   /**
 * List words placed in the Cross Word.
@@ -888,7 +928,6 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   }
 
 
-
   /**
    * Filters and displays words and symbols based on the filter input value.
    */
@@ -934,6 +973,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+
   /**
    * Places a random word on the crossword puzzle.
    * 
@@ -947,6 +987,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     return this.PlaceWord(word, i, j, direction);
   }
+
 
   /**
    * Fills the crossword puzzle with words.
@@ -966,8 +1007,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.BlockCells();
   }
 
+
   /**
-   * Fills the crossword puzzle with words.
+   * Fills the crossword puzzle with words starting from a specific position (E2).
    */
   FillCrossWord_E2() {
 
@@ -993,6 +1035,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     alert(str);
   }
 
+  
+  /**
+   * Fills the crossword puzzle with words using a specific algorithm.
+   * The words are randomly selected from a word list and placed in the puzzle grid.
+   * The algorithm determines the direction and starting position of each word.
+   * The method also keeps track of the number of iterations and the words used.
+   */
   FillCrossWord_E1() {
     //Primer palabra al asar
     let wordList = new Array();
@@ -1277,6 +1326,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     // this.wordLog!.innerHTML = "";
   }
 
+
   /**
    * Handles the key press event for the crossword component.
    * @param e - The key press event.
@@ -1290,13 +1340,9 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let min: number = 1;
     let max: number = this.crossSize * this.crossSize;
 
+    let kbEvent = e as KeyboardEvent;
 
-    let mykey = e as KeyboardEvent;
-
-    // alert(mykey.key);
-
-
-    switch (mykey.key) {
+    switch (kbEvent.key) {
       // Left arrow key
       case "ArrowLeft":
         document.getElementById(id > min ? (id - 1).toString() : min.toString())?.focus();

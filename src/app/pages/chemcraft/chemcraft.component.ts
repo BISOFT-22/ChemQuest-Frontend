@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, OnInit, ViewChild } from '@angular/core';
 import { ElementListComponent } from "../../components/chemcraft/element-list/element-list.component";
 import { SlotComponent } from "../../components/chemcraft/slot/slot.component";
 import { ModalInfoCompoundComponent } from "../../components/chemcraft/modal-info-compound/modal-info-compound.component";
@@ -17,17 +17,17 @@ import { BackgroundService } from '../../services/background.service';
   styleUrl: './chemcraft.component.scss'
 })
 export class ChemcraftComponent implements OnInit{
-  private compoundService = inject(CompoundService);
+  // private compoundService = inject(CompoundService);
   // private backgroundService = inject(BackgroundService);
   public compoundsList: ICompound[] = [];
   @ViewChild('modalError') modalError!: ModalErrorComponent;
 
 
   
-  constructor(private backgroundService: BackgroundService) {
+  constructor(private backgroundService: BackgroundService, private compoundService: CompoundService) {
     this.compoundService.getAll();
     effect(() => {      
-      this.compoundsList = [...this.compoundService.compounds$()].reverse();
+      this.compoundsList = this.compoundService.compounds$();
     });
   }
 
@@ -35,6 +35,7 @@ export class ChemcraftComponent implements OnInit{
 
   ngOnInit(): void {
     this.compoundService.getAll();
+    this.compoundsList = this.compoundService.compounds$();
     this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
   }
 

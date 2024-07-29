@@ -1,4 +1,4 @@
-import { Component, effect, inject, Input, OnInit } from '@angular/core';
+import { Component, effect, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICompound } from '../../../interfaces';
 
@@ -9,7 +9,7 @@ import { ICompound } from '../../../interfaces';
   templateUrl: './compound-request.component.html',
   styleUrls: ['./compound-request.component.scss']
 })
-export class CompoundRequestComponent implements OnInit {
+export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
   public difficultyLevel: string = '';
   public compound: ICompound = {};
@@ -18,8 +18,14 @@ export class CompoundRequestComponent implements OnInit {
   public text: string = '';
   public textList: string[] = [];
 
-
   ngOnInit(): void {
+    console.log('ngOnInit called');
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['compoundsList'] && changes['compoundsList'].currentValue.length > 0) {
+      this.generateCompoundRequest();
+    }
   }
 
 
@@ -54,6 +60,7 @@ export class CompoundRequestComponent implements OnInit {
 
   generateCompoundRequest(): void {
     let isSameCompound = true;
+    try {
     while (isSameCompound) {
       this.getRamdonCompound();
       if (this.compound.name !== this.lastCompound) {
@@ -70,5 +77,8 @@ export class CompoundRequestComponent implements OnInit {
     this.text = this.getRandomText();
     this.setDifficultyLevel();
     this.lastCompound = this.compound.name!;
+  } catch (error) {
+    console.error((error as Error).message);
+  }
   }
 }

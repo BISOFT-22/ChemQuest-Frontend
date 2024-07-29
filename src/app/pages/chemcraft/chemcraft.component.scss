@@ -368,8 +368,11 @@ body {
     }
   }
 
-  app-compound-request {
-    max-width: 50%;
+
+  @media (min-width: 768px) {
+    app-compound-request {
+        max-width: 50%;
+      }
   }
 
   @media (max-width: 768px) {

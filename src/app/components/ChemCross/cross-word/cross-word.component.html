@@ -1,5 +1,5 @@
 <app-language-select [dictionary]="msg" [id_language]="id_language"
-    (langChangd)="onLanguageChanged($event)"></app-language-select>
+    (langChangd)="OnLanguageChanged($event)"></app-language-select>
 <div class="crosswordContainer">
     <div class="crossword">
         <div class="crossRow" *ngFor="let item of fakeArray">
@@ -18,7 +18,7 @@
 </div>
 <div class="controlPanel">
     <div>
-        <input type="text" name="" id="filter" (keyup)="FilterWords()" (dragover)="onDragOver($event)" (drop)="onDrop($event)" placeholder="Filtro RegEx">
+        <input type="text" name="" id="filter" (keyup)="FilterWords()" (dragover)="OnDragOver($event)" (drop)="OnDrop($event)" placeholder="Filtro RegEx">
     </div>
     <div>
         <button (click)="BlockCells()" id="blockCells">{{msg[14][id_language]}}</button>
@@ -35,7 +35,7 @@
         <input type="number" name="zoom" (change)="CrossZoom()" [(ngModel)]="cellHeight" id="cross_cell_size"
             min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
         <label for="size">{{msg[13][id_language]}}</label>
-        <input type="number" name="size" (change)="onResize()" [(ngModel)]="crossSize" id="cross_cell_size"
+        <input type="number" name="size" (change)="OnResize()" [(ngModel)]="crossSize" id="cross_cell_size"
             min="10" max="100">
         <button (click)="FilterWords()">{{msg[7][id_language]}}</button>
         <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button>
@@ -46,125 +46,6 @@
         [wordList]="wordLogList"></app-word-log>
 <div id="hints">
     <div id="wordHints">
-        <!-- Actinio
-            Aluminio
-            Americio
-            Antimonio
-            Argón
-            Arsénico
-            Ástato
-            Azufre
-            Bario
-            Berilio
-            Berkelio
-            Bismuto
-            Bohrio
-            Boro
-            Bromo
-            Cadmio
-            Calcio
-            Californio
-            Carbono
-            Cerio
-            Cesio
-            Cloro
-            Cobalto
-            Cobre
-            Copernicium
-            Cromo
-            Curio
-            Darmstadio
-            Disprosio
-            Dubnio
-            Einstenio
-            Erbio
-            Escandio
-            Estaño
-            Estroncio
-            Europio
-            Fermio
-            Flerovium
-            Fluor
-            Fósforo
-            Francio
-            Gadolinio
-            Galio
-            Germanio
-            Hafnio
-            Hassio
-            Helio
-            Hidrógeno
-            Hierro
-            Holmio
-            Indio
-            Iodo
-            Iridio
-            Iterbio
-            Itrio
-            Kryptón
-            Lantano
-            Lawrencio
-            Litio
-            livermorium
-            Lutecio
-            Magnesio
-            Manganeso
-            Meitnerio
-            Mendelevio
-            Mercurio
-            Molibdeno
-            Moscovium
-            Neodimio
-            Neón
-            Neptunio
-            Nihonium
-            Niobio
-            Níquel
-            Nitrógeno
-            Nobelio
-            Organesson
-            Oro
-            Osmio
-            Oxígeno
-            Paladio
-            Plata
-            Platino
-            Plomo
-            Plutonio
-            Polonio
-            Potasio
-            Praseodimio
-            Promecio
-            Protactinio
-            Radio
-            Radón
-            Renio
-            Rodio
-            Roentgenium
-            Rubidio
-            Rutenio
-            Rutherfordio
-            Samario
-            Seaborgio
-            Selenio
-            Sílice
-            Sodio
-            Talio
-            Tantalio
-            Tecnecio
-            Teluro
-            Tennessine
-            Terbio
-            Titanio
-            Torio
-            Tulio
-            Uranio
-            Vanadio
-            Wolframio
-            Xenón
-            Zinc
-            Zirconio -->
-
     </div>
     <div id="symbolHints">
     </div>

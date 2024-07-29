@@ -21,6 +21,7 @@
     display: flex;
     align-items: center;
     text-align: center;
+    flex-direction: column; /* Cambiado para que los elementos se apilen verticalmente */
 }
 
 .close-button {
@@ -42,7 +43,7 @@
     margin-bottom: 15px;
 }
 
-.info{
+.info {
     margin-top: 20px;
     margin-right: 12px;
 }
@@ -58,9 +59,9 @@
     font-size: 16px;
 }
 
-.action-button{
+.action-button {
     background-color: #1a661a;
-    border:#1a661a;
+    border: #1a661a;
     color: #fff;
     padding: 10px;
     margin: 0 5px;
@@ -72,6 +73,32 @@
     flex: 0 0 auto;
 }
 
-.buttons-container{
-text-align: end;
+.buttons-container {
+    text-align: end;
+}
+
+@media (max-width: 600px) {
+    .modal-error {
+        max-width: 90%;
+        padding: 15px;
+        flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+    }
+
+    #error {
+        margin: 0 auto 15px auto; /* Centra la imagen y añade margen inferior */
+    }
+
+    .info {
+        margin: 0 auto; /* Centra el contenido */
+    }
+
+    .buttons-container {
+        text-align: center; /* Centra los botones */
+        width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+    }
+
+    .action-button {
+        width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+        margin: 5px 0; /* Añade margen entre los botones */
+    }
 }

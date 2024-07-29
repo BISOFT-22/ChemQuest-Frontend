@@ -1,7 +1,7 @@
 export const Dictionary = [
     ["Used words", "Palabras Utilizadas"],
     ["Clear","Borrar"],
-    ["CrossWord","Auto"],
+    ["Autofill","Auto"],
     ["Random","Aleatorio"],
     ["Export","Exportar"],
     ["Import","Importar"],
@@ -19,4 +19,6 @@ export const Dictionary = [
     ["column", "columna"],
     ["There is no available space to place the word", "No hay espacio disponible para colocar la palabra"],
     ["The word is too long for this ", "La palabra es demasiado larga para esta "],
+    ["Show hints", "Palabras"],
+    ["Filter", "Filtrar"],
 ];

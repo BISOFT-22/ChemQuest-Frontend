@@ -1,10 +1,7 @@
-import { Component, EventEmitter, Input, input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { IElement, IHistory } from '../../../../interfaces';
-
-
+import {IHistory } from '../../../../interfaces';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
@@ -12,19 +9,25 @@ import { ChemGuessHistoryComponent } from '../chem-guess-history/chem-guess-hist
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalPruebasComponent } from "../../../../modal-pruebas/modal-pruebas.component";
+import { LiveChangeService } from '../../../../services/liveChange.service';
+import { ChemGuessSendComponent } from '../chem-guess-send7/chem-guess-form7.component';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent]
+  imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent]
 })
 export class ChemGuessHangManComponent implements OnInit {
 
   send: string = 'assets/img/send.png';
   convert: string = 'assets/img/convert.png';
- 
+  @Input() history: IHistory = {
+    userWords: [],  
+    typeColor: [],
+    wrong: 5,
+  };
   
   @Input() allHistory: IHistory[] = [];
   word: string = '';
@@ -33,12 +36,13 @@ export class ChemGuessHangManComponent implements OnInit {
   displayedWord: string[] = [];
   guessedLetters: Set<string> = new Set(); 
   wordsArray: string[] = [];// tiene la letra por separado
-  
+
   @Output() historyChange: EventEmitter<IHistory[]> = new EventEmitter<IHistory[]>();
   ////////////////////////////
   
 
-  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router) {
+  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private liveChangeService: LiveChangeService) {
+    
     
   }
   //////////////////////////////////modal para cambiar pregunta
@@ -57,6 +61,13 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormUpdate(response: boolean) {
     if (response) {
       this.onConvert();
+    }else{
+      
+    }
+  }
+  handleFormSend(response: boolean) {
+    if (response) {
+      this.CompareWord();
     }
   }
   ngOnInit():void {
@@ -116,14 +127,13 @@ export class ChemGuessHangManComponent implements OnInit {
   }
   splitIntoWords(input: string): void {
     this.wordsArray = input.split('');
-    console.log("split");
-    console.log(this.wordsArray.length);
   }
 
   
   /////////funciones para recargar la lista y para recargar la pagina para cambiar el elemento
   onConvert(): void {
     this.clearSlots();
+    this.allHistory = [];
     this.router.navigate([this.router.url]).then(() => {
       this.initializeThings();
     });
@@ -139,11 +149,12 @@ export class ChemGuessHangManComponent implements OnInit {
   }
 /////////////////////////////Comprobar palabra
 CompareWord(): void {
-  let history: IHistory = {
-    userWords: [],  
-    typeColor: []
-  };
   
+  let historytemp: IHistory = {
+    userWords: [],
+    typeColor: [],
+    wrong: this.history.wrong,
+  };
   const slots = document.querySelectorAll<HTMLElement>('.slot');
   let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
   let procesado: boolean[] = new Array(slots.length).fill(false);
@@ -151,13 +162,13 @@ CompareWord(): void {
   // Primera iteración para coincidencias exactas
   slots.forEach((slot, i) => {
     if (slot.textContent === this.wordsArray[i]) {
-      history.userWords!.push(slot.textContent!);
-      history.typeColor!.push("#87F14A"); // Verde
+      historytemp.userWords!.push(slot.textContent!);
+      historytemp.typeColor!.push("#87F14A"); // Verde
       wordArrayCorrectTemp[i] = null;
       procesado[i] = true;
     } else {
-      history.userWords!.push('');
-      history.typeColor!.push('');
+      historytemp.userWords!.push('');
+      historytemp.typeColor!.push('');
     }
   });
 
@@ -166,25 +177,46 @@ CompareWord(): void {
     if (!procesado[i]) {
       const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
       if (index !== -1) {
-        history.userWords![i] = slot.textContent!;
-        history.typeColor![i] = "#FFFF00"; // Amarillo
+        historytemp.userWords![i] = slot.textContent!;
+        historytemp.typeColor![i] = "#FFFF00"; // Amarillo
         wordArrayCorrectTemp[index] = null;
       } else {
-        history.userWords![i] = slot.textContent!;
-        history.typeColor![i] = "#FF0000"; // Rojo
+        historytemp.userWords![i] = slot.textContent!;
+        historytemp.typeColor![i] = "#FF0000"; // Rojo
+       
       }
     }
   });
-console.log(history)
-this.clearSlots();
- this.allHistory.push(history)
- console.log(this.allHistory)
- this.callEvent();
-
  
+   
+    if (historytemp.typeColor) {
+        for (const color of historytemp.typeColor) {
+              if (color === "#FF0000") {
+                historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
+                
+                break;
+          }
+    }
 }
 
+ this.updateHistory(historytemp);
 
+  this.liveChangeService.setLive(historytemp.wrong || 5);
+  console.log("Vidas: " + this.liveChangeService.live.value);
+  this.clearSlots();
+  this.allHistory.push(historytemp)
+ 
+  this.callEvent();
+}
+
+updateHistory(historyTemp: IHistory): void {
+ 
+  this.history = {
+    
+    wrong: historyTemp.wrong,
+  };
+ 
+}
 
   
 

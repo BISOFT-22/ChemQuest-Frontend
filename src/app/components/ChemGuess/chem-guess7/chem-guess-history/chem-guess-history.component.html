@@ -6,15 +6,27 @@
   @for (history of allHistory; track $index) {
     <div class="history-item">
     
-    @for (item of history.userWords; track $index) {
+    
       <div class="item">
-        <div  [attr.id]="'casilla-'" class="slot" id="casilla-1"></div>
-      <!-- Display the fields of each item here -->
+        @for (word of history.userWords; track $index) {
+          <div [style.background-color]="history.typeColor" class="slot" id="casilla-1{{ $index + 1 }}">{{ word }}</div>
+        }
       </div>
+    
+
+    <div class="itemColor">
+      @for (word of history.typeColor; track $index) {
+      
+        <div [style.background-color]="word" class="varColor" id="casilla-1"></div>
+
     }
     </div>
+   
+    
+    </div>
+   
   }
- 
+
       
       <button (click)="showHistory()"></button>
       <div class="col-6 position" >

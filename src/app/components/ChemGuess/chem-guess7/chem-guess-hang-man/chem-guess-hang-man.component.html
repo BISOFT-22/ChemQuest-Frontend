@@ -13,7 +13,7 @@
         @if ("letter !== '_'") {
             <p>{{letter}}</p>
         }
-        <img [src]="send" (click)="CompareWord()" class="imgSize" alt="">
+        <img [src]="send" (click)="showDetailModal(detailModalSend)" class="imgSize" alt="">
         <!-- src/app/components/hangman/hangman.component.html -->
     </div>
    
@@ -64,13 +64,17 @@
    
     
     <app-modal #detailModalChange>
-
         <app-chem-guess-form7
-        
         (callParentEvent)="handleFormUpdate($event)"
         />
-       
     </app-modal>
+
+    <app-modal #detailModalSend>
+        <app-chem-guess-send
+        (callParentEvent)="handleFormSend($event)"
+        />
+    </app-modal>
+
 
 
 

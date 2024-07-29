@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TopbarComponent } from './elements/topbar/topbar.component';
 import { SidebarComponent } from './elements/sidebar/sidebar.component';
@@ -25,13 +25,14 @@ import { filter } from 'rxjs';
 export class AppLayoutComponent implements OnInit{
   public title?: string;
   public backgroundUrl: string = '';
-  constructor(public layoutService: LayoutService, private backgroundService: BackgroundService,  private router: Router) {
+  constructor(public layoutService: LayoutService, private backgroundService: BackgroundService,  private router: Router, private cdr: ChangeDetectorRef) {
     this.layoutService.title.subscribe((title) => (this.title = title));
   }
 
   ngOnInit() {
     this.backgroundService.background$.subscribe((url) => {
       this.backgroundUrl = url;
+      this.cdr.detectChanges(); // para q detecte cambios
     });
 
     this.router.events

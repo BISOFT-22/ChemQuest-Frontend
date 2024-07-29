@@ -1,10 +1,12 @@
 
 
-<main>
+<main (mousemove)="changeLife()">
     <div>
         <div class="Question-Timer">
             <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
-            <img class="imgLive" [src]="live100" alt="">
+            
+                <img class="imgLive" [src]="liveImg" alt="">
+              
               <div>
                
                 
@@ -26,6 +28,7 @@
 [allHistory]="allHistory"
 (addFavoriteEvent)="getWord($event)"
 />
+
 
 <div>
 
@@ -52,7 +55,7 @@
           </div>
     </app-modal-pruebas>
     
-    
+
   
 
 

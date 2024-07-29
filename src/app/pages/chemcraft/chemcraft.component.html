@@ -3,16 +3,23 @@
 <div class="container">
   <app-compound-request class="app-compound-request"
   [compoundsList]="compoundsList"
+(compoundGenerated)="onCompoundGenerated($event)"
   >
   </app-compound-request>
 
   <div class="slots">
+    <ng-container *ngFor="let slot of slotsArray">
+      <app-slot (error)="showError($event)"></app-slot>
+    </ng-container>
+  </div>
+
+  <!-- <div class="slots">
     <app-slot (error)="showError($event)"></app-slot>
     <app-slot (error)="showError($event)"></app-slot>
     <app-slot (error)="showError($event)"></app-slot>
     <app-slot (error)="showError($event)"></app-slot>
 
-  </div>
+  </div> -->
 
   <app-element-list class="app-element-list"></app-element-list>
   <app-modal-info-compound></app-modal-info-compound>

@@ -8,11 +8,12 @@ import { ModalErrorComponent } from '../../components/chemcraft/modal-error/moda
 import { CompoundService } from '../../services/compound.service';
 import { ICompound } from '../../interfaces';
 import { BackgroundService } from '../../services/background.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-chemcraft',
   standalone: true,
-  imports: [ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ModalErrorComponent],
+  imports: [CommonModule, ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ModalErrorComponent],
   templateUrl: './chemcraft.component.html',
   styleUrl: './chemcraft.component.scss'
 })
@@ -20,6 +21,9 @@ export class ChemcraftComponent implements OnInit{
   // private compoundService = inject(CompoundService);
   // private backgroundService = inject(BackgroundService);
   public compoundsList: ICompound[] = [];
+  public currentCompoundFormula: string = '';
+  public elementCount: number = 0;
+  public slotsArray: any[] = [];
   @ViewChild('modalError') modalError!: ModalErrorComponent;
 
 
@@ -34,8 +38,6 @@ export class ChemcraftComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.compoundService.getAll();
-    this.compoundsList = this.compoundService.compounds$();
     this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
   }
 
@@ -43,6 +45,23 @@ export class ChemcraftComponent implements OnInit{
   showError(event: { title: string; text: string, buttons: boolean }): void {
       this.modalError.showModal(event.title, event.text, event.buttons);
     }
+
+
+    onCompoundGenerated(formula: string): void {
+      this.currentCompoundFormula = formula;
+      console.log('Formula: ', formula);
+      this.setSlots();
+    }
+
+    setSlots(): void {
+      const formula = this.currentCompoundFormula || '';
+      const elementSymbolPar = /[A-Z][a-z]?/g; // esto funciona de manera que primero seleciona una letra mayuscula y luego una minuscula para elementos como el Al o el Fe, Mg, etc..
+      const elements = formula.match(elementSymbolPar) || []; //aca revisa que la formula tenga elementos y si no los tiene, devuelve un array vacio
+      const uniqueElements = new Set(elements);
+      this.elementCount = uniqueElements.size;
+      this.slotsArray = Array(this.elementCount);
+  }
+  
 
   }
 

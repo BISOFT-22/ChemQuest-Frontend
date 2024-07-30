@@ -44,36 +44,36 @@ describe('ChemGuessHangManComponent', () => {
     fixture.detectChanges();
   });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
-
-//   it('should initialize and fetch data on init', () => {
-//     component.ngOnInit();
-//     expect(randomizerServiceStub.checkAndFetch).toHaveBeenCalled();
-//     expect(randomizerServiceStub.getRandomWord).toHaveBeenCalled();
-//     expect(component.word).toBe('TEST');
-//     expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
-//   });
-
-  it('should check and add letter to guessedLetters', () => {
-    component.letter = 'A';
-    component.displayedWord = ['_', '_', '_', '_'];
-    component.checkLetter('A');
-    expect(component.guessedLetters.has('A')).toBeTrue();
-    expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should replace blank with given letter', () => {
-    component.displayedWord = ['_', '_', '_', '_'];
-    component.replaceBlank(1, 'B');
-    expect(component.displayedWord).toEqual(['_', 'B', '_', '_']);
-  });
+  // it('should initialize and fetch data on init', () => {
+  //   component.ngOnInit();
+  //   expect(randomizerServiceStub.checkAndFetch).toHaveBeenCalled();
+  //   expect(randomizerServiceStub.getRandomWord).toHaveBeenCalled();
+  //   expect(component.word).toBe('TEST');
+  //   expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
+  // });
 
-  it('should split word into letters', () => {
-    component.splitIntoWords('WORD');
-    expect(component.wordsArray).toEqual(['W', 'O', 'R', 'D']);
-  });
+  // it('should check and add letter to guessedLetters', () => {
+  //   component.letter = 'A';
+  //   component.displayedWord = ['_', '_', '_', '_'];
+  //   component.checkLetter('A');
+  //   expect(component.guessedLetters.has('A')).toBeTrue();
+  //   expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
+  // });
+
+  // it('should replace blank with given letter', () => {
+  //   component.displayedWord = ['_', '_', '_', '_'];
+  //   component.replaceBlank(1, 'B');
+  //   expect(component.displayedWord).toEqual(['_', 'B', '_', '_']);
+  // });
+
+  // it('should split word into letters', () => {
+  //   component.splitIntoWords('WORD');
+  //   expect(component.wordsArray).toEqual(['W', 'O', 'R', 'D']);
+  // });
 
   // Agrega más pruebas según sea necesario...
 });

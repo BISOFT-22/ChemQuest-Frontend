@@ -18,32 +18,23 @@
             
           
             <br>
-            <img class="imgs" [src]="imagePathAbajo" alt="" > <!----->
+            <img class="imgs" [src]="" alt="" > <!----->
         </div>
     </div>
-
-    
 </main>
 <app-chem-guess-hang-man 
 [allHistory]="allHistory"
 (addFavoriteEvent)="getWord($event)"
 />
-
-
 <div>
-
 <p class="racha"><i class="fa-solid fa-fire"></i>{{strike}}</p>
-    
-
-
+   
 <script>
     function toggleNavbar() {
         var navbarLinks = document.getElementById('navbar-links');
         navbarLinks.classList.toggle('active');
     }
 </script>
-
-
 
     <app-modal-pruebas size="lg" #modalPrueba>
         <div class="content" >

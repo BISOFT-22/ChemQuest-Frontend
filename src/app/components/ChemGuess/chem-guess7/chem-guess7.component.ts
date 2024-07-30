@@ -21,18 +21,15 @@ import { LiveChangeService } from '../../../services/liveChange.service';
 export class ChemGuess7Component implements OnChanges {
   @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
   liveImg: string = 'assets/img/live/live100.png';
-
-  constructor(private liveChangeService: LiveChangeService) {
-    
-    
-  }
-  imagePath: string = 'assets/img/magoscuro.jpeg';
-  imagePathAzules: string = 'assets/img/ojosazules.jpeg';
-  imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
-  public allHistory: IHistory[] = [];
- 
   @Input() live: number | undefined;
   strike: number = 0;
+  public allHistory: IHistory[] = [];
+
+  constructor(private liveChangeService: LiveChangeService) {}
+ 
+ 
+ 
+ 
 /////////////////////////
 
 
@@ -42,8 +39,6 @@ showHistory(modal:any): void {
 
 }
 ////////////////////////
-  
-
 opcion: string='';
   getWord(word:string){
     this.opcion = word;

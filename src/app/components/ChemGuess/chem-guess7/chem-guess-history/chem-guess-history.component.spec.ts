@@ -6,8 +6,8 @@ describe('ChemGuessHistoryComponent', () => {
     let component: ChemGuessHistoryComponent;
     let fixture: ComponentFixture<ChemGuessHistoryComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    beforeEach(async(async () => {
+        await TestBed.configureTestingModule({
             declarations: [ChemGuessHistoryComponent]
         })
             .compileComponents();
@@ -23,3 +23,12 @@ describe('ChemGuessHistoryComponent', () => {
         expect(component).toBeTruthy();
     });
 });
+
+
+
+
+
+
+    
+  
+

@@ -25,9 +25,6 @@ export class ChemGuessHistoryComponent {
   callEvent() {
     this.callHistoryEvent.emit(true);
   }
-
-  
-
   see(){
     console.log(this.allHistory)
   }

@@ -7,7 +7,7 @@ import { ChemGuessHangManComponent } from './chem-guess-hang-man/chem-guess-hang
 import { ModalPruebasComponent } from '../../../modal-pruebas/modal-pruebas.component';
 import { CommonModule } from '@angular/common';
 
-import { IElement, IHistory } from '../../../interfaces';
+import { IElement, IHistory, IUser } from '../../../interfaces';
 import { ChemGuessHistoryComponent } from './chem-guess-history/chem-guess-history.component';
 import { LiveChangeService } from '../../../services/liveChange.service';
 
@@ -21,15 +21,19 @@ import { LiveChangeService } from '../../../services/liveChange.service';
 export class ChemGuess7Component implements OnChanges {
   @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
   liveImg: string = 'assets/img/live/live100.png';
-  @Input() live: number | undefined;
-  strike: number = 0;
+  imagePath: string = 'assets/img/magoscuro.jpeg';
+  imagePathAzules: string = 'assets/img/ojosazules.jpeg';
+  imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
   public allHistory: IHistory[] = [];
+  @Input() live: number | undefined;
+ public streak: number | undefined = 0;
 
-  constructor(private liveChangeService: LiveChangeService) {}
- 
- 
- 
- 
+  constructor(private liveChangeService: LiveChangeService) {
+    
+    
+  }
+  
+  
 /////////////////////////
 
 
@@ -39,6 +43,8 @@ showHistory(modal:any): void {
 
 }
 ////////////////////////
+  
+
 opcion: string='';
   getWord(word:string){
     this.opcion = word;

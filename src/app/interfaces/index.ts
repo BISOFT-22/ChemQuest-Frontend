@@ -14,6 +14,7 @@ export interface IUser {
   name?: string;
   lastname?: string;
   email?: string;
+  streak?: number;
   password?: string;
   active?: boolean;
   createdAt?: string;

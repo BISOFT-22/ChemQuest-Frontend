@@ -35,7 +35,7 @@ export class RandomizerService extends BaseService<IElement> {
       console.error('Element is empty or not defined');
       return undefined;
     }
-    const randomIndex = Math.floor(Math.random() * 118);
+    const randomIndex = Math.floor(Math.random() * this.elementsSubject.getValue().length);
   
     const item = this.elementsSubject.getValue()[randomIndex];
   

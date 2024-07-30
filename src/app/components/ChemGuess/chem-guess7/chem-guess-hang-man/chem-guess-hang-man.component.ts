@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {IHistory } from '../../../../interfaces';
+import {IHistory, IUser } from '../../../../interfaces';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { ModalPruebasComponent } from "../../../../modal-pruebas/modal-pruebas.component";
 import { LiveChangeService } from '../../../../services/liveChange.service';
 import { ChemGuessSendComponent } from '../chem-guess-send7/chem-guess-form7.component';
+import { UserService } from '../../../../services/user.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-chem-guess-hang-man',
@@ -28,6 +30,7 @@ export class ChemGuessHangManComponent implements OnInit {
     typeColor: [],
     wrong: 5,
   };
+  user:IUser = {};
   
   @Input() allHistory: IHistory[] = [];
   word: string = '';
@@ -41,7 +44,7 @@ export class ChemGuessHangManComponent implements OnInit {
   ////////////////////////////
   
 
-  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private liveChangeService: LiveChangeService) {
+  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private liveChangeService: LiveChangeService, private authService: AuthService, private userService: UserService) {
     
     
   }
@@ -49,7 +52,7 @@ export class ChemGuessHangManComponent implements OnInit {
 
   callEvent() {
     this.historyChange.emit(this.allHistory);
-    console.log("estoy emitiendo");
+
   }
 
   showDetailModal(modal: any) {
@@ -77,8 +80,9 @@ export class ChemGuessHangManComponent implements OnInit {
   initializeThings(): void {
     // Ensure data is fetched
     this.random.checkAndFetch();
+    this.user = this.authService.getUser() || {};
 
-    //  Se suscribe a un signal para cagar la data de despues
+  
     this.random.items$.subscribe({
       next: () => {
         // Data has been fetched; proceed to get random word
@@ -149,7 +153,7 @@ export class ChemGuessHangManComponent implements OnInit {
   }
 /////////////////////////////Comprobar palabra
 CompareWord(): void {
-  
+  this.user = this.authService.getUser() || {};
   let historytemp: IHistory = {
     userWords: [],
     typeColor: [],
@@ -197,7 +201,23 @@ CompareWord(): void {
                 break;
           }
     }
+  }
+    if (historytemp.wrong == 0) {
+      this.router.navigate(['/dashboard']);
+      
+    }
+    if (historytemp.typeColor) {
+      for (const color of historytemp.typeColor) {
+            if (color === "#87F14A") {
+              this.user.streak =+ 1;
+              this.userService.updateUserSignal(this.user);
+              
+              break;
+        }
+  }
 }
+  
+
 
  this.updateHistory(historytemp);
 

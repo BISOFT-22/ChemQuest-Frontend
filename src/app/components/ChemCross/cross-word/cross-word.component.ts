@@ -632,7 +632,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     this.GenerateCrossW();
 
-    alert(this.ValidateCrossWord());
+    // alert(this.ValidateCrossWord());
 
     for (const c of this.cellsCollection) {
       this.crossWord[i][j] = c.value;

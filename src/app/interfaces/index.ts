@@ -58,3 +58,41 @@ export interface IGame {
   updatedAt?: string;
   status?: string;
 }
+
+export interface IElement {
+  id?: number;
+  name?: string;
+  description?: string;
+  atomicNumber?: number;
+  symbol?: string;
+  group?: number;
+  period?: number;
+  block?: string;
+  series?: string;
+  discover?: string;
+  discoveredBy?: string;
+  origin?: string;
+  image?: string;
+  source?: string;
+  proton?: string;
+  neutron?: string;
+  electron?: string;
+}
+
+export interface ICompound {
+  id?: number;
+  name?: string;
+  commonName?: string;
+  description?: string;
+  formula?: string;
+  molecularMass?: string;
+  color?: string;
+  state?: string;
+  commonUses?: string;
+  risks?: string;
+  image?: string;
+  structure?: string;
+  sigma?: string;
+  pi?: string;
+  sp?: string;
+}

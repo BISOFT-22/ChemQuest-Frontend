@@ -16,6 +16,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
     </ng-template>
   `,
 })
+
 export class ModalComponent {
   @Input() size?: string;
   @Input() title?: string;

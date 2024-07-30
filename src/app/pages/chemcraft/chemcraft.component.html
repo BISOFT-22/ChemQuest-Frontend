@@ -1,0 +1,35 @@
+<!-- <div style="background-image: url('assets/img/chemcraft/bgChemcraft-light.png');"> -->
+
+<div class="container">
+  <app-compound-request class="app-compound-request"
+  [compoundsList]="compoundsList"
+(compoundGenerated)="onCompoundGenerated($event)"
+(alert)="showAlert($event)"
+  [change]="change"
+  ></app-compound-request>
+
+  <div class="slots">
+    <ng-container *ngFor="let slot of slotsArray">
+      <app-slot (error)="showAlert($event)"></app-slot>
+    </ng-container>
+  </div>
+
+  <!-- <div class="slots">
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
+    <app-slot (error)="showError($event)"></app-slot>
+
+  </div> -->
+
+  <app-element-list class="app-element-list"></app-element-list>
+  <app-modal-info-compound></app-modal-info-compound>
+  <app-modal-tutorial></app-modal-tutorial>
+  
+  
+ <app-modal-error size="lg" #modalError
+ (action)="sendAction($event)"
+ ></app-modal-error>
+</div>
+  
+<!-- </div> -->

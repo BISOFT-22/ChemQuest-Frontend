@@ -1,0 +1,12 @@
+<div class="slot" (dragover)="allowDrop($event)" (drop)="onDrop($event)">
+    @if(element){
+      <div class="element" draggable="true" (dragstart)="onDragStart($event)">
+      {{ element.symbol }}
+      </div>
+    }
+    @if(element){
+      <div class="counter">
+        {{ element.count }}
+      </div>
+    }
+  </div>

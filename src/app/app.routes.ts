@@ -17,8 +17,16 @@ import { ChemGuess9Component } from './components/ChemGuess/chem-guess9/chem-gue
 import { ChemGuess10Component } from './components/ChemGuess/chem-guess10/chem-guess10.component';
 import { ChemGuess11Component } from './components/ChemGuess/chem-guess11/chem-guess11.component';
 import { ChemCrossComponent } from './components/ChemCross/chem-cross/chem-cross.component';
+import { LandingChemquestComponent } from './pages/landing-chemquest/landing-chemquest.component'; // Importa tu componente de landing page
+import { LandingNakamuraComponent } from './pages/landing-nakamura/landing-nakamura.component';
+import { ChemcraftComponent } from './pages/chemcraft/chemcraft.component';
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: LandingChemquestComponent, 
+    pathMatch: 'full',
+  },
   {
     path: 'login',
     component: LoginComponent,
@@ -33,20 +41,56 @@ export const routes: Routes = [
     path: 'access-denied',
     component: AccessDeniedComponent,
   },
+
   {
-    path: '',
-    redirectTo: 'login',
+    path: 'landing-nakamura',
+    component: LandingNakamuraComponent, 
     pathMatch: 'full',
   },
+
   {
     path: 'app',
     component: AppLayoutComponent,
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'app',
-        redirectTo: 'users',
-        pathMatch: 'full',
+        path: 'profile',
+        component: ProfileComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: false,
+          name: 'Profile'
+        }
+      },
+      {
+        path: 'chemcraft',
+        component: ChemcraftComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'ChemCraft'
+        }
+      },
+      {
+        path: 'games',
+        component: GamesComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'Juegos'
+        }
       },
       {
         path: 'users',
@@ -58,7 +102,7 @@ export const routes: Routes = [
             IRoleType.superAdmin
           ],
           showInSidebar: true,
-          name: 'Users'
+          name: 'Usuarios'
         }
       },
       {

@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TopbarComponent } from './elements/topbar/topbar.component';
 import { SidebarComponent } from './elements/sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { LayoutService } from '../../services/layout.service';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
+import { BackgroundService } from '../../services/background.service';
+import { filter } from 'rxjs';
+
 
 @Component({
   selector: 'app-layout',
@@ -17,11 +20,25 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
     SvgIconComponent
   ],
   templateUrl: './app-layout.component.html',
+  styleUrl: './app-layout.component.scss'
 })
-export class AppLayoutComponent {
+export class AppLayoutComponent implements OnInit{
   public title?: string;
-
-  constructor(public layoutService: LayoutService) {
+  public backgroundUrl: string = '';
+  constructor(public layoutService: LayoutService, private backgroundService: BackgroundService,  private router: Router, private cdr: ChangeDetectorRef) {
     this.layoutService.title.subscribe((title) => (this.title = title));
+  }
+
+  ngOnInit() {
+    this.backgroundService.background$.subscribe((url) => {
+      this.backgroundUrl = url;
+      this.cdr.detectChanges(); // para q detecte cambios
+    });
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.backgroundService.changeBackground('');
+      });
   }
 }

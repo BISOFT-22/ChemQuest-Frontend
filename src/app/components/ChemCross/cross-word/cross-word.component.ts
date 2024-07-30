@@ -630,6 +630,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let i: number = 0;
     let j: number = 0;
 
+    this.GenerateCrossW();
+
+    alert(this.ValidateCrossWord());
+
     for (const c of this.cellsCollection) {
       this.crossWord[i][j] = c.value;
 
@@ -781,10 +785,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     let j: number = 0;
     let k: number = 1;
 
-    this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
+    // this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
 
-    for (const c of this.cellsCollection) {
+    for (let c of this.cellsCollection) {
       c.value = this.crossWord[i][j];
       c.parentElement?.parentElement?.children[0]?.setAttribute('innerHTML', k.toString());
 
@@ -887,19 +891,20 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.crossSize = Math.sqrt(crossWordCollection[idCrossWord].length);
     this.fakeArray = new Array(this.crossSize);
     this.GenerateCrossW();
-
+    
     for (const c of crossWordCollection[idCrossWord]) {
       this.crossWord[i][j] = c;
-
+      
       j++;
-
+      
       if (j == this.crossSize) {
         j = 0;
         i++;
       }
     }
-
+    
     this.DrawCrossWord();
+    this.AssignId();
     this.UpdateWordLogList();
 
   }
@@ -935,7 +940,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    */
   FilterWords() {
     this.txtFilter = document.getElementById("filter") as HTMLInputElement;
-    let letter = new RegExp(this.txtFilter.value, "i");
+    let letter = new RegExp(this.txtFilter? this.txtFilter.value :"" , "i");
     let str = "";
     let strSymbols = ""
 
@@ -1368,6 +1373,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
   }
 
+  /**
+   * Toggles the visibility of hints in the crossword component.
+   * @param e - The event object.
+   */
   ShowHints(e: Event){
 
      if(this.showHints){
@@ -1377,6 +1386,17 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
         this.showHints = true;
         document.getElementById("hints")!.style.display = "flex";
     }
+  }
+
+
+  /**
+   * Validates the crossword by checking if the number of cells in the crossword
+   * matches the square of the length of the crossWord array.
+   * 
+   * @returns {boolean} True if the crossword is valid, false otherwise.
+   */
+  ValidateCrossWord():boolean {
+    return Math.pow(this.crossWord.length,2) == this.cellsCollection.length;
   }
 
 

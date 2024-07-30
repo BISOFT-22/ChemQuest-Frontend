@@ -2,14 +2,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { ChemGuessHangManComponent } from '../chem-guess-hang-man/chem-guess-hang-man.component';
 import { IHistory } from '../../../../interfaces';
 
 @Component({
   selector: 'app-chem-guess-history',
   standalone: true,
-  imports: [CommonModule, FormsModule, ChemGuessHangManComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './chem-guess-history.component.html',
   styleUrl: './chem-guess-history.component.scss'
 })

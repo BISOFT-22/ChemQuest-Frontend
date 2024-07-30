@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChemGuessHistoryComponent } from './chem-guess-history.component';
 
@@ -6,12 +6,12 @@ describe('ChemGuessHistoryComponent', () => {
     let component: ChemGuessHistoryComponent;
     let fixture: ComponentFixture<ChemGuessHistoryComponent>;
 
-    beforeEach(async(async () => {
+    beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ChemGuessHistoryComponent]
+            imports:[]
         })
             .compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ChemGuessHistoryComponent);

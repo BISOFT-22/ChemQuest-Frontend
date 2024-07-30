@@ -7,12 +7,12 @@ describe('ChemGuessForm7Component', () => {
     let component: ChemGuessSendComponent;
     let fixture: ComponentFixture<ChemGuessSendComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ChemGuessSendComponent]
+    beforeEach(async() => {
+        await TestBed.configureTestingModule({
+            imports:[]
         })
             .compileComponents();
-    }));
+    });
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ChemGuessSendComponent);

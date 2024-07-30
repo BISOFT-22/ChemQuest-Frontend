@@ -26,7 +26,7 @@ describe('ChemGuessHangManComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      declarations: [ ChemGuessHangManComponent ],
+      imports: [ ChemGuessHangManComponent ],
       providers: [
         { provide: RandomizerService, useValue: randomizerServiceStub },
         { provide: NgbModal, useValue: {} },
@@ -53,21 +53,21 @@ describe('ChemGuessHangManComponent', () => {
   //   expect(randomizerServiceStub.checkAndFetch).toHaveBeenCalled();
   //   expect(randomizerServiceStub.getRandomWord).toHaveBeenCalled();
   //   expect(component.word).toBe('TEST');
-  //   expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
+  //   expect(component.displayedWord).toEqual(['', '', '', '']);
   // });
 
   // it('should check and add letter to guessedLetters', () => {
   //   component.letter = 'A';
-  //   component.displayedWord = ['_', '_', '_', '_'];
+  //   component.displayedWord = ['', '', '', ''];
   //   component.checkLetter('A');
   //   expect(component.guessedLetters.has('A')).toBeTrue();
-  //   expect(component.displayedWord).toEqual(['_', '_', '_', '_']);
+  //   expect(component.displayedWord).toEqual(['', '', '', '']);
   // });
 
   // it('should replace blank with given letter', () => {
-  //   component.displayedWord = ['_', '_', '_', '_'];
+  //   component.displayedWord = ['', '', '', ''];
   //   component.replaceBlank(1, 'B');
-  //   expect(component.displayedWord).toEqual(['_', 'B', '_', '_']);
+  //   expect(component.displayedWord).toEqual(['', 'B', '', '_']);
   // });
 
   // it('should split word into letters', () => {

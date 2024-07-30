@@ -20,11 +20,14 @@ export class ModalErrorComponent {
 
 
   showModal(title: string, text: string, buttons: boolean): void {
+    console.log('Show buttons: ', buttons);
     this.title = title;
     this.text = text;
     this.isVisible = true;
     if(buttons){
     this.buttonsVisible = true;
+    } else {
+      this.buttonsVisible = false;
     }
   }
 

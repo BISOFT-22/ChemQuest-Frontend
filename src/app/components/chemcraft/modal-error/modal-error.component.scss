@@ -81,24 +81,38 @@
     .modal-error {
         max-width: 90%;
         padding: 15px;
-        flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+        flex-direction: column;
     }
 
     #error {
-        margin: 0 auto 15px auto; /* Centra la imagen y añade margen inferior */
+        margin: 0 auto 15px auto; 
     }
 
     .info {
-        margin: 0 auto; /* Centra el contenido */
+        margin: 0 auto; 
     }
 
     .buttons-container {
-        text-align: center; /* Centra los botones */
-        width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
+        text-align: center;
+        max-width: 60%;
+        display: block;
+        margin: auto;
     }
 
     .action-button {
-        width: 100%; /* Asegura que los botones ocupen todo el ancho disponible */
-        margin: 5px 0; /* Añade margen entre los botones */
+        width: 100%;
+        margin: 5px 0; 
     }
+}
+
+@media (max-width: 855px) {
+.buttons-container {
+    text-align: center;
+    display: block;
+    margin: auto auto;
+}
+
+.action-button{
+    margin: 5px 0; 
+}
 }

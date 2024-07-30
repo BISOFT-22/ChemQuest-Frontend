@@ -134,3 +134,24 @@ export interface IHistory{
   typeColor?: string[];
   wrong?: number;
 }
+
+export interface IChemTest {
+  id?: number;
+  module: string;
+  questions: IChemTestQuestion[];
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface IChemTestQuestion {
+  id?: number;
+  type: 'single-choice' | 'matching' | 'short-answer';
+  questionText: string;
+  options?: IChemTestOption[];
+  answer?: string;
+}
+
+export interface IChemTestOption {
+  id?: number;
+  text: string;
+}

@@ -1,56 +1,34 @@
 
 
-
-<main>
+<main (mousemove)="changeLife()">
     <div>
         <div class="Question-Timer">
-            <select id="options" class="custom-select">
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-                <option value="opcion5">Opción 5</option>
-              </select> 
+            <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
+            
+                <img class="imgLive" [src]="liveImg" alt="">
+              
               <div>
-                <p></p>
-                <h2 class="advance">{{live}}</h2>
+               
+                
               </div>
             
             <h2 class="timer">12:00</h2>
         </div>
         <div class="imageQuestion">
             
-            <button class="pregunta big-button">{{opcion}}</button>
+          
             <br>
-            <img class="imgs" [src]="imagePathAbajo" alt="" >
+            <img class="imgs" [src]="imagePathAbajo" alt="" > <!----->
         </div>
-        
-            
-
     </div>
-
-    
 </main>
-<div class="botones">
-    <button class="big-button">HOMOGENEA</button>
-    <button class="big-button">HETEROGENEA</button>
-</div>
 <app-chem-guess-hang-man 
+[allHistory]="allHistory"
 (addFavoriteEvent)="getWord($event)"
 />
-
-<p class="racha"><i class="fa-solid fa-fire"></i>100</p>
-
-<div class="sendOrChange">
-    <button type="button" class="big-button" (click)="open()">Probar respuesta</button>
-    <button type="button" class="big-button" (click)="open()">Cambiar Pregunta</button>
-</div>
-
-
-
-
-
-
+<div>
+<p class="racha"><i class="fa-solid fa-fire"></i>{{streak}}</p>
+   
 <script>
     function toggleNavbar() {
         var navbarLinks = document.getElementById('navbar-links');
@@ -58,5 +36,17 @@
     }
 </script>
 
+    <app-modal-pruebas size="lg" #modalPrueba>
+        <div class="content" >
+            <div class="modal-error"  >
+                
+             <app-chem-guess-history [allHistory]="allHistory"
+             ></app-chem-guess-history>  
+            </div>
+          </div>
+    </app-modal-pruebas>
+    
+
+  
 
 

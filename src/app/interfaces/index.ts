@@ -1,3 +1,5 @@
+import { ListFormat } from "typescript";
+
 export interface ILoginResponse {
   accessToken: string;
   expiresIn: number
@@ -12,6 +14,7 @@ export interface IUser {
   name?: string;
   lastname?: string;
   email?: string;
+  streak?: number;
   password?: string;
   active?: boolean;
   createdAt?: string;
@@ -95,4 +98,39 @@ export interface ICompound {
   sigma?: string;
   pi?: string;
   sp?: string;
+}
+
+export interface IGame {
+  id?: number;
+  description?: string;
+  name?: string;
+  imgURL?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: string;
+}
+export interface IElement {
+  id?: number;
+  name?: string;
+  description?: string;
+  atomicNumber?: number;
+  symbol?: string;
+  group?: number;
+  period?: number;
+  block?: string;
+  series?: string;
+  discover?: string;
+  discoveredBy?: string;
+  origin?: string;
+  image?: string;
+  source?: string;
+  proton?: string ;
+  neutron?: string ;
+  electron?: string;
+}
+
+export interface IHistory{
+  userWords?: string[];
+  typeColor?: string[];
+  wrong?: number;
 }

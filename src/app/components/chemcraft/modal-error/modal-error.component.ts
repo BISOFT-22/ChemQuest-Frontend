@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal-error',
@@ -11,8 +11,11 @@ import { Component, Input } from '@angular/core';
 export class ModalErrorComponent {
   @Input() title: string = '';
   @Input() text: string = '';
+  @Output() action = new EventEmitter<{option: boolean}>();
   isVisible: boolean = false;  
   buttonsVisible: boolean = false;
+  accept: boolean = true;
+  cancel: boolean = false;
 
 
 
@@ -28,4 +31,11 @@ export class ModalErrorComponent {
   closeModal(): void {
     this.isVisible = false;
   }
+
+
+  onButtonClick(option : boolean): void {
+    console.log('Action done');
+    this.action.emit({option});
+    this.closeModal();
+  } 
 }

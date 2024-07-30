@@ -12,6 +12,8 @@ import { ICompound } from '../../../interfaces';
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
   @Output() compoundGenerated = new EventEmitter<string>();
+  @Output() alert = new EventEmitter<{ title: string, text: string, buttons: boolean }>();
+  @Input() change: Boolean = false;
   public compound: ICompound = {};
   public lastCompound: string = '';
   public difficultyLevel: string = '';
@@ -31,8 +33,16 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     if (changes['compoundsList'] && changes['compoundsList'].currentValue.length > 0) {
       this.generateCompoundRequest();
     }
-  }
 
+   
+    if(changes['change'] ){
+    console.log(this.change);
+    if (this.change) {
+      this.generateCompoundRequest();
+    }
+    // this.change = false; lo pase a chemcraft porque sino, no se detecta como un cambio supongo q por ser un input
+    }
+  }
 
   getRamdonCompound(): void {
     if (this.compoundsList.length === 0) {
@@ -85,15 +95,27 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     this.compoundGenerated.emit(this.compound.formula);
     this.textList = [
       'Debes crear el compuesto "' + this.compound.name + '". ¿Qué elementos son necesarios para ello?',
-      '¿Recuerdas la fórmula química del compuesto "' + this.compound.name + '"? Genial, ¿de qué elementos está compuesta la fórmula?',
+      '¿Recuerdas la fórmula química del compuesto "' + this.compound.name + '" ? Genial, ¿De qué elementos está compuesta la fórmula?',
       'Así que eres un químico profesional... ¡Genial! ¿Qué elementos componen la fórmula del siguiente compuesto: "' + this.compound.name + '"?',
     ];
     this.text = this.getRandomText();
     this.setDifficultyLevel();
     // console.log(this.difficultyLevel);
     this.lastCompound = this.compound.name;
+    this.change = false;
+    console.log(this.change);
   } catch (error) {
     console.error((error as Error).message);
   }
+  }
+
+
+  onButtonClick(): void {
+    console.log('Perderas puntoooos');
+    this.alert.emit({
+      title: 'Cambio de solicitud',
+      text: 'Deseas cambiar la solicitud del compuesto a crear? si lo deseas cambiar perderás puntos.',
+      buttons: true
+    });
   }
 }

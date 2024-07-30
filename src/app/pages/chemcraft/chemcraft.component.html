@@ -4,12 +4,13 @@
   <app-compound-request class="app-compound-request"
   [compoundsList]="compoundsList"
 (compoundGenerated)="onCompoundGenerated($event)"
-  >
-  </app-compound-request>
+(alert)="showAlert($event)"
+  [change]="change"
+  ></app-compound-request>
 
   <div class="slots">
     <ng-container *ngFor="let slot of slotsArray">
-      <app-slot (error)="showError($event)"></app-slot>
+      <app-slot (error)="showAlert($event)"></app-slot>
     </ng-container>
   </div>
 
@@ -26,7 +27,9 @@
   <app-modal-tutorial></app-modal-tutorial>
   
   
- <app-modal-error size="lg" #modalError></app-modal-error>
+ <app-modal-error size="lg" #modalError
+ (action)="sendAction($event)"
+ ></app-modal-error>
 </div>
   
 <!-- </div> -->

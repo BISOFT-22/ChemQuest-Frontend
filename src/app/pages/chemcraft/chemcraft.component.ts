@@ -25,6 +25,7 @@ export class ChemcraftComponent implements OnInit{
   public elementCount: number = 0;
   public slotsArray: any[] = [];
   @ViewChild('modalError') modalError!: ModalErrorComponent;
+  public change: boolean = false;
 
 
   
@@ -42,7 +43,7 @@ export class ChemcraftComponent implements OnInit{
   }
 
 
-  showError(event: { title: string; text: string, buttons: boolean }): void {
+  showAlert(event: { title: string; text: string, buttons: boolean }): void {
       this.modalError.showModal(event.title, event.text, event.buttons);
     }
 
@@ -63,5 +64,12 @@ export class ChemcraftComponent implements OnInit{
   }
   
 
+  sendAction(event: { option: boolean }): void {
+  this.change = event.option;
+  if (this.change) {
+    setTimeout(() => {
+      this.change = false; //esto porque desde el request.compound no detecta los cambios cuando el cambio es true y se pasa a false
+    }, 1000);
   }
-
+}
+}

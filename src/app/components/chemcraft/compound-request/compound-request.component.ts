@@ -111,7 +111,6 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
 
 
   onButtonClick(): void {
-    console.log('Perderas puntoooos');
     this.alert.emit({
       title: 'Cambio de solicitud',
       text: 'Deseas cambiar la solicitud del compuesto a crear? si lo deseas cambiar perderás puntos.',

@@ -29,7 +29,7 @@ export class ChemGuess7Component implements OnChanges {
   imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
   public allHistory: IHistory[] = [];
   @Input() live: number | undefined;
-  public streak: number | undefined = 0;
+  public streak: number | undefined=0;
 
   constructor(private liveChangeService: LiveChangeService) {
   }

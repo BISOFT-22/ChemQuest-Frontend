@@ -41,6 +41,7 @@ export class ChemGuessHangManComponent implements OnInit {
    * Input property for the user's history.
    * Contains the user's guessed words, type colors, and remaining wrong guesses.
    */
+  @Input() streak: number | undefined;
   @Input() history: IHistory = {
     userWords: [],  
     typeColor: [],
@@ -302,8 +303,11 @@ export class ChemGuessHangManComponent implements OnInit {
 
     if (historytemp.typeColor) {
       for (const color of historytemp.typeColor) {
-        if (color === "#87F14A") {
+        if (color === "#4575b4") {
           this.user.streak =+ 1;
+          
+          this.streak = this.user.streak;
+          
           this.userService.updateUserSignal(this.user);
           break;
         }

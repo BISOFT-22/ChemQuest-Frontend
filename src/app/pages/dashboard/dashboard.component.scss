@@ -31,3 +31,11 @@
   .primary-button:hover {
     background-color: #857bad;
   }
+
+  .page-title {
+    font-size: 3.5rem !important;
+    margin-bottom: 30px !important;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2) !important;
+    color: #f1a340 !important; /* Color que combina con los botones */
+    background: #ffffff00 !important;
+  }

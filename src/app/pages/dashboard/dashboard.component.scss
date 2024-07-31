@@ -1,0 +1,41 @@
+.dashboard-container {
+    text-align: center;
+    padding-top: 20%;
+    background: #ffffff00;
+  }
+  
+  .dashboard-container h1 {
+    font-size: 2.5em;
+    color: #333;
+  }
+  
+  .dashboard-container p {
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .primary-button {
+    background-color: #998EC3;
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    font-size: 2em;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .primary-button:hover {
+    background-color: #857bad;
+  }
+
+  .page-title {
+    font-size: 3.5rem !important;
+    margin-bottom: 30px !important;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2) !important;
+    color: #f1a340 !important; /* Color que combina con los botones */
+    background: #ffffff00 !important;
+  }

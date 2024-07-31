@@ -3,7 +3,7 @@
   <div class="border-bottom pb-3 mb-3">
     <div class="px-5">
       <label for="email" class="form-label mb-2">
-        Email Address
+        Dirección de correo
       </label>
       <input #email="ngModel" type="text" class="form-control" id="email" name="email" 
         placeholder="user@gmail.com"
@@ -16,7 +16,7 @@
       />
       @if (email.invalid) {
         <div *ngIf="email.invalid" class="invalid-feedback">
-          Please add a valid email
+          Por favor, añade un correo válido
         </div>
       }
     </div>
@@ -25,7 +25,7 @@
     <div class="row">
       <div class="col-6">
         <label for="name" class="form-label mb-2">
-          Name
+          Nombre
         </label>
         <input #name="ngModel" type="text" class="form-control" id="name" name="name" 
           placeholder="Carlos"
@@ -38,7 +38,7 @@
         />
         @if (name.invalid) {
           <div *ngIf="name.invalid" class="invalid-feedback">
-            Please add a valid name
+            Añade un nombre válido
           </div>
         }
       </div>
@@ -58,14 +58,14 @@
         />
         @if (lastname.invalid) {
           <div *ngIf="lastname.invalid" class="invalid-feedback">
-            Please add a valid lastname
+            Añade un apellido válido
           </div>
         }
       </div>
       @if(action == 'add') {
         <div class="col-6 pt-3">
           <label for="password" class="form-label mb-2">
-            Password
+            Contraseña
           </label>
           <input #password="ngModel" type="password" class="form-control" id="password"    
             name="password" 
@@ -79,7 +79,7 @@
           />
           @if (password.invalid) {
             <div *ngIf="password.invalid" class="invalid-feedback">
-              Please add a valid password
+              Porfavor, añade una contraseña válida
             </div>
           }
         </div>

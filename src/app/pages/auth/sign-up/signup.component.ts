@@ -42,7 +42,9 @@ export class SigUpComponent {
     }
     if (this.emailModel.valid && this.passwordModel.valid) {
       this.authService.signup(this.user).subscribe({
-        next: () => this.validSignup = true,
+        next: () => {this.validSignup = true,
+        this.router.navigateByUrl('/login');
+        },
         error: (err: any) => (this.signUpError = err.description),
       });
     }

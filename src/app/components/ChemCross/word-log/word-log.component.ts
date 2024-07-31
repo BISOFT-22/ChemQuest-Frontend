@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, Input,  } from '@angular/core';
 

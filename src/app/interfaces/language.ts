@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 export const Dictionary = [
     ["Used words", "Palabras Utilizadas"],
     ["Clear","Borrar"],

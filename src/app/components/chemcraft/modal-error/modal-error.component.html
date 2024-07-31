@@ -1,7 +1,10 @@
 @if(isVisible){
+
 <div class="content">
     <div class="modal-error"  >
       <button class="close-button" (click)="closeModal()">x</button>
+      <ng-content></ng-content>
+      @if(isAlert){
       <img id="error" src="assets/img/chemcraft/error.png" alt="error" >
       <div class="info">
         <h2 id="title">{{ title }}</h2>
@@ -13,6 +16,8 @@
         </div>
         }
       </div>
-    </div>
+
+    }
+    </div>   
   </div>
 }

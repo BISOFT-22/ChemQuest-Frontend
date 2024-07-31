@@ -18,6 +18,7 @@ import { LanguageSelectComponent } from "../../language-select/language-select.c
   styleUrl: './cross-word.component.scss'
 })
 export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  [key: string]: any;
 
   msg = Dictionary;
   id_language: number = 0; //0: English 1:Spanish
@@ -290,6 +291,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.GenerateCrossW();
     // this.LoadCrossWord(1);
     this.FilterWords();
+    // this.GetMethods();
   }
 
   /**
@@ -970,7 +972,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     document.getElementById("wordHints")!.innerHTML = str;
     // document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
-    //Agregar event listeners a las palabras de pista
+    //Add event listeners to the clue words.
     for (let c of Array.from(document.getElementsByClassName("hintWord"))  ) {
       c.addEventListener("dragstart", (e) => this.OnDragStart(e as DragEvent));
       c.addEventListener("dblclick", (e) => this.OnWordDoubleCLick(e as Event));
@@ -1407,5 +1409,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   RefreshWordLog(word: string) {
     this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
     this.wordLog.innerHTML += `<div>${word}</div>`;
+  }
+  
+  GetMethods(){
+    const methodsList = Object.getOwnPropertyNames(CrossWordComponent.prototype).filter((method) => {
+      return typeof CrossWordComponent.prototype[method] === 'function';
+    });
+
+    console.log(methodsList);
   }
 }

@@ -1,3 +1,6 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ElementService } from '../../../services/element.service';
@@ -11,18 +14,19 @@ import { effect } from '@angular/core';
   templateUrl: './element-list.component.html',
   styleUrls: ['./element-list.component.scss']
 })
-export class ElementListComponent implements OnInit{
+
+
+export class ElementListComponent implements OnInit {
   public elementsList: IElement[] = [];
   public noResults: boolean = false;
   public isSearching: boolean = false;
-  public clickElementIndex: number | null = null; 
+  public clickElementIndex: number | null = null;
   private service = inject(ElementService);
   @ViewChild('elementsContainer', { static: true }) elementsContainer!: ElementRef;
 
-
   constructor() {
     this.service.getAllSignal();
-    effect(() => {      
+    effect(() => {
       this.elementsList = [...this.service.elements$()].reverse();
     });
   }
@@ -32,19 +36,38 @@ export class ElementListComponent implements OnInit{
     this.elementSearch();
   }
 
+  /**
+   *Muestra la información del elemento en el índice especificado.
+   *@param index - El índice del elemento que se va a mostrar.
+   */
   showElementInfo(index: number): void {
     this.clickElementIndex = index;
   }
 
+  /**
+   Oculta la información del elemento.
+   *@param event - El evento del mouse que desencadenó la acción.
+   */
   hideElementInfo(event: MouseEvent): void {
     event.stopPropagation();
     this.clickElementIndex = null;
   }
 
+  /**
+   Normaliza una cadena de texto eliminando los caracteres diacríticos y convirtiéndola a minúsculas.
+   *@param str - La cadena de texto a normalizar.
+   *@returns La cadena de texto normalizada.
+   */
   normalizeString(str: string): string {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
   }
 
+  /**
+   *Al ingresar texto en el campo de búsqueda, se filtran los elementos que coinciden con el texto ingresado.
+   *Los elementos que coinciden se muestran, mientras que los elementos que no coinciden se ocultan.
+   *Además, se actualiza la variable `isSearching` para indicar si se está realizando una búsqueda.
+   *Si no se encuentran resultados y se está realizando una búsqueda, se actualiza la variable `noResults`.
+   */
   private elementSearch(): void {
     const elementSearch = document.getElementById('element-search') as HTMLInputElement;
     elementSearch.addEventListener('input', () => {
@@ -76,18 +99,35 @@ export class ElementListComponent implements OnInit{
     });
   }
 
+  /**
+   *Previene el evento de soltar elementos arrastrados.
+   @param event - El evento de arrastre.
+   */
   preventDrop(event: DragEvent): void {
     event.preventDefault();
   }
 
+  /**
+   *Permite el evento de soltar elementos arrastrados.
+   *@param event - El evento de arrastre.
+   */
   allowDrop(event: DragEvent): void {
     event.preventDefault();
   }
 
+  /**
+   *Maneja el evento de inicio de arrastre de un elemento.
+   *@param event - El evento de arrastre.
+   *@param element - El elemento arrastrado.
+   */
   onDragStart(event: DragEvent, element: IElement): void {
     event.dataTransfer?.setData('text/plain', JSON.stringify(element));
   }
 
+  /**
+   *Maneja el evento de soltar un elemento arrastrado.
+   *@param event - El evento de soltar.
+   */
   onDrop(event: DragEvent): void {
     event.preventDefault();
     const data = event.dataTransfer?.getData('text/plain');
@@ -97,10 +137,18 @@ export class ElementListComponent implements OnInit{
     }
   }
 
+  
+  /**
+   * Desplaza el contenedor de elementos hacia la izquierda.
+  */
   scrollLeft(): void {
     this.elementsContainer.nativeElement.scrollBy({ left: -100, behavior: 'smooth' });
   }
 
+  
+  /**
+   * Desplaza el contenedor de elementos hacia la derecha.
+  */
   scrollRight(): void {
     this.elementsContainer.nativeElement.scrollBy({ left: 100, behavior: 'smooth' });
   }

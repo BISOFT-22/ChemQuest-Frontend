@@ -1,3 +1,6 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
 import { Injectable, signal } from '@angular/core';
 import { BaseService } from './base-service';
 import { IElement } from '../interfaces';

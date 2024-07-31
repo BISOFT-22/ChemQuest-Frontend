@@ -5,8 +5,20 @@
       </div>
     }
     @if(element){
-      <div class="counter">
+      <div (click)="showEditCounter()" class="counter" >
         {{ element.count }}
       </div>
     }
   </div>
+
+  <app-modal-error size="lg" #modalError>
+        <div class="info">
+          <h2 id="title">Editar cantidad</h2>
+          <p id="text"> Ingresa la cantidad de elementos que necesitas para crear el compuesto:</p>
+            <input class="input-edit" type="number" [(ngModel)]="counterValue">
+            <div class="buttons-container">
+              <button class="action-button" (click)="this.modalError.closeModal()">Cancelar</button>
+              <button class="action-button" (click)="editCounter()">Editar</button>
+           </div>
+    </div>  
+  </app-modal-error>

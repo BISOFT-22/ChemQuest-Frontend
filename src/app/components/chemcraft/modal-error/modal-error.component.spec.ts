@@ -1,3 +1,7 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
+
 // import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 // import { ModalErrorComponent } from './modal-error.component';

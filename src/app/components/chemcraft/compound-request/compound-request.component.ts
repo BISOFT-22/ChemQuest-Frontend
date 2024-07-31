@@ -1,3 +1,9 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
+
+
+
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICompound } from '../../../interfaces';
@@ -12,7 +18,7 @@ import { ICompound } from '../../../interfaces';
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
   @Output() compoundGenerated = new EventEmitter<string>();
-  @Output() alert = new EventEmitter<{ title: string, text: string, buttons: boolean }>();
+  @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttons: boolean }>();
   @Input() change: Boolean = false;
   public compound: ICompound = {};
   public lastCompound: string = '';
@@ -44,6 +50,7 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     }
   }
 
+  //genera un componente ramdon de la lista
   getRamdonCompound(): void {
     if (this.compoundsList.length === 0) {
       throw new Error('Compound list is empty');
@@ -52,12 +59,13 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     this.compound = this.compoundsList[randomIndex];
   }
 
+  //Obtiene un texto aleatorio de la lista de textos
   getRandomText(): string {
     const randomIndex = Math.floor(Math.random() * this.textList.length);
     return this.textList[randomIndex];
   }
 
-
+//Determina el nivel de dificultad de la solicitud de compuesto
   setDifficultyLevel(): void {
     const elementSymbolPar = /[A-Z][a-z]?/g; // esto funciona de manera que primero seleciona una letra mayuscula y luego una minuscula para elementos como el Al o el Fe, Mg, etc..
     const elements = this.compound.formula || ''.match(elementSymbolPar) || []; //aca revisa que la formula tenga elementos y si no los tiene, devuelve un array vacio
@@ -109,11 +117,12 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
   }
   }
 
-
+//Muestra una alerta para cambiar la solicitud de compuesto
   onButtonClick(): void {
     this.alert.emit({
       title: 'Cambio de solicitud',
       text: 'Deseas cambiar la solicitud del compuesto a crear? si lo deseas cambiar perderás puntos.',
+      isAlert: true,
       buttons: true
     });
   }

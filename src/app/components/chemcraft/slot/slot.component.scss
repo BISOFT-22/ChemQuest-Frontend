@@ -1,3 +1,7 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
+
 .slot {
   width: 100px;
   height: 100px;
@@ -32,6 +36,10 @@
   font-size: 14px;
 }
 
+.counter:hover {
+  cursor: pointer;
+}
+
 .element {
   background-color: #1a661a;
   //background: #998EC3;
@@ -62,6 +70,81 @@
   
 }
 
+/*--------Edit modal------------*/
+
+
+.info {
+  margin-top: 20px;
+  margin-right: 12px;
+}
+
+#title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#text {
+  text-align: center;
+  font-size: 16px;
+}
+.action-button {
+  background-color: #1a661a;
+  border: #1a661a;
+  // background: #998EC3;
+  // border: #998EC3;
+  color: #fff;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.buttons-container {
+  text-align: end;
+}
+
+.input-edit{
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+
+@media (max-width: 600px) {
+  .info {
+      margin: 0 auto; 
+  }
+
+  .buttons-container {
+      text-align: center;
+      max-width: 60%;
+      display: block;
+      margin: auto;
+  }
+
+  .action-button {
+      width: 100%;
+      margin: 5px 0; 
+  }
+}
+
+@media (max-width: 855px) {
+.buttons-container {
+  text-align: center;
+  display: block;
+  margin: auto auto;
+}
+
+.action-button{
+  margin: 5px 0; 
+}
+}
+
+/*----------- fin edit modal ---------------*/
 
 @media (max-width: 768px) {
   .slot {

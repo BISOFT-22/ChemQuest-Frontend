@@ -20,6 +20,7 @@ import { ChemCrossComponent } from './components/ChemCross/chem-cross/chem-cross
 import { LandingChemquestComponent } from './pages/landing-chemquest/landing-chemquest.component'; // Importa tu componente de landing page
 import { LandingNakamuraComponent } from './pages/landing-nakamura/landing-nakamura.component';
 import { ChemcraftComponent } from './pages/chemcraft/chemcraft.component';
+import { ChemTestCreateComponent } from './pages/TestCreation/testCreation.component';
 
 export const routes: Routes = [
   {
@@ -225,7 +226,20 @@ export const routes: Routes = [
             ],
             showInSidebar: true,
             name: 'ChemCross'
-          }
+          } 
+      },
+      {
+        path: 'test-creation',
+        component: ChemTestCreateComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'Test Creation'
+        }
       }
     ],
   },

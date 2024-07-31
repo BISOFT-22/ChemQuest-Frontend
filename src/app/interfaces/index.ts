@@ -135,23 +135,35 @@ export interface IHistory{
   wrong?: number;
 }
 
+// IChemTest.ts
 export interface IChemTest {
   id?: number;
   module: string;
-  questions: IChemTestQuestion[];
+  questions: Array<IQuestion>;
   createdAt?: string;
   updatedAt?: string;
 }
 
-export interface IChemTestQuestion {
-  id?: number;
-  type: 'single-choice' | 'matching' | 'short-answer';
+// IQuestion.ts
+export interface IQuestion {
+  type: string;
   questionText: string;
-  options?: IChemTestOption[];
-  answer?: string;
+  options: Array<IOption>;
+  correctAnswer: any; // Puede ser un índice o un texto dependiendo del tipo de pregunta
 }
 
-export interface IChemTestOption {
-  id?: number;
+// IOption.ts
+export interface IOption {
   text: string;
+  match?: string; // Solo para preguntas de pareo
+}
+
+// IChemTestAnswer.ts
+export interface IChemTestAnswer {
+  id?: number;
+  chemTestId: number;
+  answerText: string;
+  isCorrect: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }

@@ -48,6 +48,11 @@ export const routes: Routes = [
     component: LandingNakamuraComponent, 
     pathMatch: 'full',
   },
+  {
+    path: 'chem-craft',
+    component: ChemcraftComponent,
+
+  },
 
   {
     path: 'app',
@@ -68,6 +73,32 @@ export const routes: Routes = [
         }
       },
       {
+        path: 'chemGuess8',
+        component: ChemGuess8Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess8'
+        }
+        
+      },
+      {
+        path: 'test-creation',
+        component: ChemTestCreateComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+          ],
+          showInSidebar: true,
+          name: 'Creación de Examen'
+        }
+      },
+      {
         path: 'chemcraft',
         component: ChemcraftComponent,
         data: { 
@@ -76,7 +107,7 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'ChemCraft'
         }
       },
@@ -133,19 +164,6 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'games',
-        component: GamesComponent,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: true,
-          name: 'games'
-        }
-      },
-      {
         path: 'chemGuess7',
         component: ChemGuess7Component,
         data: { 
@@ -154,22 +172,8 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'chemGuess7'
-        }
-        
-      },
-      {
-        path: 'chemGuess8',
-        component: ChemGuess8Component,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: true,
-          name: 'chemGuess8'
         }
         
       },
@@ -182,7 +186,7 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'chemGuess9'
         }
         
@@ -196,7 +200,7 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'chemGuess10'
         }
         
@@ -210,7 +214,7 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'chemGuess11'
         }
       },
@@ -224,23 +228,11 @@ export const routes: Routes = [
               IRoleType.superAdmin,
               IRoleType.user
             ],
-            showInSidebar: true,
+            showInSidebar: false,
             name: 'ChemCross'
           } 
       },
-      {
-        path: 'test-creation',
-        component: ChemTestCreateComponent,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: true,
-          name: 'Test Creation'
-        }
-      }
+      
     ],
   },
 ];

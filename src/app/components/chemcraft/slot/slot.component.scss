@@ -49,12 +49,17 @@
   flex: 0 0 auto;
 }
 
-.element:hover {
-  transform: scale(1.1);
-}
 
 .element:active {
   background-color: #217a34;
+}
+
+.element {
+  transition: transform 0.5s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+  
 }
 
 

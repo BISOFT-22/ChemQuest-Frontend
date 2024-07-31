@@ -6,8 +6,8 @@ import { IChemTest } from '../../interfaces';
 
 @Component({
   selector: 'app-chem-test-create',
-  templateUrl: './chem-test-create.component.html',
-  styleUrls: ['./chem-test-create.component.scss'],
+  templateUrl: './testCreation.component.html',
+  styleUrls: ['./testCreation.component.scss'],
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule]
 })

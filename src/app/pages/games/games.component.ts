@@ -6,7 +6,7 @@ import { GameService } from '../../services/game.service';
 import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { GameFormComponent } from '../../components/game/game-form/game-form.component';
-import { TimerComponent } from '../../components/timer/timer.component';
+
 
 @Component({
   selector: 'app-games',

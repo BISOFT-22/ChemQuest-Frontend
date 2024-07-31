@@ -1,4 +1,4 @@
-.navbar, #sidebar-menu {
+.navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,6 +7,10 @@
     background-color: #998ec3;
     padding-top: 20px;
     transition: transform 0.3s ease;
+}
+
+#sidebar-menu{
+    background-color: #998ec3;
 }
 footer {
     background-color: #998ec3;

@@ -39,13 +39,13 @@ export class ChemcraftComponent implements OnInit {
   }
 
   showAlert(event: { title: string; text: string, buttons: boolean }): void {
-    console.log('Alert: ', event);
+    // console.log('Alert: ', event);
     this.modalError.showModal(event.title, event.text, event.buttons);
   }
 
   onCompoundGenerated(formula: string): void {
     this.currentCompoundFormula = formula;
-    console.log('Formula: ', formula);
+    // console.log('Formula: ', formula);
     this.setSlots();
   }
 

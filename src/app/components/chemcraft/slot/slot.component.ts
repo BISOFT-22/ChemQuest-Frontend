@@ -27,7 +27,7 @@ export class SlotComponent implements OnChanges {
         if (this.element.symbol === draggedElement.symbol) {
           this.element.count += 1; 
         } else {
-          console.log('No se pueden mezclar elementos diferentes en una misma casilla');
+          // console.log('No se pueden mezclar elementos diferentes en una misma casilla');
           this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', buttons: false});
         }
       } else {
@@ -57,7 +57,7 @@ export class SlotComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if(changes['cleanSlot'] ){
-      console.log('cleanSlot:', this.cleanSlot);
+      // console.log('cleanSlot:', this.cleanSlot);
     if (this.cleanSlot) {
       this.clearSlotContent();
     }

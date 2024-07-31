@@ -36,7 +36,7 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
 
    
     if(changes['change'] ){
-    console.log(this.change);
+    // console.log(this.change);
     if (this.change) {
       this.generateCompoundRequest();
     }
@@ -103,7 +103,7 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     // console.log(this.difficultyLevel);
     this.lastCompound = this.compound.name;
     this.change = false;
-    console.log(this.change);
+    // console.log(this.change);
   } catch (error) {
     console.error((error as Error).message);
   }

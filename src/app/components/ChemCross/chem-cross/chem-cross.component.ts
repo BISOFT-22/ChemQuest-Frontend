@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 import { Component } from '@angular/core';
 import { CrossWordComponent } from "../cross-word/cross-word.component";
 

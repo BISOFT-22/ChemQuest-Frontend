@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 import { afterRender, AfterRenderPhase, AfterViewChecked, AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { CrossCellComponent } from "../cross-cell/cross-cell.component";
 import { CommonModule } from '@angular/common';

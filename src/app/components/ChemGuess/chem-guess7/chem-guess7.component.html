@@ -24,6 +24,7 @@
 </main>
 <app-chem-guess-hang-man 
 [allHistory]="allHistory"
+[streak]="streak"
 (addFavoriteEvent)="getWord($event)"
 />
 <div>
@@ -41,6 +42,7 @@
             <div class="modal-error"  >
                 
              <app-chem-guess-history [allHistory]="allHistory"
+                
              ></app-chem-guess-history>  
             </div>
           </div>

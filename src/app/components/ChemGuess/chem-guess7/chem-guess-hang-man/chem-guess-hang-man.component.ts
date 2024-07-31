@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {IHistory, IUser } from '../../../../interfaces';
@@ -14,6 +14,11 @@ import { ChemGuessSendComponent } from '../chem-guess-send7/chem-guess-form7.com
 import { UserService } from '../../../../services/user.service';
 import { AuthService } from '../../../../services/auth.service';
 
+/**
+ * Component for the Hangman game in the ChemGuess application.
+ * Allows users to guess letters and compare them with a randomly generated word.
+ * Keeps track of user history and updates the display accordingly.
+ */
 @Component({
   selector: 'app-chem-guess-hang-man',
   standalone: true,
@@ -21,68 +26,139 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrls: ['./chem-guess-hang-man.component.scss'],
   imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent]
 })
-export class ChemGuessHangManComponent implements OnInit {
-
+export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
+  /**
+   * Path to the send image asset.
+   */
   send: string = 'assets/img/send.png';
+
+  /**
+   * Path to the convert image asset.
+   */
   convert: string = 'assets/img/convert.png';
+
+  /**
+   * Input property for the user's history.
+   * Contains the user's guessed words, type colors, and remaining wrong guesses.
+   */
+  @Input() streak: number | undefined;
   @Input() history: IHistory = {
     userWords: [],  
     typeColor: [],
     wrong: 5,
   };
+
+  /**
+   * User object.
+   */
   user:IUser = {};
-  
+
+  /**
+   * Input property for all user histories.
+   * Contains an array of all user histories.
+   */
   @Input() allHistory: IHistory[] = [];
+
+  /**
+   * The word to be guessed.
+   */
   word: string = '';
+
+  /**
+   * The letter input by the user.
+   */
   letter: string = '';
+
+  /**
+   * Event emitter for adding a favorite word.
+   */
   @Output() addFavoriteEvent = new EventEmitter<string>();
+
+  /**
+   * The displayed word with blanks and guessed letters.
+   */
   displayedWord: string[] = [];
+
+  /**
+   * Set of guessed letters.
+   */
   guessedLetters: Set<string> = new Set(); 
-  wordsArray: string[] = [];// tiene la letra por separado
 
+  /**
+   * Array of individual letters in the word.
+   */
+  wordsArray: string[] = [];
+
+  /**
+   * Event emitter for history change.
+   */
   @Output() historyChange: EventEmitter<IHistory[]> = new EventEmitter<IHistory[]>();
-  ////////////////////////////
-  
 
+  /**
+   * Constructor for the ChemGuessHangManComponent.
+   * @param modalService - The NgbModal service.
+   * @param random - The RandomizerService.
+   * @param router - The Router service.
+   * @param liveChangeService - The LiveChangeService.
+   * @param authService - The AuthService.
+   * @param userService - The UserService.
+   */
   constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private liveChangeService: LiveChangeService, private authService: AuthService, private userService: UserService) {
-    
-    
   }
-  //////////////////////////////////modal para cambiar pregunta
 
+  /**
+   * Calls the historyChange event emitter.
+   */
   callEvent() {
     this.historyChange.emit(this.allHistory);
-
   }
 
+  /**
+   * Shows the detail modal.
+   * @param modal - The modal to be shown.
+   */
   showDetailModal(modal: any) {
     modal.show();
   }
 
-
-  
+  /**
+   * Handles the form update event.
+   * @param response - The response from the form update.
+   */
   handleFormUpdate(response: boolean) {
     if (response) {
       this.onConvert();
-    }else{
+    } else {
       
     }
   }
+
+  /**
+   * Handles the form send event.
+   * @param response - The response from the form send.
+   */
   handleFormSend(response: boolean) {
     if (response) {
       this.CompareWord();
     }
   }
-  ngOnInit():void {
+
+  /**
+   * Initializes the component.
+   */
+  ngOnInit(): void {
     this.initializeThings();
-    
   }
+  
+
+  /**
+   * Initializes the necessary data and fetches random word.
+   */
   initializeThings(): void {
     // Ensure data is fetched
     this.random.checkAndFetch();
     this.user = this.authService.getUser() || {};
 
-  
     this.random.items$.subscribe({
       next: () => {
         // Data has been fetched; proceed to get random word
@@ -92,25 +168,31 @@ export class ChemGuessHangManComponent implements OnInit {
           console.log(this.word);
           this.splitIntoWords(this.word);
           this.displayedWord = Array(this.word.length).fill('_');
-          
         } else {
           // Handle the case where no random word is available
           console.warn('No random word available');
-          
         }
       },
       error: (error) => {
         console.error('Error fetching items', error);
-        
       }
     });
+    
   }
 
+  /**
+   * Removes accents from a string.
+   * @param str - The string to remove accents from.
+   * @returns The string without accents.
+   */
   removeAccents(str: string): string {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/Ñ/g, "Ñ");
   }
 
-
+  /**
+   * Checks if the guessed letter is correct and updates the displayed word.
+   * @param letters - The guessed letter.
+   */
   checkLetter(letters: string) {
     if (!this.guessedLetters.has(letters)) {
       this.guessedLetters.add(letters);
@@ -121,20 +203,31 @@ export class ChemGuessHangManComponent implements OnInit {
           found = true;
         }
       }
-    
     }
   }
+
+  /**
+   * Replaces a blank with the guessed letter at the specified index.
+   * @param index - The index of the blank to replace.
+   * @param letter - The guessed letter.
+   */
   replaceBlank(index: number, letter: string) {
     if (this.displayedWord[index] === '_') {
       this.displayedWord[index] = letter.toUpperCase(); // Reemplazar el guión bajo con la letra ingresada
     }
   }
+
+  /**
+   * Splits the word into individual letters.
+   * @param input - The word to split.
+   */
   splitIntoWords(input: string): void {
     this.wordsArray = input.split('');
   }
 
-  
-  /////////funciones para recargar la lista y para recargar la pagina para cambiar el elemento
+  /**
+   * Clears the slots and initializes the component again.
+   */
   onConvert(): void {
     this.clearSlots();
     this.allHistory = [];
@@ -143,6 +236,9 @@ export class ChemGuessHangManComponent implements OnInit {
     });
   }
 
+  /**
+   * Clears the slots by removing the letters and resetting the guessed letters and displayed word.
+   */
   clearSlots(): void {
     const slots = document.querySelectorAll<HTMLElement>('.slot');
     slots.forEach(slot => {
@@ -151,197 +247,198 @@ export class ChemGuessHangManComponent implements OnInit {
     this.guessedLetters.clear();
     this.displayedWord = Array(this.word.length).fill('_');
   }
-/////////////////////////////Comprobar palabra
-CompareWord(): void {
-  this.user = this.authService.getUser() || {};
-  let historytemp: IHistory = {
-    userWords: [],
-    typeColor: [],
-    wrong: this.history.wrong,
-  };
-  const slots = document.querySelectorAll<HTMLElement>('.slot');
-  let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
-  let procesado: boolean[] = new Array(slots.length).fill(false);
 
-  // Primera iteración para coincidencias exactas
-  slots.forEach((slot, i) => {
-    if (slot.textContent === this.wordsArray[i]) {
-      historytemp.userWords!.push(slot.textContent!);
-      historytemp.typeColor!.push("#87F14A"); // Verde
-      wordArrayCorrectTemp[i] = null;
-      procesado[i] = true;
-    } else {
-      historytemp.userWords!.push('');
-      historytemp.typeColor!.push('');
-    }
-  });
+  /**
+   * Compares the user's word with the correct word and updates the history.
+   */
+  CompareWord(): void {
+    this.user = this.authService.getUser() || {};
+    let historytemp: IHistory = {
+      userWords: [],
+      typeColor: [],
+      wrong: this.history.wrong,
+    };
+    const slots = document.querySelectorAll<HTMLElement>('.slot');
+    let wordArrayCorrectTemp: (string | null)[] = [...this.wordsArray];
+    let procesado: boolean[] = new Array(slots.length).fill(false);
 
-  // Segunda iteración para coincidencias parciales
-  slots.forEach((slot, i) => {
-    if (!procesado[i]) {
-      const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
-      if (index !== -1) {
-        historytemp.userWords![i] = slot.textContent!;
-        historytemp.typeColor![i] = "#FFFF00"; // Amarillo
-        wordArrayCorrectTemp[index] = null;
+    // Primera iteración para coincidencias exactas
+    slots.forEach((slot, i) => {
+      if (slot.textContent === this.wordsArray[i]) {
+        historytemp.userWords!.push(slot.textContent!);
+        historytemp.typeColor!.push("#4575b4"); // azul
+        wordArrayCorrectTemp[i] = null;
+        procesado[i] = true;
       } else {
-        historytemp.userWords![i] = slot.textContent!;
-        historytemp.typeColor![i] = "#FF0000"; // Rojo
-       
+        historytemp.userWords!.push('');
+        historytemp.typeColor!.push('');
       }
-    }
-  });
- 
-   
-    if (historytemp.typeColor) {
-        for (const color of historytemp.typeColor) {
-              if (color === "#FF0000") {
-                historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
-                
-                break;
-          }
-    }
-  }
-    if (historytemp.wrong == 0) {
-      this.router.navigate(['/dashboard']);
-      
-    }
+    });
+
+    // Segunda iteración para coincidencias parciales
+    slots.forEach((slot, i) => {
+      if (!procesado[i]) {
+        const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
+        if (index !== -1) {
+          historytemp.userWords![i] = slot.textContent!;
+          historytemp.typeColor![i] = "#fee090"; // Amarillo
+          wordArrayCorrectTemp[index] = null;
+        } else {
+          historytemp.userWords![i] = slot.textContent!;
+          historytemp.typeColor![i] = "#d73027"; // Rojo
+        }
+      }
+    });
+
     if (historytemp.typeColor) {
       for (const color of historytemp.typeColor) {
-            if (color === "#87F14A") {
-              this.user.streak =+ 1;
-              this.userService.updateUserSignal(this.user);
-              
-              break;
+        if (color === "#d73027") {
+          historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
+          break;
         }
+      }
+    }
+
+    if (historytemp.wrong == 0) {
+      this.router.navigate(['app/games']);
+    }
+
+    if (historytemp.typeColor) {
+      for (const color of historytemp.typeColor) {
+        if (color === "#4575b4") {
+          this.user.streak =+ 1;
+          
+          this.streak = this.user.streak;
+          
+          this.userService.updateUserSignal(this.user);
+          break;
+        }
+      }
+    }
+
+    this.updateHistory(historytemp);
+
+    this.liveChangeService.setLive(historytemp.wrong || 5);
+    console.log("Vidas: " + this.liveChangeService.live.value);
+    this.clearSlots();
+    this.allHistory.push(historytemp)
+    this.callEvent();
   }
-}
-  
 
+  /**
+   * Updates the history with the provided historyTemp.
+   * @param historyTemp - The updated history.
+   */
+  updateHistory(historyTemp: IHistory): void {
+    this.history = {
+      wrong: historyTemp.wrong,
+    };
+  }
 
- this.updateHistory(historytemp);
+  /**
+   * Initializes the drag and drop functionality after the view has been initialized.
+   */
+  ngAfterViewInit(): void {
+    this.makeDraggable();
+  }
 
-  this.liveChangeService.setLive(historytemp.wrong || 5);
-  console.log("Vidas: " + this.liveChangeService.live.value);
-  this.clearSlots();
-  this.allHistory.push(historytemp)
- 
-  this.callEvent();
-}
+  /**
+   * Makes the keys draggable and the slots droppable.
+   */
+  makeDraggable(): void {
+    const keys = document.querySelectorAll<HTMLElement>('.key');
+    const slots = document.querySelectorAll<HTMLElement>('.slot');
 
-updateHistory(historyTemp: IHistory): void {
- 
-  this.history = {
-    
-    wrong: historyTemp.wrong,
-  };
- 
-}
+    keys.forEach((element) => {
+      element.addEventListener('mousedown', (e: MouseEvent) => {
+        e.preventDefault();
 
-  
+        // Crea una copia del elemento
+        const copy = element.cloneNode(true) as HTMLElement;
+        copy.style.position = 'absolute';
+        copy.style.left = `${e.clientX}px`;
+        copy.style.top = `${e.clientY}px`;
+        document.body.appendChild(copy);
 
-/////////////////////////////////////DRAG AND DROP
-ngAfterViewInit(): void {
-  this.makeDraggable();
-}
+        // Leer la letra del atributo data-letter
+        const letter = (element.getAttribute('data-letter') || '').toUpperCase();
+        copy.setAttribute('data-letter', letter);
 
-makeDraggable(): void {
-  const keys = document.querySelectorAll<HTMLElement>('.key');
-  const slots = document.querySelectorAll<HTMLElement>('.slot');
+        const offsetX = e.clientX - element.getBoundingClientRect().left;
+        const offsetY = e.clientY - element.getBoundingClientRect().top;
 
-  keys.forEach((element) => {
-    element.addEventListener('mousedown', (e: MouseEvent) => {
-      e.preventDefault();
+        const onMouseMove = (e: MouseEvent) => {
+          copy.style.left = `${e.clientX - offsetX}px`;
+          copy.style.top = `${e.clientY - offsetY}px`;
 
-      // Crea una copia del elemento
-      const copy = element.cloneNode(true) as HTMLElement;
-      copy.style.position = 'absolute';
-      copy.style.left = `${e.clientX}px`;
-      copy.style.top = `${e.clientY}px`;
-      document.body.appendChild(copy);
-
-      // Leer la letra del atributo data-letter
-      const letter = (element.getAttribute('data-letter') || '').toUpperCase();
-      copy.setAttribute('data-letter', letter);
-
-      const offsetX = e.clientX - element.getBoundingClientRect().left;
-      const offsetY = e.clientY - element.getBoundingClientRect().top;
-
-      const onMouseMove = (e: MouseEvent) => {
-        copy.style.left = `${e.clientX - offsetX}px`;
-        copy.style.top = `${e.clientY - offsetY}px`;
-
-        // Detecta si la copia está sobre un slot
-        const copyRect = copy.getBoundingClientRect();
-        let isOverSlot = false;
-
-        slots.forEach((slot) => {
-          const slotRect = slot.getBoundingClientRect();
-          if (
-            copyRect.left < slotRect.right &&
-            copyRect.right > slotRect.left &&
-            copyRect.top < slotRect.bottom &&
-            copyRect.bottom > slotRect.top
-          ) {
-            isOverSlot = true;
-            slot.classList.add('over'); // Opcional: agregar clase para visualización
-          } else {
-            slot.classList.remove('over');
-          }
-        });
-
-        // Cambia el cursor si está sobre un slot
-        if (isOverSlot) {
-          document.body.style.cursor = 'pointer';
-        } else {
-          document.body.style.cursor = 'default';
-        }
-      };
-
-      const onMouseUp = () => {
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
-
-        document.body.style.cursor = 'default'; // Restaura el cursor
-
-        // Mueve la copia al slot si está sobre uno
-        let isPlaced = false;
-
-        slots.forEach((slot) => {
-          const slotRect = slot.getBoundingClientRect();
+          // Detecta si la copia está sobre un slot
           const copyRect = copy.getBoundingClientRect();
+          let isOverSlot = false;
 
-          if (
-            copyRect.left < slotRect.right &&
-            copyRect.right > slotRect.left &&
-            copyRect.top < slotRect.bottom &&
-            copyRect.bottom > slotRect.top
-          ) {
-            // Coloca la letra en el slot
-            const letter = copy.getAttribute('data-letter');
-            if (letter) {
-              slot.textContent = letter; // Inserta la letra en el slot
+          slots.forEach((slot) => {
+            const slotRect = slot.getBoundingClientRect();
+            if (
+              copyRect.left < slotRect.right &&
+              copyRect.right > slotRect.left &&
+              copyRect.top < slotRect.bottom &&
+              copyRect.bottom > slotRect.top
+            ) {
+              isOverSlot = true;
+              slot.classList.add('over'); // Opcional: agregar clase para visualización
+            } else {
+              slot.classList.remove('over');
             }
-            slot.classList.remove('over');
-            copy.remove(); // Elimina la copia después de moverla
-            isPlaced = true;
+          });
+
+          // Cambia el cursor si está sobre un slot
+          if (isOverSlot) {
+            document.body.style.cursor = 'pointer';
+          } else {
+            document.body.style.cursor = 'default';
           }
-        });
+        };
 
-        // Si no se coloca en ningún slot, elimina la copia
-        if (!isPlaced) {
-          copy.remove();
-        }
-      };
+        const onMouseUp = () => {
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
 
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
+          document.body.style.cursor = 'default'; // Restaura el cursor
+
+          // Mueve la copia al slot si está sobre uno
+          let isPlaced = false;
+
+          slots.forEach((slot) => {
+            const slotRect = slot.getBoundingClientRect();
+            const copyRect = copy.getBoundingClientRect();
+
+            if (
+              copyRect.left < slotRect.right &&
+              copyRect.right > slotRect.left &&
+              copyRect.top < slotRect.bottom &&
+              copyRect.bottom > slotRect.top
+            ) {
+              // Coloca la letra en el slot
+              const letter = copy.getAttribute('data-letter');
+              if (letter) {
+                slot.textContent = letter; // Inserta la letra en el slot
+              }
+              slot.classList.remove('over');
+              copy.remove(); // Elimina la copia después de moverla
+              isPlaced = true;
+            }
+          });
+
+          // Si no se coloca en ningún slot, elimina la copia
+          if (!isPlaced) {
+            copy.remove();
+          }
+        };
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
     });
-  });
-}
-
-
-
+  }
 }
 
 

@@ -2,3 +2,20 @@
 display: flex;
 justify-content: space-around;
 }
+
+#btn-accept {
+    background-color: #1a661a;
+    border: #1a661a;
+    // background: #998EC3;
+    // border: #998EC3;
+    color: #fff;
+    padding: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    margin-left: 110px;
+}

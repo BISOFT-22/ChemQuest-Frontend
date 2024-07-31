@@ -87,6 +87,20 @@ export const routes: Routes = [
         
       },
       {
+        path: 'chemGuess7',
+        component: ChemGuess7Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: true,
+          name: 'chemGuess7'
+        }
+        
+      },
+      {
         path: 'test-creation',
         component: ChemTestCreateComponent,
         data: { 
@@ -162,20 +176,6 @@ export const routes: Routes = [
           showInSidebar: false,
           name: 'profile'
         }
-      },
-      {
-        path: 'chemGuess7',
-        component: ChemGuess7Component,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: false,
-          name: 'chemGuess7'
-        }
-        
       },
       {
         path: 'chemGuess9',

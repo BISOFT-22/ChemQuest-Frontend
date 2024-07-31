@@ -20,7 +20,6 @@ export class ModalErrorComponent {
 
 
   showModal(title: string, text: string, buttons: boolean): void {
-    console.log('Show buttons: ', buttons);
     this.title = title;
     this.text = text;
     this.isVisible = true;
@@ -37,7 +36,6 @@ export class ModalErrorComponent {
 
 
   onButtonClick(option : boolean): void {
-    console.log('Action done');
     this.action.emit({option});
     this.closeModal();
   } 

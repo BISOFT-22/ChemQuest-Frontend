@@ -1,26 +1,37 @@
 <!-- <div style="background-image: url('assets/img/chemcraft/bgChemcraft-light.png');"> -->
 
 <div class="container">
-  <app-compound-request class="app-compound-request"
+  <app-compound-request style="margin-top: -3%;" class="app-compound-request"
   [compoundsList]="compoundsList"
 (compoundGenerated)="onCompoundGenerated($event)"
 (alert)="showAlert($event)"
   [change]="change"
   ></app-compound-request>
 
+  <div class="crafting-area">
   <div class="slots">
     <ng-container *ngFor="let slot of slotsArray">
-      <app-slot (error)="showAlert($event)"></app-slot>
+      <app-slot
+       (error)="showAlert($event)"
+      ></app-slot>
     </ng-container>
   </div>
 
-  <!-- <div class="slots">
-    <app-slot (error)="showError($event)"></app-slot>
-    <app-slot (error)="showError($event)"></app-slot>
-    <app-slot (error)="showError($event)"></app-slot>
-    <app-slot (error)="showError($event)"></app-slot>
-
+ <!-- <div class="slots">
+    <app-slot (error)="showAlert($event)"></app-slot>
+    <app-slot (error)="showAlert($event)"></app-slot>
+    <app-slot (error)="showAlert($event)"></app-slot>
+    <app-slot (error)="showAlert($event)"></app-slot>
+    <app-slot (error)="showAlert($event)"></app-slot>
   </div> -->
+
+  <div class="actions-buttons">
+    <button class="action-button"><img class="action-image" src="assets/img/chemcraft/chemistry-white.png" alt=""></button>
+    <button class="action-button" (click)="cleanSlots()"><img class="action-image" src="assets/img/chemcraft/clear.png" alt=""></button>  
+  </div>
+</div>
+
+ 
 
   <app-element-list class="app-element-list"></app-element-list>
   <app-modal-info-compound></app-modal-info-compound>

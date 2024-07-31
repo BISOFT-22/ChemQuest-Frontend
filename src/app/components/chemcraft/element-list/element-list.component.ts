@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ElementService } from '../../../services/element.service';
 import { IElement } from '../../../interfaces';
@@ -17,6 +17,7 @@ export class ElementListComponent implements OnInit{
   public isSearching: boolean = false;
   public clickElementIndex: number | null = null; 
   private service = inject(ElementService);
+  @ViewChild('elementsContainer', { static: true }) elementsContainer!: ElementRef;
 
 
   constructor() {
@@ -94,5 +95,13 @@ export class ElementListComponent implements OnInit{
       const draggedElement: IElement = JSON.parse(data);
       console.log('Elemento soltado:', draggedElement);
     }
+  }
+
+  scrollLeft(): void {
+    this.elementsContainer.nativeElement.scrollBy({ left: -100, behavior: 'smooth' });
+  }
+
+  scrollRight(): void {
+    this.elementsContainer.nativeElement.scrollBy({ left: 100, behavior: 'smooth' });
   }
 }

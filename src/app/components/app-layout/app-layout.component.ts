@@ -19,8 +19,7 @@ import { filter } from 'rxjs';
     SidebarComponent,
     SvgIconComponent
   ],
-  templateUrl: './app-layout.component.html',
-  styleUrl: './app-layout.component.scss'
+  templateUrl: './app-layout.component.html'
 })
 export class AppLayoutComponent implements OnInit{
   public title?: string;

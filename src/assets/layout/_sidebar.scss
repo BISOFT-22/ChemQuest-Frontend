@@ -3534,5 +3534,66 @@
 }
 
 /**=====================
+    Propios 
+==========================**/
+
+
+
+.sidebar-links{
+  background: #998ec3 !important;
+  margin-top: 0px !important;
+}
+
+
+#sidebar-menu{
+  margin-left: 0px;
+  background: #998ec3;
+  padding-bottom: 15%;
+}
+
+.logo-wrapper{
+  background: #998ec3;
+}
+
+.logo-icon-wrapper{
+  background: #998ec3;
+}
+
+.fa-solid{
+  color: #fff;
+}
+
+.sidebar-link span{
+  color: #fff !important;
+}
+
+
+.sidebar-link{
+  color: #fff !important;
+  text-decoration: none;
+}
+
+
+.sidebar-link:hover {
+  font-size: 1.2em;
+  transition: font-size 0.1s ease;
+}
+
+.sidebar-link.active {
+  transition: all 0.5s ease !important;
+  position: relative !important;
+  margin-bottom: 10px;
+  color: #998ec3 !important;
+  font-size: 14px !important;
+  background-color: #f1f0ff !important;
+}
+
+.sidebar-link.active span{
+  color: #998ec3 !important;
+  font-size: 14px !important;
+}
+
+
+/**=====================
     78. Sidebar CSS Ends
 ==========================**/

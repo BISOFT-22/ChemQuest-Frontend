@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ModalComponent } from '../../components/modal/modal.component';
 import { GameFormComponent } from '../../components/game/game-form/game-form.component';
 
+
 @Component({
   selector: 'app-games',
   standalone: true,
@@ -24,13 +25,13 @@ export class GamesComponent{
   public gameService: GameService = inject(GameService);
 
 
-  constructor() {
-    this.gameService.getAll();
-  }
+  //constructor() {
+    //this.gameService.getAll();
+  //}
 
-  handleFormAction(item: IGame) {
-    this.gameService.save(item);
-  }
+  //handleFormAction(item: IGame) {
+    //this.gameService.save(item);
+  //}
 
 
 }

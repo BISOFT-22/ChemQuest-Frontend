@@ -1,0 +1,29 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #998ec3;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+#sidebar-menu{
+    background-color: #998ec3;
+}
+footer {
+    background-color: #998ec3;
+    color: #f7f7f7;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}

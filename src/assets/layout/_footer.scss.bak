@@ -1,0 +1,95 @@
+/**=====================
+     47. Footer CSS Start
+==========================**/
+/*.footer{
+  background-color: $footer_bg_color;
+  box-shadow: $footer_box_shadow;
+  margin: 0px;
+  padding: 15px;
+  bottom: 0;
+  left: 0;
+  margin-left: $sidebar-compact-width;
+  transition: 0.5s;  
+  &.footer-dark{
+    background-color: $footer_dark_color;
+    p{
+      color: $white;
+    }
+  }
+}
+.footer-fix{
+  width: calc(100% - $sidebar-compact-width);
+  position: fixed;
+}*/
+
+footer {
+  background-color: #998ec3;
+  color: #f7f7f7;
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  margin-bottom: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 10px;
+}
+
+.footer-section h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 5px;
+}
+
+.footer-section ul li a {
+  text-decoration: none;
+  color: #f7f7f7;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #ccc;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  font-size: 14px;
+}
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #998ec3;
+  color: white;
+  text-align: center;          
+}
+
+.footer-layout{
+  position: fixed;
+  background: #998ec3;
+  margin: auto;
+  width: 100%;
+  z-index: 10;
+}
+/**=====================
+     47. Footer CSS Ends
+==========================**/

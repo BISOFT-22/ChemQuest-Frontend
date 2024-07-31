@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {IHistory, IUser } from '../../../../interfaces';
@@ -26,7 +26,7 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrls: ['./chem-guess-hang-man.component.scss'],
   imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent]
 })
-export class ChemGuessHangManComponent implements OnInit {
+export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
   /**
    * Path to the send image asset.
    */
@@ -149,6 +149,7 @@ export class ChemGuessHangManComponent implements OnInit {
   ngOnInit(): void {
     this.initializeThings();
   }
+  
 
   /**
    * Initializes the necessary data and fetches random word.
@@ -176,6 +177,7 @@ export class ChemGuessHangManComponent implements OnInit {
         console.error('Error fetching items', error);
       }
     });
+    
   }
 
   /**

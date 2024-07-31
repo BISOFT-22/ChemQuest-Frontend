@@ -167,7 +167,7 @@ CompareWord(): void {
   slots.forEach((slot, i) => {
     if (slot.textContent === this.wordsArray[i]) {
       historytemp.userWords!.push(slot.textContent!);
-      historytemp.typeColor!.push("#87F14A"); // Verde
+      historytemp.typeColor!.push("#4575b4"); // azul
       wordArrayCorrectTemp[i] = null;
       procesado[i] = true;
     } else {
@@ -182,11 +182,11 @@ CompareWord(): void {
       const index = wordArrayCorrectTemp.indexOf(slot.textContent!);
       if (index !== -1) {
         historytemp.userWords![i] = slot.textContent!;
-        historytemp.typeColor![i] = "#FFFF00"; // Amarillo
+        historytemp.typeColor![i] = "#fee090"; // Amarillo
         wordArrayCorrectTemp[index] = null;
       } else {
         historytemp.userWords![i] = slot.textContent!;
-        historytemp.typeColor![i] = "#FF0000"; // Rojo
+        historytemp.typeColor![i] = "#d73027"; // Rojo
        
       }
     }
@@ -195,7 +195,7 @@ CompareWord(): void {
    
     if (historytemp.typeColor) {
         for (const color of historytemp.typeColor) {
-              if (color === "#FF0000") {
+              if (color === "#d73027") {
                 historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
                 
                 break;

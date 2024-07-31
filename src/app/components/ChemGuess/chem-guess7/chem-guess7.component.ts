@@ -53,8 +53,6 @@ opcion: string='';
 
 changeLife(): void {
 this.live = this.liveChangeService.live.value;  
-  console.log("Cambiar la vida");
-  console.log(this.live);
  
   switch (this.live) {
     case 5:

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -10,15 +10,20 @@ import { FormsModule } from '@angular/forms';
 })
 export class TimerComponent implements OnInit, OnDestroy {
   timerDisplay: string = '0:00:00';
-  timerSeconds: number = 0; // Inicialmente en 0
+  timerSeconds: number = 0; // Initially set to 0
   timerPaused: boolean = false;
   timerInterval: any;
   inputHours: number = 0;
   inputMinutes: number = 0;
   inputSeconds: number = 0;
 
+  // Event emitters for pause, resume, and completion
+  @Output() pauseEvent = new EventEmitter<void>();
+  @Output() resumeEvent = new EventEmitter<void>();
+  @Output() timeCompleteEvent = new EventEmitter<void>();
+
   ngOnInit(): void {
-    // No iniciar el temporizador automáticamente
+    // Do not start the timer automatically
   }
 
   ngOnDestroy(): void {
@@ -49,6 +54,7 @@ export class TimerComponent implements OnInit, OnDestroy {
           clearInterval(this.timerInterval);
           this.timerDisplay = '0:00:00';
           alert('¡Tiempo agotado! El examen ha finalizado.');
+          this.emitTimeCompleteEvent();
           this.disableGame();
         } else {
           this.updateTimer();
@@ -65,13 +71,28 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   pauseTimer(): void {
     this.timerPaused = true;
+    this.emitPauseEvent();
   }
 
   resumeTimer(): void {
     this.timerPaused = false;
+    this.emitResumeEvent();
   }
 
   disableGame(): void {
-    // Aquí iría la lógica para deshabilitar el juego.
+    // Logic to disable the game goes HERE.
+  }
+
+  // Emitters for custom events
+  private emitPauseEvent(): void {
+    this.pauseEvent.emit();
+  }
+
+  private emitResumeEvent(): void {
+    this.resumeEvent.emit();
+  }
+
+  private emitTimeCompleteEvent(): void {
+    this.timeCompleteEvent.emit();
   }
 }

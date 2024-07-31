@@ -20,6 +20,13 @@
   width: calc(100% - $sidebar-compact-width);
   position: fixed;
 }
+
+.footer-layout{
+  position: fixed;
+  background: #998ec3;
+  margin: auto;
+  width: 100%;
+}
 /**=====================
      47. Footer CSS Ends
 ==========================**/

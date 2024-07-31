@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { WordLogComponent } from './word-log.component';
 import { CommonModule, NgFor } from '@angular/common';

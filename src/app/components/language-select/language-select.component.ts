@@ -1,3 +1,6 @@
+/**
+*@Author Guillermo Jiménez De Sárraga
+*/
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({

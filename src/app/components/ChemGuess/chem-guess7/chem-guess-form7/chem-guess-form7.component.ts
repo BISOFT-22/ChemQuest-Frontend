@@ -3,6 +3,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IGame } from '../../../../interfaces';
 
+/**
+ * Represents the ChemGuessForm7Component.
+ */
 @Component({
   selector: 'app-chem-guess-form7',
   standalone: true,
@@ -15,8 +18,14 @@ import { IGame } from '../../../../interfaces';
 })
 export class ChemGuessForm7Component {
 
+  /**
+   * Event emitter for calling the parent component.
+   */
   @Output() callParentEvent: EventEmitter<boolean> = new EventEmitter<boolean>()
 
+  /**
+   * Calls the parent event and emits a boolean value.
+   */
   callEvent() {
     this.callParentEvent.emit(true);
     console.log("estoy emitiendo");

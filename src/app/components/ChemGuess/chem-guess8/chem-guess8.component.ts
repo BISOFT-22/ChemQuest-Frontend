@@ -3,6 +3,9 @@ import { ChemGuessHangManComponent } from '../chem-guess7/chem-guess-hang-man/ch
 import { RandomizerService } from '../../../services/randomizer.service';
 import { IElement } from '../../../interfaces';
 
+/**
+ * Component for ChemGuess8.
+ */
 @Component({
   selector: 'app-chem-guess8',
   standalone: true,
@@ -10,10 +13,9 @@ import { IElement } from '../../../interfaces';
   templateUrl: './chem-guess8.component.html',
   styleUrls: ['./chem-guess8.component.scss']
 })
-export class ChemGuess8Component implements OnInit{
+export class ChemGuess8Component implements OnInit {
   convert: string = 'assets/img/convert.png';
   element1P: IElement = {
-    
     name: '',
     symbol: '',
     proton: '',
@@ -22,7 +24,6 @@ export class ChemGuess8Component implements OnInit{
     electron: ''
   };
   element2P: IElement = {
-    
     name: '',
     symbol: '',
     atomicNumber: 0,
@@ -32,42 +33,41 @@ export class ChemGuess8Component implements OnInit{
   };
 
   constructor(private random: RandomizerService) { }
+
+  /**
+   * Lifecycle hook that is called after data-bound properties of a directive are initialized.
+   */
   ngOnInit(): void {
     this.random.checkAndFetch();
     this.fillTableFields();
-    
   }
 
-
-    
-
+  /**
+   * Initializes things.
+   */
   initializeThings(): void {
     // Ensure data is fetched
     this.random.checkAndFetch();
- 
 
-  
     this.random.items$.subscribe({
       next: () => {
         // Data has been fetched; proceed to get random word
         const randomWord = this.random.getRandomWord();
-     
       },
       error: (error) => {
         console.error('Error fetching items', error);
-        
       }
     });
   }
+
   public items = [
     { word: "angular", hint: "A popular front-end framework" },
     { word: "typescript", hint: "A superset of JavaScript" },
   ];
 
-  
-
-
-
+  /**
+   * Charges the element.
+   */
   chargeElement(): void {
     const randomElement = this.random.getRandomElement();
     console.log(randomElement);
@@ -76,9 +76,7 @@ export class ChemGuess8Component implements OnInit{
       case 1:
         this.element1P = {
           name: randomElement?.name,
-        
           proton: randomElement?.proton,
-       
           electron: randomElement?.electron
         };
         break;
@@ -96,76 +94,45 @@ export class ChemGuess8Component implements OnInit{
       default:
         break;
     }
-    
   }
-  // Función para rellenar los campos de la tabla
-fillTableFields(): void {
-  console.log(this.element1P);
-  // Llamar a la función chargeElement para obtener el elemento aleatorio
 
+  /**
+   * Fills the fields of the table.
+   */
+  fillTableFields(): void {
+    console.log(this.element1P);
+    // Call chargeElement function to get the random element
+    this.chargeElement();
 
-  this.chargeElement();
+    // Get the input elements of the table
+    const table1 = document.getElementById('table1');
+    const inputs1 = table1?.getElementsByTagName('input');
 
-  // Obtener los elementos de entrada de la tabla
-  const table1 = document.getElementById('table1');
-  const inputs1 = table1?.getElementsByTagName('input');
-
-  if (inputs1 && inputs1.length >= 6) {
-      // Rellenar los campos de la tabla con los datos del elemento
+    if (inputs1 && inputs1.length >= 6) {
+      // Fill the table fields with the element data
       inputs1[0].value = this.element1P?.name || '';
       inputs1[1].value = this.element1P?.symbol || '';
       inputs1[2].value = this.element1P?.atomicNumber?.toString() || '';
       inputs1[3].value = this.element1P?.proton?.toString() || '';
       inputs1[4].value = this.element1P?.neutron?.toString() || '';
       inputs1[5].value = this.element1P?.electron?.toString() || '';
-  }
+    }
 
-  this.chargeElement();
+    this.chargeElement();
 
-  // Obtener los elementos de entrada de la tabla
-  const table = document.getElementById('table2');
-  const inputs = table?.getElementsByTagName('input');
+    // Get the input elements of the table
+    const table = document.getElementById('table2');
+    const inputs = table?.getElementsByTagName('input');
 
-  if (inputs && inputs.length >= 6) {
-      // Rellenar los campos de la tabla con los datos del elemento
+    if (inputs && inputs.length >= 6) {
+      // Fill the table fields with the element data
       inputs[0].value = this.element1P?.name || '';
       inputs[1].value = this.element1P?.symbol || '';
       inputs[2].value = this.element1P?.atomicNumber?.toString() || '';
       inputs[3].value = this.element1P?.proton?.toString() || '';
       inputs[4].value = this.element1P?.neutron?.toString() || '';
       inputs[5].value = this.element1P?.electron?.toString() || '';
+    }
   }
-}
-
-   // chargeTables(): void {
-  //   const randomElement = this.random.getRandomElement();
-  //   this.element1P = {
-      
-  //     name: randomElement?.name,
-  //     symbol: randomElement?.symbol,
-  //     atomicNumber: randomElement?.atomicNumber,
-  //     proton: randomElement?.proton,
-  //     neutron: randomElement?.neutron,
-  //     electron: randomElement?.electron
-  //   };
-  //   const randomElement2 = this.random.getRandomElement();
-
-  //   this.element2P = {
-      
-  //     name: randomElement2?.name,
-  //     symbol: randomElement2?.symbol,
-  //     atomicNumber: randomElement2?.atomicNumber,
-  //     proton: randomElement2?.proton,
-  //     neutron: randomElement2?.neutron,
-  //     electron: randomElement2?.electron
-  //   };
-  //   console.log("ELEMENTO1");
-  //   console.log(this.element1P);
-  //   console.log("ELEMENTO2");
-  //   console.log(this.element2P);
-
-   
-  // }
-  
 }
  

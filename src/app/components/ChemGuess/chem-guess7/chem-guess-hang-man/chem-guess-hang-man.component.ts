@@ -297,7 +297,7 @@ export class ChemGuessHangManComponent implements OnInit {
     }
 
     if (historytemp.wrong == 0) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['app/games']);
     }
 
     if (historytemp.typeColor) {

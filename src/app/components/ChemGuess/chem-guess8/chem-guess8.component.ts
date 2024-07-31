@@ -33,9 +33,32 @@ export class ChemGuess8Component implements OnInit{
 
   constructor(private random: RandomizerService) { }
   ngOnInit(): void {
+    this.random.checkAndFetch();
     this.fillTableFields();
+    
   }
 
+
+    
+
+  initializeThings(): void {
+    // Ensure data is fetched
+    this.random.checkAndFetch();
+ 
+
+  
+    this.random.items$.subscribe({
+      next: () => {
+        // Data has been fetched; proceed to get random word
+        const randomWord = this.random.getRandomWord();
+     
+      },
+      error: (error) => {
+        console.error('Error fetching items', error);
+        
+      }
+    });
+  }
   public items = [
     { word: "angular", hint: "A popular front-end framework" },
     { word: "typescript", hint: "A superset of JavaScript" },

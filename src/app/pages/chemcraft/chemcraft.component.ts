@@ -1,3 +1,6 @@
+/**
+*@Author Alejandro José Salazar Lobo
+*/
 import { AfterViewInit, Component, effect, OnInit, QueryList, viewChild, ViewChild, ViewChildren } from '@angular/core';
 import { ElementListComponent } from "../../components/chemcraft/element-list/element-list.component";
 import { SlotComponent } from "../../components/chemcraft/slot/slot.component";
@@ -34,21 +37,39 @@ export class ChemcraftComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Cambia el background una vez inicializado el componente.
+   */
   ngOnInit(): void {
     this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
   }
 
-  showAlert(event: { title: string; text: string, buttons: boolean }): void {
+  /**
+   * Muestra un modal de alerta para cambiar el compuesto.
+   */
+  showAlert(event: { title: string; text: string, isAlert: boolean, buttons: boolean }): void {
     // console.log('Alert: ', event);
-    this.modalError.showModal(event.title, event.text, event.buttons);
+    this.modalError.showModal(event.title, event.text, event.isAlert, event.buttons);
   }
 
+
+  
+  /**
+   * Actualiza la fórmula del compuesto actual y establece los espacios.
+   * 
+   * @param formula La fórmula del compuesto generado.
+   */
   onCompoundGenerated(formula: string): void {
     this.currentCompoundFormula = formula;
     // console.log('Formula: ', formula);
     this.setSlots();
   }
 
+  
+  /**
+   * Establece los espacios.
+   */
   setSlots(): void {
     const formula = this.currentCompoundFormula || '';
     const elementSymbolPar = /[A-Z][a-z]?/g; // esto funciona de manera que primero seleciona una letra mayuscula y luego una minuscula para elementos como el Al o el Fe, Mg, etc..
@@ -58,10 +79,17 @@ export class ChemcraftComponent implements OnInit {
     this.slotsArray = Array(this.elementCount);
   }
   
+  /**
+   * Limpia los slots de contenido.
+   */
   cleanSlots(): void {
     this.slots.forEach(slot => slot.clearSlotContent());
   }
 
+  /**
+   * Envía una acción y actualiza el estado de la variable 'change'.
+   * @param event - El evento que contiene la opción booleana.
+   */
   sendAction(event: { option: boolean }): void {
     this.change = event.option;
     if (this.change) {

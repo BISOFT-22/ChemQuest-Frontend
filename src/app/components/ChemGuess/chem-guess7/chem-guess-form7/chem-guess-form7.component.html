@@ -1,19 +1,23 @@
 
 <form class="container">
-    <div>
+  <div class="base">
+    <div class="tittle">
       <h2>¿Quieres cambiar el elemento?</h2>
     </div>
     <div class="row">
-      Si haces esto corres el riesgo de perder tu racha
+      <p>Si haces esto corres el riesgo de perder tu racha</p>
       <div class="col-6 position" >
 
         <button
+        id="btn-accept"
         (click)="callEvent();"
         type="button"
-        class="btn btn-primary d-flex align-items-center">
+        class="btn btn-primary d-flex justify-content-end">
         <p class="mb-0"> Aceptar </p>
       </button>
      
       </div>
     </div>
+  </div>
+    
   </form>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ChemGuessHangManComponent } from '../chem-guess7/chem-guess-hang-man/chem-guess-hang-man.component';
+
 import { RandomizerService } from '../../../services/randomizer.service';
 import { IElement } from '../../../interfaces';
-import { retry } from 'rxjs';
+
 
 /**
  * Component for ChemGuess8.
@@ -32,6 +32,8 @@ export class ChemGuess8Component implements OnInit {
     neutron: '',
     electron: ''
   };
+  elementCheck1: IElement = {};
+  elementCheck2: IElement = {};
 
   constructor(private random: RandomizerService) { }
 
@@ -57,35 +59,57 @@ change(){
   /**
    * Charges the element.
    */
-  chargeElement(): void {
+  chargeElement(element: IElement): void {
     this.random.items$.subscribe({
       next: () => {
         // Data has been fetched; proceed to get random word
         const randomElement = this.random.getRandomElement();
         console.log(randomElement);
-    const randomNumber = Math.floor(Math.random() * 3) + 1;
-    switch (randomNumber) {
-      case 1:
-        this.element1P = {
-          name: randomElement?.name,
-          proton: randomElement?.proton,
-          electron: randomElement?.electron
-        };
-        break;
-      case 2:
-        this.element1P = {
-          symbol: randomElement?.symbol,
-        };
-        break;
-      case 3:
-        this.element1P = {
-          name: randomElement?.name,
-          atomicNumber: randomElement?.atomicNumber,
-        };
-        break;
-      default:
-        break;
-    }
+       
+        const randomNumber = Math.floor(Math.random() * 3) + 1;
+        switch (randomNumber) {
+          case 1:
+            if (element === this.element1P) {
+              this.element1P = {
+                name: randomElement?.name,
+                proton: randomElement?.proton,
+                electron: randomElement?.electron
+              };
+            } else if (element === this.element2P) {
+              this.element2P = {
+                name: randomElement?.name,
+                proton: randomElement?.proton,
+                electron: randomElement?.electron
+              };
+            }
+            break;
+          case 2:
+            if (element === this.element1P) {
+              this.element1P = {
+                symbol: randomElement?.symbol,
+              };
+            } else if (element === this.element2P) {
+              this.element2P = {
+                symbol: randomElement?.symbol,
+              };
+            }
+            break;
+          case 3:
+            if (element === this.element1P) {
+              this.element1P = {
+                name: randomElement?.name,
+                atomicNumber: randomElement?.atomicNumber,
+              };
+            } else if (this.element2P) {
+              this.element2P = {
+                name: randomElement?.name,
+                atomicNumber: randomElement?.atomicNumber,
+              };
+            }
+            break;
+          default:
+            break;
+        }
       },
       error: (error) => {
         console.error('Error fetching items', error);
@@ -98,7 +122,7 @@ change(){
    */
   fillTableFields(): void {
     this.random.checkAndFetch();
-    this.chargeElement();
+    this.chargeElement(this.element1P);
 
     // Get the input elements of the table
     const table1 = document.getElementById('table1');
@@ -114,7 +138,7 @@ change(){
       inputs1[5].value = this.element1P?.electron?.toString() || '';
     }
 
-    this.chargeElement();
+    this.chargeElement(this.element2P);
 
     // Get the input elements of the table
     const table = document.getElementById('table2');
@@ -122,12 +146,12 @@ change(){
 
     if (inputs && inputs.length >= 6) {
       // Fill the table fields with the element data
-      inputs[0].value = this.element1P?.name || '';
-      inputs[1].value = this.element1P?.symbol || '';
-      inputs[2].value = this.element1P?.atomicNumber?.toString() || '';
-      inputs[3].value = this.element1P?.proton?.toString() || '';
-      inputs[4].value = this.element1P?.neutron?.toString() || '';
-      inputs[5].value = this.element1P?.electron?.toString() || '';
+      inputs[0].value = this.element2P?.name || '';
+      inputs[1].value = this.element2P?.symbol || '';
+      inputs[2].value = this.element2P?.atomicNumber?.toString() || '';
+      inputs[3].value = this.element2P?.proton?.toString() || '';
+      inputs[4].value = this.element2P?.neutron?.toString() || '';
+      inputs[5].value = this.element2P?.electron?.toString() || '';
     }
   }
 }

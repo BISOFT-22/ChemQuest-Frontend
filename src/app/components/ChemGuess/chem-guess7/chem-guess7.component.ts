@@ -72,10 +72,11 @@ export class ChemGuess7Component implements OnChanges, OnInit {
    */
   changeLife(): void {
     this.live = this.liveChangeService.live.value;
-  
+ 
     switch (this.live) {
       case 6:
         this.liveImg = 'assets/img/live/live100.png';
+        
         break;
       case 5:
         this.liveImg = 'assets/img/live/live100.png';

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ChemGuessHangManComponent } from '../chem-guess7/chem-guess-hang-man/chem-guess-hang-man.component';
 import { RandomizerService } from '../../../services/randomizer.service';
 import { IElement } from '../../../interfaces';
-import { retry } from 'rxjs';
 
 /**
  * Component for ChemGuess8.
@@ -39,12 +38,10 @@ export class ChemGuess8Component implements OnInit {
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   ngOnInit(): void {
-    this.initializeThings();
+    this.random.checkAndFetch();
     this.fillTableFields();
   }
-change(){
-  window.location.reload();
-}
+
   /**
    * Initializes things.
    */
@@ -52,17 +49,28 @@ change(){
     // Ensure data is fetched
     this.random.checkAndFetch();
 
-    
+    this.random.items$.subscribe({
+      next: () => {
+        // Data has been fetched; proceed to get random word
+        const randomWord = this.random.getRandomWord();
+      },
+      error: (error) => {
+        console.error('Error fetching items', error);
+      }
+    });
   }
+
+  public items = [
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+  ];
+
   /**
    * Charges the element.
    */
   chargeElement(): void {
-    this.random.items$.subscribe({
-      next: () => {
-        // Data has been fetched; proceed to get random word
-        const randomElement = this.random.getRandomElement();
-        console.log(randomElement);
+    const randomElement = this.random.getRandomElement();
+    console.log(randomElement);
     const randomNumber = Math.floor(Math.random() * 3) + 1;
     switch (randomNumber) {
       case 1:
@@ -86,18 +94,14 @@ change(){
       default:
         break;
     }
-      },
-      error: (error) => {
-        console.error('Error fetching items', error);
-      }
-    });
   }
 
   /**
    * Fills the fields of the table.
    */
   fillTableFields(): void {
-    this.random.checkAndFetch();
+    console.log(this.element1P);
+    // Call chargeElement function to get the random element
     this.chargeElement();
 
     // Get the input elements of the table

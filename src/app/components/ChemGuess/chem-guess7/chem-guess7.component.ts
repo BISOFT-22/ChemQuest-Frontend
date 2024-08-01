@@ -21,17 +21,30 @@ import { LiveChangeService } from '../../../services/liveChange.service';
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
-export class ChemGuess7Component implements OnChanges {
+export class ChemGuess7Component implements OnChanges, OnInit {
   @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
   liveImg: string = 'assets/img/live/live100.png';
-  imagePath: string = 'assets/img/magoscuro.jpeg';
-  imagePathAzules: string = 'assets/img/ojosazules.jpeg';
-  imagePathAbajo: string = 'assets/img/bocaAbajo.jpg';
+
+
+
+  imagePathHead: string = 'assets/img/exodia/Head.png';
+  imagePathLeftArm: string = 'assets/img/exodia/ArmLeft.png';
+  imagePathRigthArm: string = 'assets/img/exodia/ArmRight.png';
+  imagePathLeftLeg: string = 'assets/img/exodia/LegLeft.png';
+  imagePathRightLeg: string = 'assets/img/exodia/LegRight.png';
+ 
   public allHistory: IHistory[] = [];
   @Input() live: number | undefined;
   public streak: number | undefined=0;
 
   constructor(private liveChangeService: LiveChangeService) {
+  }
+  ngOnInit(): void {
+    this.imagePathHead = 'assets/img/bocaAbajo.jpg';
+    this.imagePathLeftArm = 'assets/img/bocaAbajo.jpg';
+    this.imagePathRigthArm = 'assets/img/bocaAbajo.jpg';  
+    this.imagePathLeftLeg = 'assets/img/bocaAbajo.jpg';
+    this.imagePathRightLeg = 'assets/img/bocaAbajo.jpg';
   }
 
   /**
@@ -58,22 +71,27 @@ export class ChemGuess7Component implements OnChanges {
    */
   changeLife(): void {
     this.live = this.liveChangeService.live.value;
-
+  
     switch (this.live) {
       case 5:
         this.liveImg = 'assets/img/live/live100.png';
+        this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         break;
       case 4:
         this.liveImg = 'assets/img/live/live75.png';
+        this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
         break;
       case 3:
         this.liveImg = 'assets/img/live/live50.png';
+        this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
         break;
       case 2:
         this.liveImg = 'assets/img/live/live25.png';
+        this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
         break;
       case 1:
-        this.liveImg = 'assets/img/live/live0.png';
+        this.liveImg = 'assets/img/live/live25.png';
+        this.imagePathHead = 'assets/img/exodia/Head.png';
         break;
       default:
         this.liveImg = 'assets/img/live/live100.png';

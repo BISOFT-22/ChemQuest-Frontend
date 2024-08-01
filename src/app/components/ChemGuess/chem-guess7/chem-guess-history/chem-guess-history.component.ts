@@ -40,11 +40,4 @@ export class ChemGuessHistoryComponent {
   callEvent() {
     this.callHistoryEvent.emit(true);
   }
-
-  /**
-   * Logs the array of all history items to the console.
-   */
-  see() {
-    console.log(this.allHistory);
-  }
 }

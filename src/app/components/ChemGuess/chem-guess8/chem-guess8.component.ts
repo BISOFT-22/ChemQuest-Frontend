@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChemGuessHangManComponent } from '../chem-guess7/chem-guess-hang-man/chem-guess-hang-man.component';
 import { RandomizerService } from '../../../services/randomizer.service';
 import { IElement } from '../../../interfaces';
+import { retry } from 'rxjs';
 
 /**
  * Component for ChemGuess8.
@@ -38,10 +39,12 @@ export class ChemGuess8Component implements OnInit {
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   ngOnInit(): void {
-    this.random.checkAndFetch();
+    this.initializeThings();
     this.fillTableFields();
   }
-
+change(){
+  window.location.reload();
+}
   /**
    * Initializes things.
    */
@@ -49,28 +52,17 @@ export class ChemGuess8Component implements OnInit {
     // Ensure data is fetched
     this.random.checkAndFetch();
 
-    this.random.items$.subscribe({
-      next: () => {
-        // Data has been fetched; proceed to get random word
-        const randomWord = this.random.getRandomWord();
-      },
-      error: (error) => {
-        console.error('Error fetching items', error);
-      }
-    });
+    
   }
-
-  public items = [
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-  ];
-
   /**
    * Charges the element.
    */
   chargeElement(): void {
-    const randomElement = this.random.getRandomElement();
-    console.log(randomElement);
+    this.random.items$.subscribe({
+      next: () => {
+        // Data has been fetched; proceed to get random word
+        const randomElement = this.random.getRandomElement();
+        console.log(randomElement);
     const randomNumber = Math.floor(Math.random() * 3) + 1;
     switch (randomNumber) {
       case 1:
@@ -94,14 +86,18 @@ export class ChemGuess8Component implements OnInit {
       default:
         break;
     }
+      },
+      error: (error) => {
+        console.error('Error fetching items', error);
+      }
+    });
   }
 
   /**
    * Fills the fields of the table.
    */
   fillTableFields(): void {
-    console.log(this.element1P);
-    // Call chargeElement function to get the random element
+    this.random.checkAndFetch();
     this.chargeElement();
 
     // Get the input elements of the table

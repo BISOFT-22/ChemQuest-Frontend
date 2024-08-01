@@ -36,6 +36,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   public allHistory: IHistory[] = [];
   @Input() live: number | undefined;
   public streak: number | undefined=0;
+  public change: boolean = false;
 
   constructor(private liveChangeService: LiveChangeService) {
   }
@@ -73,6 +74,9 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     this.live = this.liveChangeService.live.value;
   
     switch (this.live) {
+      case 6:
+        this.liveImg = 'assets/img/live/live100.png';
+        break;
       case 5:
         this.liveImg = 'assets/img/live/live100.png';
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
@@ -101,6 +105,9 @@ export class ChemGuess7Component implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.live = this.liveChangeService.live.value;
+    if (changes) {
+      this.allHistory=[];
+    }
     console.log(this.live);
     const liveChange = changes['live'];
     if (liveChange && !liveChange.firstChange) {

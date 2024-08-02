@@ -16,7 +16,7 @@ import { IElement } from '../../../interfaces';
 })
 export class ChemGuess8Component implements OnInit {
   convert: string = 'assets/img/convert.png';
-  element1P: IElement = {
+  public element1P: IElement = {
     name: '',
     symbol: '',
     proton: '',
@@ -24,7 +24,7 @@ export class ChemGuess8Component implements OnInit {
     neutron: '',
     electron: ''
   };
-  element2P: IElement = {
+  public element2P: IElement = {
     name: '',
     symbol: '',
     atomicNumber: 0,
@@ -147,7 +147,7 @@ change(){
     // Get the input elements of the table
     const table1 = document.getElementById('table1');
     const inputs1 = table1?.getElementsByTagName('input');
-
+    console.log(this.elementCheck1)
     if (inputs1 && inputs1.length >= 6) {
       // Fill the table fields with the element data
       inputs1[0].value = this.element1P?.name || '';
@@ -159,7 +159,7 @@ change(){
     }
 
     this.chargeElement(this.element2P);
-
+      console.log(this.elementCheck2)
     // Get the input elements of the table
     const table = document.getElementById('table2');
     const inputs = table?.getElementsByTagName('input');
@@ -187,9 +187,10 @@ change(){
      let proton1:string = inputs[3].value
      let neutron1:string = inputs[4].value 
      let electron1:string =  inputs[5].value   
+     
      this.insertInfo1(name1,symbol1,atomicNumber1,proton1,neutron1,electron1)
     }
-    
+    let response1:boolean = this.compareElement1();
     
     const table2 = document.getElementById('table2');
     const inputs2 = table2?.getElementsByTagName('input');
@@ -203,6 +204,11 @@ change(){
      let electron2:string =  inputs2[5].value   
      this.insertInfo2(name2,symbol2,atomicNumber2,proton2,neutron2,electron2)
     }
+    let response2:boolean = this.compareElement2();
+
+    if (response1 && response2) {
+      console.log("TODO CORRECTO")
+    }
   }
   insertInfo1(name1:string, symbol1:string, atomicNumber1:number, proton1:string, neutron1:string, electron1:string): void {
     this.element1P = {
@@ -213,6 +219,7 @@ change(){
       neutron: neutron1,
       electron: electron1
     };
+    
   }
   insertInfo2(name2:string, symbol2:string, atomicNumber2:number, proton2:string, neutron2:string, electron2:string): void {
     this.element2P = {
@@ -223,6 +230,22 @@ change(){
       neutron: neutron2,
       electron: electron2
     };
+  }
+  compareElement1(): boolean {
+    return this.element1P.name === this.elementCheck1.name &&
+           this.element1P.symbol === this.elementCheck1.symbol &&
+           this.element1P.atomicNumber === this.elementCheck1.atomicNumber &&
+           this.element1P.proton === this.elementCheck1.proton &&
+           this.element1P.neutron === this.elementCheck1.neutron &&
+           this.element1P.electron === this.elementCheck1.electron;
+  }
+  compareElement2(): boolean {
+    return this.element2P.name === this.elementCheck2.name &&
+           this.element2P.symbol === this.elementCheck2.symbol &&
+           this.element2P.atomicNumber === this.elementCheck2.atomicNumber &&
+           this.element2P.proton === this.elementCheck2.proton &&
+           this.element2P.neutron === this.elementCheck2.neutron &&
+           this.element2P.electron === this.elementCheck2.electron;
   }
 
 }

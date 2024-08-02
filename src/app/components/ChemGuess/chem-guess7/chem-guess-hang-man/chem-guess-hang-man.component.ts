@@ -45,7 +45,7 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
   @Input() history: IHistory = {
     userWords: [],  
     typeColor: [],
-    wrong: 5,
+    wrong: 6,
   };
 
   /**
@@ -318,7 +318,7 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
 
     this.updateHistory(historytemp);
 
-    this.liveChangeService.setLive(historytemp.wrong || 5);
+    this.liveChangeService.setLive(historytemp.wrong || 6);
     console.log("Vidas: " + this.liveChangeService.live.value);
     this.clearSlots();
     this.allHistory.push(historytemp)

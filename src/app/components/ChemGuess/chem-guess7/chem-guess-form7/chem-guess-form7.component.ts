@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IGame } from '../../../../interfaces';
+
 
 /**
  * Represents the ChemGuessForm7Component.
@@ -11,12 +11,12 @@ import { IGame } from '../../../../interfaces';
   standalone: true,
   imports: [CommonModule,
             FormsModule,
-
           ],
   templateUrl: './chem-guess-form7.component.html',
   styleUrl: './chem-guess-form7.component.scss'
 })
 export class ChemGuessForm7Component {
+ 
 
   /**
    * Event emitter for calling the parent component.
@@ -28,6 +28,6 @@ export class ChemGuessForm7Component {
    */
   callEvent() {
     this.callParentEvent.emit(true);
-    console.log("estoy emitiendo");
+ 
   }
 }

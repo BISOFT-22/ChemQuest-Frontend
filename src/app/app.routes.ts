@@ -21,6 +21,7 @@ import { LandingChemquestComponent } from './pages/landing-chemquest/landing-che
 import { LandingNakamuraComponent } from './pages/landing-nakamura/landing-nakamura.component';
 import { ChemcraftComponent } from './pages/chemcraft/chemcraft.component';
 import { ChemTestCreateComponent } from './pages/TestCreation/testCreation.component';
+import { ChemguessComponent } from './pages/chemguess/chemguess.component';
 
 export const routes: Routes = [
   {
@@ -81,8 +82,22 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: true,
+          showInSidebar: false,
           name: 'chemGuess8'
+        }
+        
+      },
+      {
+        path: 'chemGuess7',
+        component: ChemGuess7Component,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: false,
+          name: 'chemGuess7'
         }
         
       },
@@ -109,6 +124,19 @@ export const routes: Routes = [
           ],
           showInSidebar: false,
           name: 'ChemCraft'
+        }
+      },
+      {
+        path: 'chemguess',
+        component: ChemguessComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          showInSidebar: false,
+          name: 'ChemGuess'
         }
       },
       {
@@ -162,20 +190,6 @@ export const routes: Routes = [
           showInSidebar: false,
           name: 'profile'
         }
-      },
-      {
-        path: 'chemGuess7',
-        component: ChemGuess7Component,
-        data: { 
-          authorities: [
-            IRoleType.admin, 
-            IRoleType.superAdmin,
-            IRoleType.user
-          ],
-          showInSidebar: false,
-          name: 'chemGuess7'
-        }
-        
       },
       {
         path: 'chemGuess9',

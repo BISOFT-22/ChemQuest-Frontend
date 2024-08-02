@@ -390,11 +390,7 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
           });
 
           // Cambia el cursor si está sobre un slot
-          if (isOverSlot) {
-            document.body.style.cursor = 'pointer';
-          } else {
-            document.body.style.cursor = 'default';
-          }
+          document.body.style.cursor = isOverSlot ? 'pointer' : 'default';
         };
 
         const onMouseUp = () => {

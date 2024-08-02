@@ -65,6 +65,26 @@ change(){
         // Data has been fetched; proceed to get random word
         const randomElement = this.random.getRandomElement();
         console.log(randomElement);
+        if (element === this.element1P) {
+          this.elementCheck1 = {
+            name: randomElement?.name,
+            symbol: randomElement?.symbol,
+            atomicNumber: randomElement?.atomicNumber,
+            proton: randomElement?.proton,
+            neutron: randomElement?.neutron,
+            electron: randomElement?.electron
+          };
+        }
+        if (element === this.element2P) {
+          this.elementCheck2 = {
+            name: randomElement?.name,
+            symbol: randomElement?.symbol,
+            atomicNumber: randomElement?.atomicNumber,
+            proton: randomElement?.proton,
+            neutron: randomElement?.neutron,
+            electron: randomElement?.electron
+          };
+        }
        
         const randomNumber = Math.floor(Math.random() * 3) + 1;
         switch (randomNumber) {
@@ -154,5 +174,56 @@ change(){
       inputs[5].value = this.element2P?.electron?.toString() || '';
     }
   }
+
+  save(): void {
+    const table = document.getElementById('table1');
+    const inputs = table?.getElementsByTagName('input');
+
+    if (inputs && inputs.length >= 6) {
+      // Fill the table fields with the element data
+     let name1:string = inputs[0].value 
+     let symbol1: string =inputs[1].value 
+     let atomicNumber1: number = Number(inputs[2].value);
+     let proton1:string = inputs[3].value
+     let neutron1:string = inputs[4].value 
+     let electron1:string =  inputs[5].value   
+     this.insertInfo1(name1,symbol1,atomicNumber1,proton1,neutron1,electron1)
+    }
+    
+    
+    const table2 = document.getElementById('table2');
+    const inputs2 = table2?.getElementsByTagName('input');
+    if (inputs2 && inputs2.length >= 6) {
+      // Fill the table fields with the element data
+     let name2:string = inputs2[0].value 
+     let symbol2: string =inputs2[1].value 
+     let atomicNumber2:number =Number(inputs2[2].value); 
+     let proton2:string = inputs2[3].value
+     let neutron2:string = inputs2[4].value 
+     let electron2:string =  inputs2[5].value   
+     this.insertInfo2(name2,symbol2,atomicNumber2,proton2,neutron2,electron2)
+    }
+  }
+  insertInfo1(name1:string, symbol1:string, atomicNumber1:number, proton1:string, neutron1:string, electron1:string): void {
+    this.element1P = {
+      name: name1,
+      symbol: symbol1,
+      atomicNumber: atomicNumber1,
+      proton: proton1,
+      neutron: neutron1,
+      electron: electron1
+    };
+  }
+  insertInfo2(name2:string, symbol2:string, atomicNumber2:number, proton2:string, neutron2:string, electron2:string): void {
+    this.element2P = {
+      name: name2,
+      symbol: symbol2,
+      atomicNumber: atomicNumber2,
+      proton: proton2,
+      neutron: neutron2,
+      electron: electron2
+    };
+  }
+
 }
  

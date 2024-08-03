@@ -949,6 +949,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   validateWord(inspectedWord: string, filters: string): boolean {
     let bValid = true;
     let splitChar = ";";
+    let skipRegEx = false;
 
     // if filters is empty, return true
     if (filters == "") {
@@ -965,6 +966,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
         if (inspectedWord.search(condition) != -1) {
           bValid = false;
           break;
+        }else{
+          skipRegEx = true;
         }
       } 
       
@@ -974,21 +977,24 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
         if (inspectedWord.search(condition) == -1) {
           bValid = false;
           break;
+        }else{
+          skipRegEx = true;
         }
       } 
 
 
       //the condition is a regex expresion, the inspectedWord should match the condition
       
-      //turn the condition into a regex
-      let regex = new RegExp(condition, "i");
+      if (!skipRegEx) {
+        //turn the condition into a regex
+        let regex = new RegExp(condition, "i");
       
-      //find if the inspectedWord matches the condition
-      if (inspectedWord.search(regex) == -1) {
-        bValid = false;
-        break;
+        //find if the inspectedWord matches the condition
+        if (inspectedWord.search(regex) == -1) {
+          bValid = false;
+          break;
+        }
       }
-
     }
     
     return bValid;

@@ -21,6 +21,31 @@
   --view-grid-bg: #ecf3fa80;
   --view-border-marker: #cfcdfc;
   
+  
+  
+  //Color variables
+  --green-dark-color: #1b793a;
+  --green-light-color: #5cae62;
+  --lavender-color: #998ec3;
+  --dark-purple-color: #742882;
+  --purple-color: #986ead;
+
+
+  --element-bg-color:var(--green-dark-color);
+  --element-bg-color-hover:var(--green-light-color);
+  --element-symbol-bg-color: #d9f2d5;
+  --button-ok-bg-color: var(--green-dark-color);
+  --button-cancel-bg-color: var(--dark-purple-color);
+  --button-cancel-bg-hover-color: var(--purple-color);
+  --button-foreground-color: #fff;
+  
+  
+  //Layout colors
+  --layout-bg-color: var(--lavender-color);
+
+
+
+  
   --fc-button-bg-color: var(--theme-default);
   --fc-button-active-bg-color: var(--theme-default);
   --fc-button-active-border-color: var(--theme-default);
@@ -60,12 +85,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   background-color: rgb(197, 49, 49) !important;
 }
 
+
+// CrossWord Game
   
 .hintWord{
   font-size: 80%;
   width: 80px;
   height: min-content;
-  background-color: cornflowerblue;
+  background-color: var(--element-bg-color);
   text-align: center;
   border-radius: 5px;
   padding: 3px;
@@ -74,7 +101,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .hintWord:hover, .hintSymbol:hover{
-  background-color: yellow;
+  background-color: var(--element-bg-color-hover);
   color: black;
 }
 
@@ -82,10 +109,41 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-size: 80%;
   width: 30px;
   height: min-content;
-  background-color:coral;
+  background-color:var(--element-symbol-bg-color);
   text-align: center;
   border-radius: 5px;
   padding: 3px;
   margin: 2px;
-  color: white;
+  color: black;
+}
+
+
+
+// Game Selection Page
+.game-selection-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1200px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor horizontalmente */
+}
+
+
+// Buttons
+
+.btn-primary {
+  margin-top: auto; /* Coloca el botón al final del contenedor */
+  width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+  background-color: var(--button-ok-bg-color);
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1.5rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--green-light-color);
+  transform: translateY(-2px);
+  color: var(--button-foreground-color);
 }

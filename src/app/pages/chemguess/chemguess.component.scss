@@ -12,13 +12,7 @@
     background: #ffffff00 !important;
   }
   
-  .game-selection-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    max-width: 1200px; /* Ancho máximo del contenedor */
-    margin: 0 auto; /* Centra el contenedor horizontalmente */
-  }
+
   
   .card {
     width: 300px;
@@ -27,7 +21,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    background-color: #998ec3;
+    background-color: var(--lavender-color);
     position: relative; /* Para manejar la superposición de elementos internos */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -54,21 +48,5 @@
   .card-text,
   .card-title {
     color: #fff;
-  }
-  
-  .btn-primary {
-    margin-top: auto; /* Coloca el botón al final del contenedor */
-    width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
-    background-color: #1a661a;
-    color: #fff;
-    border: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 1.5rem;
-  }
-  
-  .btn-primary:hover {
-    background-color: #e0942e;
-    transform: translateY(-2px);
-    color: #000000;
   }
   

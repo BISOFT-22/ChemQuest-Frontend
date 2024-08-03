@@ -54,7 +54,8 @@ button {
     display: block;
     margin: 0.5rem auto;
     padding: 0.75rem;
-    background: linear-gradient(135deg, #7366ff, #f73164);
+    //background: linear-gradient(135deg, #7366ff, #f73164);
+    background-color: var(--green-dark-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -68,7 +69,8 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(135deg, #7366ff, #fd7e14);
+    // background: linear-gradient(135deg, #7366ff, #fd7e14);
+    background-color: var(--green-light-color);
     transform: translateY(-3px);
 }
 
@@ -80,7 +82,7 @@ button:not(:last-child) {
 /* Estilos para el botón de eliminar opción */
 .remove-option-btn {
     align-items: center;
-    background-color: #f73164; 
+    background-color: var(--dark-purple-color); 
     color: white;
     border: none;
     border-radius: 4px;
@@ -91,8 +93,12 @@ button:not(:last-child) {
     white-space: nowrap; 
 }
 
-.remove-option-btn:hover {
-    background-color: #fd7e14; 
+.remove-question-btn{
+    background-color: var(--dark-purple-color); 
+}
+
+.remove-option-btn:hover, .remove-question-btn:hover {
+    background-color: var(--button-cancel-bg-hover-color); 
 }
 
 .remove-option-btn i {

@@ -23,6 +23,7 @@ import { CommonModule } from '@angular/common';
 export class ChemcraftComponent implements OnInit {
   public compoundsList: ICompound[] = [];
   public currentCompoundFormula: string = '';
+  public craftFormula: string = '';
   public elementCount: number = 0;
   public slotsArray: any[] = [];
   @ViewChild('modalError') modalError!: ModalErrorComponent;
@@ -61,9 +62,84 @@ export class ChemcraftComponent implements OnInit {
    * @param formula La fórmula del compuesto generado.
    */
   onCompoundGenerated(formula: string): void {
-    this.currentCompoundFormula = formula;
-    // console.log('Formula: ', formula);
+    console.log('Formula: ', formula);
+    this.currentCompoundFormula = this.expandFormula(formula);
+     console.log('Formula: ', this.currentCompoundFormula);
     this.setSlots();
+  }
+
+
+
+  /**
+   * Expande una fórmula química para mostrar los elementos y sus cantidades.
+   * 
+   * @param formula La fórmula a expandir.
+   * @returns La fórmula expandida.
+   */
+
+  expandFormula(formula: string): string {
+    if (!formula.includes('(')) {
+      return formula;
+    }
+
+    const elementCounts = this.countElements(formula);
+    return this.formatExpandedFormula(elementCounts);
+  }
+
+  private countElements(formula: string): { [key: string]: number } {
+    const elementGroups = formula.match(/([A-Z][a-z]*)(\d*)|(\(.+?\))(\d*)/g);
+    const elementCounts: { [key: string]: number } = {};
+
+    if (elementGroups) {
+      elementGroups.forEach(group => {
+        const elementMatch = group.match(/([A-Z][a-z]*)|(\(.+?\))(\d*)/);
+        if (elementMatch) {
+          const element = elementMatch[1] || elementMatch[2];
+          const count = parseInt(elementMatch[3] || '1', 10);
+
+          if (element.startsWith('(')) {
+            this.expandInnerFormula(element, count, elementCounts);
+          } else {
+            this.addElementCount(element, count, elementCounts);
+          }
+        }
+      });
+    }
+
+    return elementCounts;
+  }
+
+  private expandInnerFormula(element: string, count: number, elementCounts: { [key: string]: number }) {
+    const innerFormula = element.slice(1, -1);
+    const expandedInnerFormula = this.expandFormula(innerFormula);
+    const innerElementGroups = expandedInnerFormula.match(/([A-Z][a-z]*)(\d*)/g);
+
+    if (innerElementGroups) {
+      innerElementGroups.forEach(innerGroup => {
+        const innerElementMatch = innerGroup.match(/([A-Z][a-z]*)(\d*)/);
+        if (innerElementMatch) {
+          const innerElement = innerElementMatch[1];
+          const innerCount = parseInt(innerElementMatch[2] || '1', 10) * count;
+          this.addElementCount(innerElement, innerCount, elementCounts);
+        }
+      });
+    }
+  }
+
+  private addElementCount(element: string, count: number, elementCounts: { [key: string]: number }) {
+    if (element in elementCounts) {
+      elementCounts[element] += count;
+    } else {
+      elementCounts[element] = count;
+    }
+  }
+
+  private formatExpandedFormula(elementCounts: { [key: string]: number }): string {
+    let expandedFormula = '';
+    Object.keys(elementCounts).forEach(element => {
+      expandedFormula += element + (elementCounts[element] > 1 ? elementCounts[element] : '');
+    });
+    return expandedFormula;
   }
 
   
@@ -84,6 +160,7 @@ export class ChemcraftComponent implements OnInit {
    */
   cleanSlots(): void {
     this.slots.forEach(slot => slot.clearSlotContent());
+
   }
 
   /**
@@ -99,4 +176,42 @@ export class ChemcraftComponent implements OnInit {
       }, 1000);
     }
   }
+
+
+
+  sameOrder(formula1: string, formula2: string): boolean {
+    const sortedFormula1 = formula1.split('').sort().join('');
+    const sortedFormula2 = formula2.split('').sort().join('');
+    return sortedFormula1 === sortedFormula2;
+  }
+
+  compareFormulas(): void {
+    console.log ('Fórmula actual: ', this.currentCompoundFormula);
+    console.log ('Fórmula a crear: ', this.craftFormula);
+    if (this.craftFormula === this.currentCompoundFormula) {
+      console.log('Las fórmulas son iguales.');
+      this.cleanSlots();
+    } else if (this.sameOrder(this.craftFormula, this.currentCompoundFormula)) {
+      console.log('Las fórmulas tienen los mismos símbolos pero en diferente orden.');
+      this.cleanSlots();
+
+    } else {
+      console.log('Las fórmulas son diferentes.');
+      this.cleanSlots();  
+    }
+    this.craftFormula = '';
+
+  }
+
+
+  craftCompound(): void { 
+    this.slots.forEach(slot => {
+      slot.getSlotContentString()
+      const slotContent = slot.getSlotContentString();
+      this.craftFormula += slotContent;
+   });
+   console.log(this.craftFormula);
+  this.compareFormulas();
+  }
+
 }

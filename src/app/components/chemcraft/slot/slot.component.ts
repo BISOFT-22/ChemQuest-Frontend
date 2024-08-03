@@ -105,4 +105,15 @@ export class SlotComponent {
     this.modalError.showModal('', '', false, false);
 }
 
+getSlotContentString(): string {
+  if (this.element && this.element.symbol && this.element.count !== undefined) {
+    if (this.element.count > 1) {
+      return `${this.element.symbol}${this.element.count}`;
+    } else if (this.element.count === 1) {
+    return `${this.element.symbol}`;
+    }
+  }
+  return '';
+}
+
 }

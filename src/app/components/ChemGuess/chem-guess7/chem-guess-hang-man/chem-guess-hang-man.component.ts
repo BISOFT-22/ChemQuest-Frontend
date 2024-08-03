@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input,OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input,OnInit, Output, ViewChild } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {IHistory, IUser } from '../../../../interfaces';
@@ -45,7 +45,7 @@ export class ChemGuessHangManComponent implements OnInit {
   @Input() history: IHistory = {
     userWords: [],  
     typeColor: [],
-    wrong: 6,
+    wrong: 5,
   };
 
   /**
@@ -121,7 +121,7 @@ export class ChemGuessHangManComponent implements OnInit {
   showDetailModal(modal: any) {
     modal.show();
   }
-
+  @ViewChild('detailModalSend') detailModalChange!: ModalComponent;
   /**
    * Handles the form update event.
    * @param response - The response from the form update.
@@ -141,6 +141,7 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormSend(response: boolean) {
     if (response) {
       this.CompareWord();
+      this.detailModalChange.hide(); // Cierra el modal
     }
   }
 
@@ -317,7 +318,7 @@ export class ChemGuessHangManComponent implements OnInit {
 
     this.updateHistory(historytemp);
 
-    this.liveChangeService.setLive(historytemp.wrong || 6);
+    this.liveChangeService.setLive(historytemp.wrong || 5);
     console.log("Vidas: " + this.liveChangeService.live.value);
     this.clearSlots();
     this.allHistory.push(historytemp)

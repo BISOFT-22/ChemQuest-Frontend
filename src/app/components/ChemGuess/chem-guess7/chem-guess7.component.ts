@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { IElement, IHistory, IUser } from '../../../interfaces';
 import { ChemGuessHistoryComponent } from './chem-guess-history/chem-guess-history.component';
 import { LiveChangeService } from '../../../services/liveChange.service';
+import { TimerComponent } from "../../timer/timer.component";
 
 /**
  * Component for ChemGuess7.
@@ -17,7 +18,7 @@ import { LiveChangeService } from '../../../services/liveChange.service';
 @Component({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent, CommonModule, ChemGuessHistoryComponent],
+  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })

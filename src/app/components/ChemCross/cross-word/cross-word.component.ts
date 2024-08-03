@@ -38,7 +38,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   filledCells = 0;    //Cantidad de celdas con letras o blockChar
   totalIterations = 0;
   totalCrossWords = crossWordCollection.length;
-  administrator = false;
+  administrator = true;
 
   // Dirección inicial para colocar palabras
   currentDirection = 0;
@@ -940,11 +940,68 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
 
   /**
+   * Validates a word against a set of filters.
+   * 
+   * @param inspectedWord - The word to be inspected.
+   * @param filters - The filters to be applied to the word.
+   * @returns A boolean indicating whether the word is valid or not.
+   */
+  validateWord(inspectedWord: string, filters: string): boolean {
+    let bValid = true;
+    let splitChar = ";";
+
+    // if filters is empty, return true
+    if (filters == "") {
+      return true;
+    }
+
+    // split this.txtFilter.value by the splitChar
+    let filterArray = filters.split(splitChar);
+    
+    for (let condition of filterArray) { 
+      //if first character is "-" remove it from the condition, the inspedtedWord should not contain the condition
+      if (condition.charAt(0) == "-") {
+        condition = condition.substring(1);
+        if (inspectedWord.search(condition) != -1) {
+          bValid = false;
+          break;
+        }
+      } 
+      
+      //if first character is "+" remove it from the condition, the inspedtedWord should contain the condition
+      if (condition.charAt(0) == "+") {
+        condition = condition.substring(1);
+        if (inspectedWord.search(condition) == -1) {
+          bValid = false;
+          break;
+        }
+      } 
+
+
+      //the condition is a regex expresion, the inspectedWord should match the condition
+      
+      //turn the condition into a regex
+      let regex = new RegExp(condition, "i");
+      
+      //find if the inspectedWord matches the condition
+      if (inspectedWord.search(regex) == -1) {
+        bValid = false;
+        break;
+      }
+
+    }
+    
+    return bValid;
+  }
+
+
+
+  /**
    * Filters and displays words and symbols based on the filter input value.
    */
   FilterWords() {
     this.txtFilter = document.getElementById("filter") as HTMLInputElement;
-    let letter = new RegExp(this.txtFilter? this.txtFilter.value :"" , "i");
+    let condition = this.txtFilter.value as string;
     let str = "";
     let strSymbols = ""
 
@@ -959,10 +1016,10 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       //   continue;
       // }
 
-      if ((c[0] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[0])) {
+      if (this.validateWord(c[0] as string, condition) && !this.UsedWordsSet.has(c[0])) {
         str += `<div class="hintWord" draggable="true">${c[0]}</div>`;
       }
-      if ((c[2] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[2])) {
+      if (this.validateWord(c[2] as string, condition) && !this.UsedWordsSet.has(c[2])) {
         strSymbols += `<div class="hintSymbol" draggable="true">${c[2]}</div>`;
       }
     }

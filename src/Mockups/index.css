@@ -196,7 +196,7 @@ body {
     left: 0;
     width: 250px;
     height: 100%;
-    background-color: #998ec3;
+    background-color: var(--lavender-color);
     padding-top: 20px;
     transition: transform 0.3s ease;
     display: flex;
@@ -253,7 +253,7 @@ main {
 
 /* Footer */
 footer {
-    background-color: #998ec3;
+    background-color: var(--lavender-color);
     color: #f7f7f7;
     text-align: center;
     padding: 20px;

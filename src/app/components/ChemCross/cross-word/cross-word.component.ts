@@ -20,7 +20,7 @@ import { LanguageSelectComponent } from "../../language-select/language-select.c
 export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
   msg = Dictionary;
-  id_language: number = 0; //0: English 1:Spanish
+  id_language: number = 1; //0: English 1:Spanish
   cellsCollection: HTMLInputElement[] = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
   txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
   txtFilter = document.getElementById("filter") as HTMLInputElement;
@@ -38,6 +38,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   filledCells = 0;    //Cantidad de celdas con letras o blockChar
   totalIterations = 0;
   totalCrossWords = crossWordCollection.length;
+  administrator = false;
 
   // Dirección inicial para colocar palabras
   currentDirection = 0;
@@ -962,13 +963,13 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
         str += `<div class="hintWord" draggable="true">${c[0]}</div>`;
       }
       if ((c[2] as string).search(letter) != -1 && !this.UsedWordsSet.has(c[2])) {
-        str += `<div class="hintSymbol" draggable="true">${c[2]}</div>`;
+        strSymbols += `<div class="hintSymbol" draggable="true">${c[2]}</div>`;
       }
     }
 
     
     document.getElementById("wordHints")!.innerHTML = str;
-    // document.getElementById("symbolHints")!.innerHTML = strSymbols;
+    document.getElementById("symbolHints")!.innerHTML = strSymbols;
 
     //Agregar event listeners a las palabras de pista
     for (let c of Array.from(document.getElementsByClassName("hintWord"))  ) {

@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
     color: #1a661a;
-    // color: #998EC3;
+    // color: var(--lavender-color);
     padding: 10px;
     border-radius: 10px;
     margin-top: 20px;
@@ -36,8 +36,8 @@
 
 
 .element {
-    background-color: #1a661a;
-    // background: #998EC3;
+    background-color:var(--element-bg-color);
+    // background: var(--lavender-color);
     color: #fff;
     padding: 10px;
     margin: 0 5px;
@@ -64,7 +64,7 @@
 
 .element:active {
      background-color: #217a34;
-    // background: #998EC3;
+    // background: var(--lavender-color);
 }
 
 #element-search {
@@ -80,7 +80,7 @@
 
 .no-results {
     text-align: center;
-   // color: #998EC3;
+   // color: var(--lavender-color);
     color: #1a661a;
     font-weight: bold;
     flex: 0 0 100%;
@@ -106,7 +106,7 @@
     margin-right: 635px;
     margin-bottom: 35px;
     background-color: #1a661a;
-   // background: #998EC3;
+   // background: var(--lavender-color);
     z-index: 2;
     padding: 10px;
     border-radius: 5px;

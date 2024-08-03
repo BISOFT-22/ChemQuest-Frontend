@@ -24,4 +24,6 @@ export const Dictionary = [
     ["The word is too long for this ", "La palabra es demasiado larga para esta "],
     ["Show hints", "Palabras"],
     ["Filter", "Filtrar"],
+    ["Available words", "Palabras disponibles"],
+    ["Export Crossword", "Exportar Crucigrama"],
 ];

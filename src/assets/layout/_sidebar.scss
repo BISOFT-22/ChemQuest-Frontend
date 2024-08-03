@@ -3540,23 +3540,23 @@
 
 
 .sidebar-links{
-  background: #998ec3 !important;
+  background: var(--lavender-color) !important;
   margin-top: 0px !important;
 }
 
 
 #sidebar-menu{
   margin-left: 0px;
-  background: #998ec3;
+  background: var(--lavender-color);
   padding-bottom: 15%;
 }
 
 .logo-wrapper{
-  background: #998ec3;
+  background: var(--lavender-color);
 }
 
 .logo-icon-wrapper{
-  background: #998ec3;
+  background: var(--lavender-color);
 }
 
 .fa-solid{
@@ -3583,13 +3583,13 @@
   transition: all 0.5s ease !important;
   position: relative !important;
   margin-bottom: 10px;
-  color: #998ec3 !important;
+  color: var(--lavender-color) !important;
   font-size: 14px !important;
   background-color: #f1f0ff !important;
 }
 
 .sidebar-link.active span{
-  color: #998ec3 !important;
+  color: var(--lavender-color) !important;
   font-size: 14px !important;
 }
 

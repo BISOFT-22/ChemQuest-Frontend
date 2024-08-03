@@ -370,7 +370,7 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
    * Initializes the drag and drop functionality after the view has been initialized.
    */
   ngAfterViewInit(): void {
-    this.makeDraggable();
+    // this.makeDraggable();
   }
 
   /**

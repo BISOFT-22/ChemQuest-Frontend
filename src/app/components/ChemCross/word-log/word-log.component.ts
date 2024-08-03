@@ -19,7 +19,7 @@ export class WordLogComponent {
   @Input() wordList: string[] = ["word1", "word2", "word3"];
 
   get heading(): string { 
-    return this.dictionary[this.id_language][this.id_message];
+    return this.dictionary[this.id_message][this.id_language];
   }
 
   constructor() { }

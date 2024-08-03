@@ -35,10 +35,14 @@
   --element-bg-color-hover:var(--green-light-color);
   --element-symbol-bg-color: #d9f2d5;
   --button-ok-bg-color: var(--green-dark-color);
+  --button-ok-bg-hover-color: var(--green-light-color);
   --button-cancel-bg-color: var(--dark-purple-color);
   --button-cancel-bg-hover-color: var(--purple-color);
   --button-foreground-color: #fff;
-  
+  --input-background-color: #f2f3f7;
+  --container-bg-color: var(--lavender-color);
+  --font-color-light: #fff;
+  --font-color-dark: #000;
   
   //Layout colors
   --layout-bg-color: var(--lavender-color);
@@ -102,7 +106,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .hintWord:hover, .hintSymbol:hover{
   background-color: var(--element-bg-color-hover);
-  color: black;
+  // color: var(--font-color-dark);
 }
 
 .hintSymbol{
@@ -114,7 +118,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border-radius: 5px;
   padding: 3px;
   margin: 2px;
-  color: black;
+  color: var(--font-color-dark);
 }
 
 
@@ -136,7 +140,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: auto; /* Coloca el botón al final del contenedor */
   width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
   background-color: var(--button-ok-bg-color);
-  color: #fff;
+  color: var(--font-color-light);
   border: none;
   transition: background-color 0.3s ease, transform 0.2s ease;
   font-size: 1.5rem;

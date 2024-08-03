@@ -26,7 +26,7 @@ import { AuthService } from '../../../../services/auth.service';
   styleUrls: ['./chem-guess-hang-man.component.scss'],
   imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent]
 })
-export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
+export class ChemGuessHangManComponent implements OnInit {
   /**
    * Path to the send image asset.
    */
@@ -337,103 +337,129 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
   /**
    * Initializes the drag and drop functionality after the view has been initialized.
    */
-  ngAfterViewInit(): void {
-    this.makeDraggable();
-  }
+
+  OnDragStart(e: DragEvent) {
+    e.dataTransfer?.setData("text", (e.target as HTMLElement).getAttribute('data-letter') as string);
+}
+
+OnDragOver(e: Event) {
+    e.preventDefault();
+}
+
+OnDropOnCross(e: DragEvent) {
+    e.preventDefault();
+    let data = e.dataTransfer?.getData("text");
+    if (data) {
+        // Buscar el primer elemento con la clase 'slot'
+        let slotElement = e.target as HTMLElement;
+        if (slotElement && slotElement.classList.contains('slot')) {
+            // Asignar los datos obtenidos al contenido del elemento
+            slotElement.textContent = data;
+        }
+    }
+}
+
+
+
+
+
+
+
+
 
   /**
    * Makes the keys draggable and the slots droppable.
    */
-  makeDraggable(): void {
-    const keys = document.querySelectorAll<HTMLElement>('.key');
-    const slots = document.querySelectorAll<HTMLElement>('.slot');
+  // makeDraggable(): void {
+  //   const keys = document.querySelectorAll<HTMLElement>('.key');
+  //   const slots = document.querySelectorAll<HTMLElement>('.slot');
 
-    keys.forEach((element) => {
-      element.addEventListener('mousedown', (e: MouseEvent) => {
-        e.preventDefault();
+  //   keys.forEach((element) => {
+  //     element.addEventListener('mousedown', (e: MouseEvent) => {
+  //       e.preventDefault();
 
-        // Crea una copia del elemento
-        const copy = element.cloneNode(true) as HTMLElement;
-        copy.style.position = 'absolute';
-        copy.style.left = `${e.clientX}px`;
-        copy.style.top = `${e.clientY}px`;
-        document.body.appendChild(copy);
+  //       // Crea una copia del elemento
+  //       const copy = element.cloneNode(true) as HTMLElement;
+  //       copy.style.position = 'absolute';
+  //       copy.style.left = `${e.clientX}px`;
+  //       copy.style.top = `${e.clientY}px`;
+  //       document.body.appendChild(copy);
 
-        // Leer la letra del atributo data-letter
-        const letter = (element.getAttribute('data-letter') || '').toUpperCase();
-        copy.setAttribute('data-letter', letter);
+  //       // Leer la letra del atributo data-letter
+  //       const letter = (element.getAttribute('data-letter') || '').toUpperCase();
+  //       copy.setAttribute('data-letter', letter);
 
-        const offsetX = e.clientX - element.getBoundingClientRect().left;
-        const offsetY = e.clientY - element.getBoundingClientRect().top;
+  //       const offsetX = e.clientX - element.getBoundingClientRect().left;
+  //       const offsetY = e.clientY - element.getBoundingClientRect().top;
 
-        const onMouseMove = (e: MouseEvent) => {
-          copy.style.left = `${e.clientX - offsetX}px`;
-          copy.style.top = `${e.clientY - offsetY}px`;
+  //       const onMouseMove = (e: MouseEvent) => {
+  //         copy.style.left = `${e.clientX - offsetX}px`;
+  //         copy.style.top = `${e.clientY - offsetY}px`;
 
-          // Detecta si la copia está sobre un slot
-          const copyRect = copy.getBoundingClientRect();
-          let isOverSlot = false;
+  //         // Detecta si la copia está sobre un slot
+  //         const copyRect = copy.getBoundingClientRect();
+  //         let isOverSlot = false;
 
-          slots.forEach((slot) => {
-            const slotRect = slot.getBoundingClientRect();
-            if (
-              copyRect.left < slotRect.right &&
-              copyRect.right > slotRect.left &&
-              copyRect.top < slotRect.bottom &&
-              copyRect.bottom > slotRect.top
-            ) {
-              isOverSlot = true;
-              slot.classList.add('over'); // Opcional: agregar clase para visualización
-            } else {
-              slot.classList.remove('over');
-            }
-          });
+  //         slots.forEach((slot) => {
+  //           const slotRect = slot.getBoundingClientRect();
+  //           if (
+  //             copyRect.left < slotRect.right &&
+  //             copyRect.right > slotRect.left &&
+  //             copyRect.top < slotRect.bottom &&
+  //             copyRect.bottom > slotRect.top
+  //           ) {
+  //             isOverSlot = true;
+  //             slot.classList.add('over'); // Opcional: agregar clase para visualización
+  //           } else {
+  //             slot.classList.remove('over');
+  //           }
+  //         });
 
-          // Cambia el cursor si está sobre un slot
-          document.body.style.cursor = isOverSlot ? 'pointer' : 'default';
-        };
+  //         // Cambia el cursor si está sobre un slot
+  //         document.body.style.cursor = isOverSlot ? 'pointer' : 'default';
+  //       };
 
-        const onMouseUp = () => {
-          document.removeEventListener('mousemove', onMouseMove);
-          document.removeEventListener('mouseup', onMouseUp);
+  //       const onMouseUp = () => {
+  //         document.removeEventListener('mousemove', onMouseMove);
+  //         document.removeEventListener('mouseup', onMouseUp);
 
-          document.body.style.cursor = 'default'; // Restaura el cursor
+  //         document.body.style.cursor = 'default'; // Restaura el cursor
 
-          // Mueve la copia al slot si está sobre uno
-          let isPlaced = false;
+  //         // Mueve la copia al slot si está sobre uno
+  //         let isPlaced = false;
 
-          slots.forEach((slot) => {
-            const slotRect = slot.getBoundingClientRect();
-            const copyRect = copy.getBoundingClientRect();
+  //         slots.forEach((slot) => {
+  //           const slotRect = slot.getBoundingClientRect();
+  //           const copyRect = copy.getBoundingClientRect();
 
-            if (
-              copyRect.left < slotRect.right &&
-              copyRect.right > slotRect.left &&
-              copyRect.top < slotRect.bottom &&
-              copyRect.bottom > slotRect.top
-            ) {
-              // Coloca la letra en el slot
-              const letter = copy.getAttribute('data-letter');
-              if (letter) {
-                slot.textContent = letter; // Inserta la letra en el slot
-              }
-              slot.classList.remove('over');
-              copy.remove(); // Elimina la copia después de moverla
-              isPlaced = true;
-            }
-          });
+  //           if (
+  //             copyRect.left < slotRect.right &&
+  //             copyRect.right > slotRect.left &&
+  //             copyRect.top < slotRect.bottom &&
+  //             copyRect.bottom > slotRect.top
+  //           ) {
+  //             // Coloca la letra en el slot
+  //             const letter = copy.getAttribute('data-letter');
+  //             if (letter) {
+  //               slot.textContent = letter; // Inserta la letra en el slot
+  //             }
+  //             slot.classList.remove('over');
+  //             copy.remove(); // Elimina la copia después de moverla
+  //             isPlaced = true;
+  //           }
+  //         });
 
-          // Si no se coloca en ningún slot, elimina la copia
-          if (!isPlaced) {
-            copy.remove();
-          }
-        };
+  //         // Si no se coloca en ningún slot, elimina la copia
+  //         if (!isPlaced) {
+  //           copy.remove();
+  //         }
+  //       };
 
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-      });
-    });
-  }
+  //       document.addEventListener('mousemove', onMouseMove);
+  //       document.addEventListener('mouseup', onMouseUp);
+  //     });
+  //   });
+  // }
 }
 
 

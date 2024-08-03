@@ -2,13 +2,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <form [formGroup]="chemTestForm" (ngSubmit)="onSubmit()">
-    <div>
+    <div class="test_title">
         <label for="module">Título del examen</label>
         <input id="module" formControlName="module" type="text">
     </div>
 
-    <div formArrayName="questions">
-        <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i">
+    <div formArrayName="questions" class="questions">
+        <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="dos">
             <div>
                 <label for="type">Tipo de pregunta</label>
                 <select id="type" formControlName="type" (change)="onTypeChange($event, i)">
@@ -26,11 +26,10 @@
             <div *ngIf="questions.at(i)?.get('type')?.value === 'single-choice'">
                 <div formArrayName="options">
                     <div class="option-container" *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
-                        <input formControlName="text" placeholder="Texto de la opción">
+                        <input formControlName="text" placeholder="Texto de la opción" class="option_text">
                         <input type="radio" [value]="j" [formControl]="getCorrectAnswerControl(i)"> Correcta
-                        <button type="button" (click)="removeOption(i, j)" class="remove-option-btn">
-                            <i class="fas fa-trash"></i> Eliminar opción
-                        </button>
+                        <button type="button" (click)="removeOption(i, j)" class="remove-option-btn delete">
+                            <i class="fas fa-trash"></i></button>
                     </div>
                     <button type="button" (click)="addOption(i)" class="button-Width add-option-btn">
                         <i class="fas fa-plus"></i> Añadir opción
@@ -41,11 +40,10 @@
             <div *ngIf="questions.at(i)?.get('type')?.value === 'matching'">
                 <div formArrayName="options">
                     <div class="option-container" *ngFor="let option of getOptions(i).controls; let j = index" [formGroupName]="j">
-                        <input formControlName="text" placeholder="Texto del par">
-                        <input formControlName="match" placeholder="Par a emparejar">
-                        <button type="button" (click)="removeOption(i, j)" class="remove-option-btn">
-                            <i class="fas fa-trash"></i> Eliminar opción
-                        </button>
+                        <input formControlName="text" placeholder="Texto del par" class="option_text">
+                        <input formControlName="match" placeholder="Par a emparejar" class="option_text">
+                        <button type="button" (click)="removeOption(i, j)" class="remove-option-btn delete">
+                            <i class="fas fa-trash"></i></button>
                     </div>
                     <button type="button" (click)="addOption(i)" class="button-Width add-option-btn">
                         <i class="fas fa-plus"></i> Añadir par
@@ -60,8 +58,8 @@
                 </div>
             </div>
 
-            <button type="button" (click)="removeQuestion(i)" class="button-Width remove-question-btn">
-                <i class="fas fa-trash-alt"></i> Eliminar pregunta
+            <button type="button" (click)="removeQuestion(i)" class="remove-question-btn button-Width">
+                <i class="fas fa-trash-alt"></i>Eliminar pregunta
             </button>
         </div>
     </div>

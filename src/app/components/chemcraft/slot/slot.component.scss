@@ -25,7 +25,7 @@
   bottom: 5px;
   right: 5px;
    background-color: #1a661a;
-  //background: #998EC3;
+  //background: var(--lavender-color);
   color: white;
   border-radius: 50%;
   width: 20px;
@@ -42,7 +42,7 @@
 
 .element {
   background-color: #1a661a;
-  //background: #998EC3;
+  //background: var(--lavender-color);
   color: #fff;
   padding: 10px;
   margin: 0 5px;
@@ -91,8 +91,8 @@
 .action-button {
   background-color: #1a661a;
   border: #1a661a;
-  // background: #998EC3;
-  // border: #998EC3;
+  // background: var(--lavender-color);
+  // border: var(--lavender-color);
   color: #fff;
   padding: 10px;
   margin: 0 5px;

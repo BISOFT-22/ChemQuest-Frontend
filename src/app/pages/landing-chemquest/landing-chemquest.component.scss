@@ -194,21 +194,21 @@ p{
 
 
 /*** Hero Header ***/
-.hero-header {
-    background:
-        url(../../../assets/img/landing-chemquest/bg-round.png),
-        url(../../../assets/img/landing-chemquest/bg-round-2.png),
-        url(../../../assets/img/landing-chemquest/bg-square.png),
-        url(../../../assets/img/landing-chemquest/bg-line.png),
-        url(../../../assets/img/landing-chemquest/bg-bottom-hero.png);
-    background-position:
-        0px 40%,
-        right 0 top 0,
-        left 50% top 0,
-        left 50% top 50%,
-        center bottom -1px;
-    background-repeat: no-repeat;
-}
+// .hero-header {
+//     background:
+//         url(../../../assets/img/landing-chemquest/bg-round.png),
+//         url(../../../assets/img/landing-chemquest/bg-round-2.png),
+//         url(../../../assets/img/landing-chemquest/bg-square.png),
+//         url(../../../assets/img/landing-chemquest/bg-line.png),
+//         url(../../../assets/img/landing-chemquest/bg-bottom-hero.png);
+//     background-position:
+//         0px 40%,
+//         right 0 top 0,
+//         left 50% top 0,
+//         left 50% top 50%,
+//         center bottom -1px;
+//     background-repeat: no-repeat;
+// }
 
 .breadcrumb-item + .breadcrumb-item::before {
     color: rgba(255, 255, 255, .5);
@@ -379,21 +379,21 @@ p{
 
 
 /*** Footer ***/
-.footer {
-    background:
-        url(../../../assets/img/landing-chemquest/bg-round.png),
-        url(../../../assets/img/landing-chemquest/bg-round-2.png),
-        url(../../../assets/img/landing-chemquest/bg-square.png),
-        url(../../../assets/img/landing-chemquest/bg-line.png),
-        url(../../../assets/img/landing-chemquest/bg-bottom-footer.png);
-    background-position:
-        0px 112px,
-        right 0 bottom 0,
-        left 50% top 80px,
-        left 50% bottom 0,
-        top center;
-    background-repeat: no-repeat;
-}
+// .footer {
+//     background:
+//         url(../../../assets/img/landing-chemquest/bg-round.png),
+//         url(../../../assets/img/landing-chemquest/bg-round-2.png),
+//         url(../../../assets/img/landing-chemquest/bg-square.png),
+//         url(../../../assets/img/landing-chemquest/bg-line.png),
+//         url(../../../assets/img/landing-chemquest/bg-bottom-footer.png);
+//     background-position:
+//         0px 112px,
+//         right 0 bottom 0,
+//         left 50% top 80px,
+//         left 50% bottom 0,
+//         top center;
+//     background-repeat: no-repeat;
+// }
 
 .footer p {
     font-size: 15px;
@@ -474,4 +474,17 @@ p{
     left: 0;
     margin-left: 0px;
     transition: 0.5s;
+}
+
+@media (min-width: 1400px) {
+    .container-xxl {
+        max-width: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-lg-4 {
+        flex: 0 0 auto;
+        width: 50%
+    }
 }

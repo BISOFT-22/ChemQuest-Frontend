@@ -23,7 +23,7 @@
 }*/
 
 footer {
-  background-color: #998ec3;
+  background-color: var(--lavender-color);
   color: #f7f7f7;
   text-align: center;
   padding: 20px;
@@ -78,14 +78,14 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #998ec3;
+  background-color: var(--lavender-color);
   color: white;
   text-align: center;          
 }
 
 .footer-layout{
   position: fixed;
-  background: #998ec3;
+  background: var(--lavender-color);
   margin: auto;
   width: 100%;
   z-index: 10;

@@ -13,7 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class LanguageSelectComponent {
   
   @Input() dictionary: string[][] = [];
-  @Input() id_language: number = 0; //0: English 1:Spanish
+  @Input() id_language: number = 1; //0: English 1:Spanish
   @Input() id_message: number = 0; 
   
   @Output() langChangd = new EventEmitter<number>();

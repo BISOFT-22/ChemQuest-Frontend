@@ -229,13 +229,44 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
    * Clears the slots and initializes the component again.
    */
   onConvert(): void {
-    this.clearSlots();
-    this.allHistory = [];
-    this.router.navigate([this.router.url]).then(() => {
-      this.initializeThings();
-    });
+    window.location.reload();
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   /**
    * Clears the slots by removing the letters and resetting the guessed letters and displayed word.
    */
@@ -339,7 +370,7 @@ export class ChemGuessHangManComponent implements OnInit, AfterViewInit {
    * Initializes the drag and drop functionality after the view has been initialized.
    */
   ngAfterViewInit(): void {
-    this.makeDraggable();
+    // this.makeDraggable();
   }
 
   /**

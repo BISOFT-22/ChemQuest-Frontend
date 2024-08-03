@@ -6,7 +6,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    background-color: #998ec3;
+    background-color: var(--lavender-color);
     position: relative; /* Para manejar la superposición de elementos internos */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }

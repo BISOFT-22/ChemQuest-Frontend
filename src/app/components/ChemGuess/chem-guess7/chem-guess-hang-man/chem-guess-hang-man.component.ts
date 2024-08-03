@@ -298,23 +298,39 @@ export class ChemGuessHangManComponent implements OnInit {
         }
       }
     }
+      if (historytemp.typeColor) {
+        let goodAnswer = 0;
+        console.log(historytemp.typeColor.length);
+        for (const color of historytemp.typeColor) {
+          if (color === "#4575b4") {
+            goodAnswer++;
+          }
+        }
+        console.log(goodAnswer);
+        if (goodAnswer === historytemp.typeColor.length) {
+          console.log("Ganaste");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      }
 
     if (historytemp.wrong == 0) {
       this.router.navigate(['app/games']);
     }
-
     if (historytemp.typeColor) {
       for (const color of historytemp.typeColor) {
         if (color === "#4575b4") {
           this.user.streak =+ 1;
-          
           this.streak = this.user.streak;
-          
           this.userService.updateUserSignal(this.user);
           break;
         }
       }
     }
+
+  
+   
 
     this.updateHistory(historytemp);
 

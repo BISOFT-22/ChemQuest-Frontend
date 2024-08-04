@@ -1,6 +1,6 @@
 /* Estilos para el temporizador */
 .timer-container {
-  position: fixed;
+  // position: fixed;
   top: 20px;
   right: 20px;
   display: flex;
@@ -10,6 +10,7 @@
 .timer-container input[type="number"] {
   width: 60px; /* Ajusta el tamaño de los campos de entrada */
   margin-right: 5px; /* Espacio entre los campos */
+  background-color: var(--white-color); /* Color de fondo */
 }
 
 #timer {

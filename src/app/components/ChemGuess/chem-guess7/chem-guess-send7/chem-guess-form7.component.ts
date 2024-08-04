@@ -30,5 +30,8 @@ export class ChemGuessSendComponent {
     this.callParentEvent.emit(true);
     console.log("estoy emitiendo");
   }
- 
+/**
+ * Closes the modal when the accept button is clicked.
+ */
+
 }

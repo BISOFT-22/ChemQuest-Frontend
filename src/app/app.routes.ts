@@ -200,7 +200,7 @@ export const routes: Routes = [
             IRoleType.superAdmin,
             IRoleType.user
           ],
-          showInSidebar: false,
+          showInSidebar: true,
           name: 'chemGuess9'
         }
         

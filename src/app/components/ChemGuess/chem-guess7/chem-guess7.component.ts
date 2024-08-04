@@ -116,4 +116,10 @@ export class ChemGuess7Component implements OnChanges, OnInit {
       this.changeLife();
     }
   }
+
+
+  // GJDES
+  OnTimeComplete() {
+    alert("Time is over");
+  }
 }

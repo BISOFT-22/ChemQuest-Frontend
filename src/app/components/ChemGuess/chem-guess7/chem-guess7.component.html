@@ -6,8 +6,8 @@
             <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
             
 
-            
-            <h2 class="timer">12:00</h2>
+            <app-timer [inputSeconds]="120" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+            <!-- <h2 class="timer">12:00</h2> -->
         </div>
         <div class="imageQuestion">
             

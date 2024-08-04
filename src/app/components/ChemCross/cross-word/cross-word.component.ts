@@ -9,11 +9,12 @@ import { WordLogComponent } from "../word-log/word-log.component";
 import { FormsModule } from '@angular/forms';
 import { Dictionary } from 'app/interfaces/language';
 import { LanguageSelectComponent } from "../../language-select/language-select.component";
+import { TimerComponent } from 'app/components/timer/timer.component';
 
 @Component({
   selector: 'app-cross-word',
   standalone: true,
-  imports: [CrossCellComponent, CommonModule, WordLogComponent, FormsModule, LanguageSelectComponent],
+  imports: [CrossCellComponent, CommonModule, WordLogComponent, FormsModule, LanguageSelectComponent, TimerComponent],
   templateUrl: './cross-word.component.html',
   styleUrl: './cross-word.component.scss'
 })
@@ -1471,5 +1472,16 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   RefreshWordLog(word: string) {
     this.wordLog = document.getElementById("wordLog") as HTMLInputElement;
     this.wordLog.innerHTML += `<div>${word}</div>`;
+  }
+
+
+  /**
+   * Handles the event when the time is complete.
+   */
+  OnTimeComplete() {
+    
+    //This alert is temporary. It will be replaced by a modal window.
+    alert("Time is over");
+    
   }
 }

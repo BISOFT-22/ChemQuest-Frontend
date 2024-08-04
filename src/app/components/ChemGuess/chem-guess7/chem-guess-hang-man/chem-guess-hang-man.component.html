@@ -2,7 +2,7 @@
  <br>
  <div class="hangman-container">
     <div class="word">
-        <img [src]="convert" (click)="showDetailModal(detailModalChange)" class="imgSize" alt="" title="Cambiar de palabra">
+        <img [src]="convert" draggable="false" (click)="showDetailModal(detailModalChange)" class="imgSize" alt="" title="Cambiar de palabra">
         @for (item of wordsArray; track $index) {
             <div (drop)="OnDropOnCross($event)" (dragover)="OnDragOver($event)" class="slot" [attr.id]="'casilla-'"></div>
         }
@@ -10,7 +10,7 @@
                 <p>{{letter}}</p>
             }
         
-        <img [src]="send" (click)="showDetailModal(detailModalSend)" class="imgSize" alt="" title="Verificar intento">
+        <img [src]="send" draggable="false" (click)="showDetailModal(detailModalSend)" class="imgSize" alt="" title="Verificar intento">
     </div>
     <br>
 </div>

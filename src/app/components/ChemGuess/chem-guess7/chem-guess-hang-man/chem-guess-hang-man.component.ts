@@ -230,8 +230,9 @@ export class ChemGuessHangManComponent implements OnInit {
    * Clears the slots and initializes the component again.
    */
   onConvert(): void {
-    this.clearSlots();
     this.deleteHistory();
+    console.log(this.allHistory);
+    this.clearSlots();
     this.router.navigate([this.router.url]).then(() => {
       this.initializeThings();
     });

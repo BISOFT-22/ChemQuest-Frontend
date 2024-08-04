@@ -187,5 +187,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     
   // }
 
- 
+  OnTimeComplete() {
+    alert("Time is over");
+  }
 }

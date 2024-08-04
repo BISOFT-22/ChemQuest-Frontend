@@ -5,14 +5,9 @@
         <div class="Question-Timer">
             <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
             
-                <img class="imgLive" [src]="liveImg" alt="">
-              
-              <div>
-               
-                
-              </div>
-            
-            <h2 class="timer">12:00</h2>
+
+            <app-timer [inputSeconds]="120" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+            <!-- <h2 class="timer">12:00</h2> -->
         </div>
         <div class="imageQuestion">
             
@@ -20,9 +15,9 @@
             <br>
         
             <div class="imgs">
-                <img class="exodiaUp" [src]="imagePathLeftArm" alt="" > 
-                <img class="exodiaUp" [src]="imagePathHead" alt="" > 
-                <img class="exodiaUp" [src]="imagePathRigthArm" alt="" > 
+                <img class="exodiaUp" [draggable]="false" [src]="imagePathLeftArm" alt="" > 
+                <img class="exodiaUp" [draggable]="false" [src]="imagePathHead" alt="" > 
+                <img class="exodiaUp" [draggable]="false" [src]="imagePathRigthArm" alt="" > 
             </div>
             <div class="imgs">
                 <img class="exodiaDown" [src]="imagePathLeftLeg" alt="" > 

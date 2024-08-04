@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { IElement, IHistory, IUser } from '../../../interfaces';
 import { ChemGuessHistoryComponent } from './chem-guess-history/chem-guess-history.component';
 import { LiveChangeService } from '../../../services/liveChange.service';
+import { TimerComponent } from "../../timer/timer.component";
 
 /**
  * Component for ChemGuess7.
@@ -17,7 +18,7 @@ import { LiveChangeService } from '../../../services/liveChange.service';
 @Component({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent, CommonModule, ChemGuessHistoryComponent],
+  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
@@ -72,35 +73,39 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   changeLife(): void {
     this.live = this.liveChangeService.live.value;
  
-    switch (this.live) {
-      case 6:
-        this.liveImg = 'assets/img/live/live100.png';
-        
-        break;
-      case 5:
-        this.liveImg = 'assets/img/live/live100.png';
+    if (this.live === 6) {
+    
+      this.imagePathLeftArm = 'assets/img/bocaAbajo.jpg';
+       } else if(this.live === 5) {
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-        break;
-      case 4:
-        this.liveImg = 'assets/img/live/live75.png';
+       }else if(this.live === 4) {
+       
+        this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
-        break;
-      case 3:
-        this.liveImg = 'assets/img/live/live50.png';
+        
+        
+       }else if(this.live === 3) {  
+       
+        this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+        this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
         this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
-        break;
-      case 2:
-        this.liveImg = 'assets/img/live/live25.png';
+       } else if(this.live === 2) {
+       
+        this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+        this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+        this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
         this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
-        break;
-      case 1:
-        this.liveImg = 'assets/img/live/live25.png';
+       }
+       else if(this.live === 1) {
+        
+        this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+        this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+        this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
+        this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
         this.imagePathHead = 'assets/img/exodia/Head.png';
-        break;
-      default:
-        this.liveImg = 'assets/img/live/live100.png';
-        break;
-    }
+       }
+     
+    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -110,5 +115,11 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     if (liveChange && !liveChange.firstChange) {
       this.changeLife();
     }
+  }
+
+
+  // GJDES
+  OnTimeComplete() {
+    alert("Time is over");
   }
 }

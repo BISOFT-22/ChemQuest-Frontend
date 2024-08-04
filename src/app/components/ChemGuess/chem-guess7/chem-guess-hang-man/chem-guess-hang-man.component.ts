@@ -128,9 +128,9 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormUpdate(response: boolean) {
     if (response) {
       this.onConvert();
-    } else {
-      
-    }
+      console.log("Se actualizo");
+      console.log(this.allHistory);
+    } 
   }
 
   /**
@@ -157,6 +157,7 @@ export class ChemGuessHangManComponent implements OnInit {
    */
   initializeThings(): void {
     // Ensure data is fetched
+    
     this.random.checkAndFetch();
     this.user = this.authService.getUser() || {};
 
@@ -230,16 +231,14 @@ export class ChemGuessHangManComponent implements OnInit {
    * Clears the slots and initializes the component again.
    */
   onConvert(): void {
-    this.deleteHistory();
-    console.log(this.allHistory);
     this.clearSlots();
-    this.router.navigate([this.router.url]).then(() => {
-      this.initializeThings();
-    });
+    this.deleteHistory();
+    this.initializeThings();
+    
   }
   deleteHistory(): void {
     this.allHistory = [];
-
+    this.historyChange.emit(this.allHistory);
   }
 
   // onConvert(): void {
@@ -247,39 +246,6 @@ export class ChemGuessHangManComponent implements OnInit {
   //   window.location.reload();
     
   // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   

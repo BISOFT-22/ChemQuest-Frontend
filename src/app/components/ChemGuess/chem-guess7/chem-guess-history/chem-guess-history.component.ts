@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { IHistory } from '../../../../interfaces';
   templateUrl: './chem-guess-history.component.html',
   styleUrl: './chem-guess-history.component.scss'
 })
-export class ChemGuessHistoryComponent {
+export class ChemGuessHistoryComponent implements OnChanges{
   /**
    * Event emitter for calling the history event.
    */
@@ -25,6 +25,19 @@ export class ChemGuessHistoryComponent {
    */
   @Input() allHistory: IHistory[] = [];
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['allHistory']) {
+      this.updateHistory();
+    }
+  }
+
+  /**
+   * Updates the history display.
+   */
+  updateHistory() {
+    // Aquí puedes agregar lógica adicional si es necesario
+    console.log('History updated:', this.allHistory);
+  }
   /**
    * Displays the history by logging each history item to the console.
    */

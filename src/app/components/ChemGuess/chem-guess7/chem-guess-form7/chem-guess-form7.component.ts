@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { IHistory } from 'app/interfaces';
 
 
 /**
@@ -16,7 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './chem-guess-form7.component.scss'
 })
 export class ChemGuessForm7Component {
- 
+ @Input() allHistory: IHistory[] = [];
 
   /**
    * Event emitter for calling the parent component.
@@ -27,6 +28,7 @@ export class ChemGuessForm7Component {
    * Calls the parent event and emits a boolean value.
    */
   callEvent() {
+    
     this.callParentEvent.emit(true);
  
   }

@@ -7,20 +7,21 @@ import { CommonModule } from '@angular/common';
 import { IElement } from '../../../interfaces';
 import { FormsModule } from '@angular/forms';
 import { ModalErrorComponent } from "../modal-error/modal-error.component";
+import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.component";
 
 @Component({
   selector: 'app-slot',
   standalone: true,
-  imports: [CommonModule, FormsModule, ModalErrorComponent],
+  imports: [CommonModule, FormsModule, ChemquestModalComponent],
   templateUrl: './slot.component.html',
   styleUrls: ['./slot.component.scss']
 })
 export class SlotComponent {
   @Input() element: { symbol: string; count: number } | null = null;
-  @Output() error = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttons: boolean }>();
+  @Output() error = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean }>();
   @Input() cleanSlot: boolean = false;
   counterValue: number = 0; 
-  @ViewChild('modalError') modalError!: ModalErrorComponent;
+  @ViewChild('modal') modal!: ChemquestModalComponent;
 
 
 
@@ -47,7 +48,7 @@ export class SlotComponent {
         if (this.element.symbol === draggedElement.symbol) {
           this.element.count += 1; 
         } else {
-          this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', isAlert: true, buttons: false});
+          this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', isAlert: true, buttonAccept: true, buttonCancel: false });
         }
       } else {
         this.element = {
@@ -91,10 +92,10 @@ export class SlotComponent {
   editCounter(): void {
     if (this.counterValue <= 0) {
       this.element = null;
-      this.modalError.closeModal()
+      this.modal.closeModal()
     }else if (this.element) {
       this.element.count = this.counterValue;
-      this.modalError.closeModal()
+      this.modal.closeModal()
     }
   }
 
@@ -117,7 +118,7 @@ inputElement.value = this.counterValue.toString();
    */
   showEditCounter(): void {
     this.counterValue = this.element?.count || 0;
-    this.modalError.showModal('', '', false, false);
+    this.modal.showModal('', '', false, false, false);
 }
 
 getSlotContentString(): string {

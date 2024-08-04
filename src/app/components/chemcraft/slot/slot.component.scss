@@ -24,7 +24,7 @@
   position: absolute;
   bottom: 5px;
   right: 5px;
-   background-color: #1a661a;
+   background-color: var(--button-ok-bg-color);
   //background: var(--lavender-color);
   color: white;
   border-radius: 50%;
@@ -41,7 +41,7 @@
 }
 
 .element {
-  background-color: #1a661a;
+  background-color: var(--button-ok-bg-color);
   //background: var(--lavender-color);
   color: #fff;
   padding: 10px;
@@ -59,7 +59,7 @@
 
 
 .element:active {
-  background-color: #217a34;
+  background-color: var(--button-ok-bg-color);
 }
 
 .element {
@@ -89,8 +89,8 @@
   font-size: 16px;
 }
 .action-button {
-  background-color: #1a661a;
-  border: #1a661a;
+  background-color: var(--button-ok-bg-color);
+  border: var(--button-ok-bg-color);
   // background: var(--lavender-color);
   // border: var(--lavender-color);
   color: #fff;
@@ -104,6 +104,31 @@
   flex: 0 0 auto;
 }
 
+#edit{
+  padding-left: 20px;
+    padding-right: 20px;
+}
+
+.action-button:hover {
+  background-color: var(--button-ok-bg-hover-color);
+  border: var(--button-ok-bg-hover-color);
+}
+
+#cancel{
+  background-color: var(--button-cancel-bg-color);
+  border: var(--button-cancel-bg-color);
+}
+
+#cancel:hover{
+  background-color: var(--button-cancel-bg-hover-color);
+  border: var(--button-cancel-bg-hover-color);
+}
+
+.buttons-container {
+  text-align: end;
+}
+
+
 .buttons-container {
   text-align: end;
 }
@@ -111,6 +136,8 @@
 .input-edit{
   margin-bottom: 15px;
   border-radius: 10px;
+  text-align: center;
+  width: 15%;
 }
 
 

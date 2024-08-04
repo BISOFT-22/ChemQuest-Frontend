@@ -4,7 +4,7 @@
 
 
 
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ICompound } from '../../../interfaces';
 
@@ -13,18 +13,20 @@ import { ICompound } from '../../../interfaces';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './compound-request.component.html',
-  styleUrls: ['./compound-request.component.scss']
+  styleUrls: ['./compound-request.component.scss'],
+  encapsulation: ViewEncapsulation.None // Desactiva la encapsulación de estilos
 })
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
   @Output() compoundGenerated = new EventEmitter<string>();
-  @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttons: boolean }>();
+  @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean }>();
   @Input() change: Boolean = false;
   public compound: ICompound = {};
   public lastCompound: string = '';
   public difficultyLevel: string = '';
   public text: string = '';
   public textList: string[] = [];
+
 
   ngOnInit(): void {
 
@@ -102,9 +104,9 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     }
     this.compoundGenerated.emit(this.compound.formula);
     this.textList = [
-      'Debes crear el compuesto "' + this.compound.name + '". ¿Qué elementos son necesarios para ello?',
-      '¿Recuerdas la fórmula química del compuesto "' + this.compound.name + '" ? Genial, ¿De qué elementos está compuesta la fórmula?',
-      'Así que eres un químico profesional... ¡Genial! ¿Qué elementos componen la fórmula del siguiente compuesto: "' + this.compound.name + '"?',
+      'Debes crear el compuesto <span class="compound-name">"' + this.compound.name + '"</span>. ¿Qué elementos son necesarios para ello?',
+      '¿Recuerdas la fórmula química del compuesto <span class="compound-name">"' + this.compound.name + '"</span>? Genial, ¿De qué elementos está compuesta la fórmula?',
+      'Así que eres un químico profesional... ¡Genial! ¿Qué elementos componen la fórmula del siguiente compuesto: <span class="compound-name">"' + this.compound.name + '"</span>?',
     ];
     this.text = this.getRandomText();
     this.setDifficultyLevel();
@@ -123,7 +125,8 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
       title: 'Cambio de solicitud',
       text: 'Deseas cambiar la solicitud del compuesto a crear? si lo deseas cambiar perderás puntos.',
       isAlert: true,
-      buttons: true
+      buttonAccept: true,
+      buttonCancel: true
     });
   }
 }

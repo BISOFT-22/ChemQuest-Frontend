@@ -116,6 +116,7 @@ export const routes: Routes = [
       {
         path: 'chemcraft',
         component: ChemcraftComponent,
+        title:'ChemCraft',
         data: { 
           authorities: [
             IRoleType.admin, 

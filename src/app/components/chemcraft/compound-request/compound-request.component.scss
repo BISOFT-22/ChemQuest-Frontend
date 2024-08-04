@@ -3,7 +3,7 @@
 */
 
 .compound-request {
-    background-color: #1a661a;
+    background-color: var(--button-ok-bg-color);
     //background: var(--lavender-color);
     color: white;
     padding: 20px;
@@ -52,4 +52,11 @@
   .change-button img{
     width: 20px;
     height: 20px;
+  }
+
+  .compound-request-info span {
+    font-size: 14px; 
+    font-weight: 500;
+    background: #0000001f;
+    border-radius: 10px;
   }

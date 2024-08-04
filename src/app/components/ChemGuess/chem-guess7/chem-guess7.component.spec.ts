@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChemGuess7Component } from './chem-guess7.component';
-import { LiveChangeService } from '../../../services/liveChange.service';
+import { LifeChangeService } from '../../../services/lifeChange.service';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChemGuessHangManComponent } from './chem-guess-hang-man/chem-guess-hang-man.component';
@@ -11,10 +11,10 @@ import { HttpClient, HttpHandler } from '@angular/common/http';
 describe('ChemGuess7Component', () => {
   let component: ChemGuess7Component;
   let fixture: ComponentFixture<ChemGuess7Component>;
-  let liveChangeService: LiveChangeService;
+  let liveChangeService: LifeChangeService;
 
   beforeEach(async () => {
-    liveChangeService = new LiveChangeService();
+    liveChangeService = new LifeChangeService();
 
     await TestBed.configureTestingModule({
 

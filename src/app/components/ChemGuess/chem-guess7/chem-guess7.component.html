@@ -14,14 +14,14 @@
           
             <br>
         
-            <div class="imgs">
-                <img class="exodiaUp" (drag)="false" [src]="imagePathLeftArm" alt="" > 
-                <img class="exodiaUp" (drag)="false" [src]="imagePathHead" alt="" > 
-                <img class="exodiaUp" (drag)="false" [src]="imagePathRigthArm" alt="" > 
+            <div  class="imgs">
+                <img class="exodiaUp" draggable="false" [src]="imagePathLeftArm" alt="" > 
+                <img class="exodiaUp" draggable="false" [src]="imagePathHead" alt="" > 
+                <img class="exodiaUp" draggable="false" [src]="imagePathRigthArm" alt="" > 
             </div>
             <div class="imgs">
-                <img class="exodiaDown" [src]="imagePathLeftLeg" alt="" > 
-                <img class="exodiaDown" [src]="imagePathRightLeg" alt="" > 
+                <img class="exodiaDown"draggable="false" [src]="imagePathLeftLeg" alt="" > 
+                <img class="exodiaDown" draggable="false"[src]="imagePathRightLeg" alt="" > 
             </div>
 
            
@@ -36,7 +36,7 @@
 (addFavoriteEvent)="getWord($event)"
 />
 <div>
-<p class="racha"><i class="fa-solid fa-fire"></i>{{streak}}</p>
+<p class="racha"><i class="fa-solid fa-fire"></i>{{user.streak}}</p>
    
 <script>
     function toggleNavbar() {

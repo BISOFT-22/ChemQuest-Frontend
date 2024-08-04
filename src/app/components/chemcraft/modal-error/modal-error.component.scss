@@ -64,8 +64,8 @@
 }
 
 .action-button {
-    background-color: #1a661a;
-    border: #1a661a;
+    background-color: var(--button-ok-bg-color);
+    border: var(--button-ok-bg-color);
     // background: var(--lavender-color);
     // border: var(--lavender-color);
     color: #fff;
@@ -77,6 +77,22 @@
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+}
+
+
+.action-button:hover {
+    background-color: var(--button-ok-bg-hover-color);
+    border: var(--button-ok-bg-hover-color);
+}
+
+#cancel{
+    background-color: var(--button-cancel-bg-color);
+    border: var(--button-cancel-bg-color);
+}
+
+#cancel:hover{
+    background-color: var(--button-cancel-bg-hover-color);
+    border: var(--button-cancel-bg-hover-color);
 }
 
 .buttons-container {

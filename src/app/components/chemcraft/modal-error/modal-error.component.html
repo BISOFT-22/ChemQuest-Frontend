@@ -11,8 +11,9 @@
         <p id="text">{{ text }}</p>
         @if(buttonsVisible){
         <div class="buttons-container">
+
           <button class="action-button" (click)="onButtonClick(accept)">Aceptar</button>
-          <button class="action-button" (click)="onButtonClick(cancel)">Cancelar</button> 
+          <button id="cancel" class="action-button" (click)="onButtonClick(cancel)">Cancelar</button> 
         </div>
         }
       </div>

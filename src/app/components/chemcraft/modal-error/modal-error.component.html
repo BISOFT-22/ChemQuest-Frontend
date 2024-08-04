@@ -2,23 +2,37 @@
 
 <div class="content">
     <div class="modal-error"  >
-      <button class="close-button" (click)="closeModal()">x</button>
+      <!-- <button class="close-button" (click)="closeModal()">x</button> -->
       <ng-content></ng-content>
+
+      <!-- Si no les gusta este contenido por defecto, entonces solo pasan por parametros
+       cuando llaman al metodo de mostrar el modal asi:
+       this.modalError.showModal('', '', false, false, false); y en el html donde lo quieran usar
+       dentro de las etiquetas le ponen el contenido propio y le dan el estilo del contenido en ese
+       mismo componente donde lo llaman
+       Y si lo quieren usar por defecto entonces solo pasan:
+
+       el titulo, el texto, true, y si quieren solo el botón de aceptar entonces true, false,
+       y si son los 2 entonces true, true y listo -->
+
+
       @if(isAlert){
       <img id="error" src="assets/img/chemcraft/error.png" alt="error" >
       <div class="info">
         <h2 id="title">{{ title }}</h2>
         <p id="text">{{ text }}</p>
-        @if(buttonsVisible){
         <div class="buttons-container">
-
-          <button class="action-button" (click)="onButtonClick(accept)">Aceptar</button>
-          <button id="cancel" class="action-button" (click)="onButtonClick(cancel)">Cancelar</button> 
+          @if(buttonAcceptVisible){
+          <button id="accept" class="action-button" (click)="onButtonClick(accept)">Aceptar</button>
+          }
+          @if(buttonCancelVisible){
+          <button id="cancel" class="action-button" (click)="onButtonClick(cancel)">Cancelar</button>
+          }
         </div>
-        }
+
       </div>
 
     }
-    </div>   
+    </div>
   </div>
 }

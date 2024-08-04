@@ -7,16 +7,16 @@ import { SlotComponent } from "../../components/chemcraft/slot/slot.component";
 import { ModalInfoCompoundComponent } from "../../components/chemcraft/modal-info-compound/modal-info-compound.component";
 import { ModalTutorialComponent } from "../../components/chemcraft/modal-tutorial/modal-tutorial.component";
 import { CompoundRequestComponent } from "../../components/chemcraft/compound-request/compound-request.component";
-import { ModalErrorComponent } from '../../components/chemcraft/modal-error/modal-error.component';
 import { CompoundService } from '../../services/compound.service';
 import { ICompound } from '../../interfaces';
 import { BackgroundService } from '../../services/background.service';
 import { CommonModule } from '@angular/common';
+import { ChemquestModalComponent } from "../../components/chemquest-modal/chemquest-modal.component";
 
 @Component({
   selector: 'app-chemcraft',
   standalone: true,
-  imports: [CommonModule, ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ModalErrorComponent],
+  imports: [CommonModule, ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ChemquestModalComponent],
   templateUrl: './chemcraft.component.html',
   styleUrl: './chemcraft.component.scss'
 })
@@ -26,7 +26,7 @@ export class ChemcraftComponent implements OnInit {
   public craftFormula: string = '';
   public elementCount: number = 0;
   public slotsArray: any[] = [];
-  @ViewChild('modalError') modalError!: ModalErrorComponent;
+  @ViewChild('modal') modal!: ChemquestModalComponent;
   public change: boolean = false;
   @ViewChildren(SlotComponent) slots!: QueryList<SlotComponent>;
 //tambien los viewChild se pueden trabjar asi ahora: children = viewChild!(ElementListComponent); trabajan como signals, en la documentacion de angular esta, pero mejor los dejo con los decoradores viejos
@@ -49,9 +49,9 @@ export class ChemcraftComponent implements OnInit {
   /**
    * Muestra un modal de alerta para cambiar el compuesto.
    */
-  showAlert(event: { title: string; text: string, isAlert: boolean, buttons: boolean }): void {
+  showAlert(event: { title: string; text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean  }): void {
     // console.log('Alert: ', event);
-    this.modalError.showModal(event.title, event.text, event.isAlert, event.buttons);
+    this.modal.showModal(event.title, event.text, event.isAlert, event.buttonAccept, event.buttonCancel);
   }
 
 

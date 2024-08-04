@@ -4,17 +4,18 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+
 
 @Component({
-  selector: 'app-modal-error',
+  selector: 'app-chemquest-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './modal-error.component.html',
-  styleUrls: ['./modal-error.component.scss']
+  imports: [],
+  templateUrl: './chemquest-modal.component.html',
+  styleUrl: './chemquest-modal.component.scss'
 })
+export class ChemquestModalComponent {
 
-export class ModalErrorComponent {
+
   /**
    * Título del modal.
    */
@@ -98,7 +99,9 @@ export class ModalErrorComponent {
    * @param option - La opción seleccionada.
    */
   onButtonClick(option : boolean): void {
-    this.action.emit({option});
+    if(this.buttonAcceptVisible && this.buttonCancelVisible){
+      this.action.emit({option});
+    }
     this.closeModal();
   } 
 }

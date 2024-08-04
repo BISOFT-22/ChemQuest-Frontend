@@ -98,6 +98,21 @@ export class SlotComponent {
     }
   }
 
+  /**metodo para no djar que el contador sea negativo, o que se ingresen decimales o puntos
+   */
+
+preventInvalidInput(event: Event): void {
+  const inputElement = event.target as HTMLInputElement;
+  inputElement.value = inputElement.value.replace(/[^0-9]/g, '');
+  this.counterValue = parseInt(inputElement.value, 10) || 0;
+
+  if (this.counterValue > 99) {
+    this.counterValue = 99;
+}
+
+inputElement.value = this.counterValue.toString();
+}
+
   /**metodo para mostrar el modal con el contenido de editar el contador del elemento
    */
   showEditCounter(): void {

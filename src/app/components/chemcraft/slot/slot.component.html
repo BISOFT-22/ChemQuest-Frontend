@@ -15,10 +15,11 @@
       <div class="info">
           <h2 id="title">Editar cantidad</h2>
           <p id="text"> Ingresa la cantidad de elementos que necesitas para crear el compuesto:</p>
-            <input class="input-edit" type="number" [(ngModel)]="counterValue" min="1">
+          <input class="input-edit" type="number" [(ngModel)]="counterValue" min="0" (input)="preventInvalidInput($event)">
             <div class="buttons-container">
-              <button class="action-button" (click)="this.modalError.closeModal()">Cancelar</button>
               <button class="action-button" (click)="editCounter()">Editar</button>
+              <button class="action-button" (click)="this.modalError.closeModal()">Cancelar</button>
+
            </div>
       </div>  
   </app-modal-error>

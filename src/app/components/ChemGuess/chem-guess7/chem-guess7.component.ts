@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
 
 import { IElement, IHistory, IUser } from '../../../interfaces';
 import { ChemGuessHistoryComponent } from './chem-guess-history/chem-guess-history.component';
-import { LiveChangeService } from '../../../services/liveChange.service';
+import { LifeChangeService} from '../../../services/lifeChange.service';
 import { TimerComponent } from "../../timer/timer.component";
+import { AuthService } from 'app/services/auth.service';
+import { UserService } from 'app/services/user.service';
 
 /**
  * Component for ChemGuess7.
@@ -24,7 +26,7 @@ import { TimerComponent } from "../../timer/timer.component";
 })
 export class ChemGuess7Component implements OnChanges, OnInit {
   @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
-  liveImg: string = 'assets/img/live/live100.png';
+  lifeImg: string = 'assets/img/live/live100.png';
 
 
 
@@ -33,12 +35,28 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   imagePathRigthArm: string = 'assets/img/exodia/ArmRight.png';
   imagePathLeftLeg: string = 'assets/img/exodia/LegLeft.png';
   imagePathRightLeg: string = 'assets/img/exodia/LegRight.png';
+
+  //////////////////////////////////////////
+  /////////100 de vida//////////////////////
+  scientific: string = 'assets/img/exodia/scientific.gif';
+  //////////////////////////////////////////
+  /////////75 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////50 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////25 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////0 de vida//////////////////////
  
   public allHistory: IHistory[] = [];
-  @Input() live: number | undefined;
+  @Input() life: number | undefined;
   public streak: number | undefined=0;
-
-  constructor(private liveChangeService: LiveChangeService) {
+  public change: boolean = false;
+  user:IUser = {};
+  constructor(private lifeChangeService: LifeChangeService, private authService:AuthService, private userService: UserService) {
   }
   ngOnInit(): void {
     this.imagePathHead = 'assets/img/bocaAbajo.jpg';
@@ -46,15 +64,29 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     this.imagePathRigthArm = 'assets/img/bocaAbajo.jpg';  
     this.imagePathLeftLeg = 'assets/img/bocaAbajo.jpg';
     this.imagePathRightLeg = 'assets/img/bocaAbajo.jpg';
-  }
 
+    this.setUser();
+  }
+  setUser(): void {
+    const user = this.authService.getUser();
+    if (user) {
+      this.user = user;
+    }
+  }
   /**
    * Shows the history modal.
    * @param modal - The modal component.
    */
   showHistory(modal: any): void {
+    console.log(this.user.streak);
     let visible: boolean = true;
     modal.show();
+  }
+  comprobation(modal: any): void {
+    let show = this.life;
+    if (show !== undefined && show < 5) {
+      this.showHistory(modal);
+    }
   }
 
   opcion: string = '';
@@ -66,37 +98,47 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   getWord(word: string): void {
     this.opcion = word;
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    this.life = this.lifeChangeService.life.value;
+    if (changes) {
+      this.allHistory=[];
+    }
+    console.log(this.life);
+    const liveChange = changes['life'];
+    if (liveChange && !liveChange.firstChange) {
+      this.changeLife();
+    }
+  }
   /**
    * Changes the life image based on the current live value.
    */
   changeLife(): void {
-    this.live = this.liveChangeService.live.value;
+    this.life = this.lifeChangeService.life.value;
  
-    if (this.live === 6) {
+    if (this.life === 6) {
     
-      this.imagePathLeftArm = 'assets/img/bocaAbajo.jpg';
-       } else if(this.live === 5) {
+      this.scientific 
+       } else if(this.life === 5) {
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-       }else if(this.live === 4) {
+       }else if(this.life === 4) {
        
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
         
         
-       }else if(this.live === 3) {  
+       }else if(this.life === 3) {  
        
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
         this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
-       } else if(this.live === 2) {
+       } else if(this.life === 2) {
        
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
         this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
         this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
        }
-       else if(this.live === 1) {
+       else if(this.life === 1) {
         
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
         this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
@@ -107,19 +149,43 @@ export class ChemGuess7Component implements OnChanges, OnInit {
      
     
   }
+  // changeLife(): void {
+  //   this.life = this.lifeChangeService.life.value;
+ 
+  //   if (this.life === 6) {
+    
+  //     this.scientific 
+  //      } else if(this.life === 5) {
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //      }else if(this.life === 4) {
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+        
+        
+  //      }else if(this.life === 3) {  
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
+  //      } else if(this.life === 2) {
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
+  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
+  //      }
+  //      else if(this.life === 1) {
+        
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
+  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
+  //       this.imagePathHead = 'assets/img/exodia/Head.png';
+  //      }
+     
+    
+  // }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.live = this.liveChangeService.live.value;
-    console.log(this.live);
-    const liveChange = changes['live'];
-    if (liveChange && !liveChange.firstChange) {
-      this.changeLife();
-    }
-  }
-
-
-  // GJDES
-  OnTimeComplete() {
-    alert("Time is over");
-  }
+ 
 }

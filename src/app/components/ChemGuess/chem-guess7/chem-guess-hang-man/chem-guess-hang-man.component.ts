@@ -9,7 +9,7 @@ import { ChemGuessHistoryComponent } from '../chem-guess-history/chem-guess-hist
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalPruebasComponent } from "../../../../modal-pruebas/modal-pruebas.component";
-import { LiveChangeService } from '../../../../services/liveChange.service';
+import { LifeChangeService } from '../../../../services/lifeChange.service';
 import { ChemGuessSendComponent } from '../chem-guess-send7/chem-guess-form7.component';
 import { UserService } from '../../../../services/user.service';
 import { AuthService } from '../../../../services/auth.service';
@@ -103,7 +103,7 @@ export class ChemGuessHangManComponent implements OnInit {
    * @param authService - The AuthService.
    * @param userService - The UserService.
    */
-  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private liveChangeService: LiveChangeService, private authService: AuthService, private userService: UserService) {
+  constructor(private modalService: NgbModal,private random: RandomizerService,  private router: Router, private lifeChangeService: LifeChangeService, private authService: AuthService, private userService: UserService) {
   }
 
   /**
@@ -230,44 +230,23 @@ export class ChemGuessHangManComponent implements OnInit {
    * Clears the slots and initializes the component again.
    */
   onConvert(): void {
-    window.location.reload();
+    this.clearSlots();
+    this.deleteHistory();
+    this.router.navigate([this.router.url]).then(() => {
+      this.initializeThings();
+    });
+  }
+  deleteHistory(): void {
+    this.allHistory = [];
+
   }
 
+  // onConvert(): void {
+    
+  //   window.location.reload();
+    
+  // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
   /**
    * Clears the slots by removing the letters and resetting the guessed letters and displayed word.
    */
@@ -330,33 +309,51 @@ export class ChemGuessHangManComponent implements OnInit {
         }
       }
     }
+    ///Se encarga de ver si el juego se completo si o no
+      if (historytemp.typeColor) {
+        let goodAnswer = 0;
+        console.log(historytemp.typeColor.length);
+        for (const color of historytemp.typeColor) {
+          if (color === "#4575b4") {
+            goodAnswer++;
+          }
+        }
+        console.log(goodAnswer);
+        if (goodAnswer === historytemp.typeColor.length) {
+          this.increaseStreak(historytemp);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      }
 
     if (historytemp.wrong == 0) {
       this.router.navigate(['app/games']);
     }
+    //se encarga de aumentar la racha del usuario
+   
+  
+    this.updateHistory(historytemp);
 
-    if (historytemp.typeColor) {
-      for (const color of historytemp.typeColor) {
+    this.lifeChangeService.setLive(historytemp.wrong || 5);
+    console.log("Vidas: " + this.lifeChangeService.life.value);
+    this.clearSlots();
+    this.allHistory.push(historytemp)
+    this.callEvent();
+  }
+  increaseStreak(historyTemp:IHistory): void {
+    if (historyTemp.typeColor && this.user) {
+      for (const color of historyTemp.typeColor) {
         if (color === "#4575b4") {
-          this.user.streak =+ 1;
-          
+          this.user.streak = (this.user.streak || 0) + 1;
           this.streak = this.user.streak;
-          
+          console.log("Racha: " + this.streak);
           this.userService.updateUserSignal(this.user);
           break;
         }
       }
     }
-
-    this.updateHistory(historytemp);
-
-    this.liveChangeService.setLive(historytemp.wrong || 5);
-    console.log("Vidas: " + this.liveChangeService.live.value);
-    this.clearSlots();
-    this.allHistory.push(historytemp)
-    this.callEvent();
   }
-
   /**
    * Updates the history with the provided historyTemp.
    * @param historyTemp - The updated history.

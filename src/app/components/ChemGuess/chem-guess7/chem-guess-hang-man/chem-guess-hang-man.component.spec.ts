@@ -3,7 +3,7 @@ import { ChemGuessHangManComponent } from './chem-guess-hang-man.component';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { LiveChangeService } from '../../../../services/liveChange.service';
+import { LifeChangeService } from '../../../../services/lifeChange.service';
 import { of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
@@ -11,7 +11,7 @@ describe('ChemGuessHangManComponent', () => {
   let component: ChemGuessHangManComponent;
   let fixture: ComponentFixture<ChemGuessHangManComponent>;
   let randomizerServiceStub: Partial<RandomizerService>;
-  let liveChangeServiceStub: Partial<LiveChangeService>;
+  let liveChangeServiceStub: Partial<LifeChangeService>;
 
   beforeEach(async () => {
     // Configuración de los stubs de los servicios
@@ -31,7 +31,7 @@ describe('ChemGuessHangManComponent', () => {
         { provide: RandomizerService, useValue: randomizerServiceStub },
         { provide: NgbModal, useValue: {} },
         { provide: Router, useValue: { navigate: jasmine.createSpy('navigate') } },
-        { provide: LiveChangeService, useValue: liveChangeServiceStub }
+        { provide: LifeChangeService, useValue: liveChangeServiceStub }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

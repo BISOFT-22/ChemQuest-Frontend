@@ -5,13 +5,13 @@ import { IHistory } from '../interfaces';
 @Injectable({
     providedIn: 'root'
 })
-export class LiveChangeService {
+export class LifeChangeService {
 
-    public live = new BehaviorSubject<number>(5);
+    public life = new BehaviorSubject<number>(5);
    
     setLive(livetemp: number) {
-        this.live.next(livetemp);
-        return this.live.asObservable();
+        this.life.next(livetemp);
+        return this.life.asObservable();
     }
 
     

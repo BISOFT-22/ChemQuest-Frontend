@@ -3,7 +3,7 @@
 <main (mousemove)="changeLife()">
     <div>
         <div class="Question-Timer">
-            <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
+            <a (click)="comprobation(modalPrueba)" class="big-button">historial</a>
             
 
             <app-timer [inputSeconds]="120" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
@@ -14,19 +14,33 @@
           
             <br>
         
-            <div class="imgs">
-                <img class="exodiaUp" [draggable]="false" [src]="imagePathLeftArm" alt="" > 
-                <img class="exodiaUp" [draggable]="false" [src]="imagePathHead" alt="" > 
-                <img class="exodiaUp" [draggable]="false" [src]="imagePathRigthArm" alt="" > 
+            <div  class="imgs">
+                <img class="scientific" draggable="false" [src]="scientific" alt="" > 
+             
+            </div>
+            
+
+           
+            
+        </div> 
+        <!-- <div class="imageQuestion">
+            
+          
+            <br>
+        
+            <div  class="imgs">
+                <img class="exodiaUp" draggable="false" [src]="imagePathLeftArm" alt="" > 
+                <img class="exodiaUp" draggable="false" [src]="imagePathHead" alt="" > 
+                <img class="exodiaUp" draggable="false" [src]="imagePathRigthArm" alt="" > 
             </div>
             <div class="imgs">
-                <img class="exodiaDown" [src]="imagePathLeftLeg" alt="" > 
-                <img class="exodiaDown" [src]="imagePathRightLeg" alt="" > 
+                <img class="exodiaDown"draggable="false" [src]="imagePathLeftLeg" alt="" > 
+                <img class="exodiaDown" draggable="false"[src]="imagePathRightLeg" alt="" > 
             </div>
 
            
             
-        </div>
+        </div> -->
     </div>
 </main>
 <app-chem-guess-hang-man 
@@ -35,7 +49,7 @@
 (addFavoriteEvent)="getWord($event)"
 />
 <div>
-<p class="racha"><i class="fa-solid fa-fire"></i>{{streak}}</p>
+<p class="racha"><i class="fa-solid fa-fire"></i>{{user.streak}}</p>
    
 <script>
     function toggleNavbar() {

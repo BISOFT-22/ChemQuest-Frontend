@@ -231,10 +231,22 @@ export class ChemGuessHangManComponent implements OnInit {
    * Clears the slots and initializes the component again.
    */
   onConvert(): void {
-    
-    window.location.reload();
-    
+    this.clearSlots();
+    this.deleteHistory();
+    this.router.navigate([this.router.url]).then(() => {
+      this.initializeThings();
+    });
   }
+  deleteHistory(): void {
+    this.allHistory = [];
+
+  }
+
+  // onConvert(): void {
+    
+  //   window.location.reload();
+    
+  // }
 
   /**
    * Clears the slots by removing the letters and resetting the guessed letters and displayed word.

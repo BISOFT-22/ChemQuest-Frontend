@@ -35,6 +35,21 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   imagePathRigthArm: string = 'assets/img/exodia/ArmRight.png';
   imagePathLeftLeg: string = 'assets/img/exodia/LegLeft.png';
   imagePathRightLeg: string = 'assets/img/exodia/LegRight.png';
+
+  //////////////////////////////////////////
+  /////////100 de vida//////////////////////
+  scientific: string = 'assets/img/exodia/scientific.gif';
+  //////////////////////////////////////////
+  /////////75 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////50 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////25 de vida//////////////////////
+
+  //////////////////////////////////////////
+  /////////0 de vida//////////////////////
  
   public allHistory: IHistory[] = [];
   @Input() life: number | undefined;
@@ -49,6 +64,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     this.imagePathRigthArm = 'assets/img/bocaAbajo.jpg';  
     this.imagePathLeftLeg = 'assets/img/bocaAbajo.jpg';
     this.imagePathRightLeg = 'assets/img/bocaAbajo.jpg';
+
     this.setUser();
   }
   setUser(): void {
@@ -66,6 +82,12 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     let visible: boolean = true;
     modal.show();
   }
+  comprobation(modal: any): void {
+    let show = this.life;
+    if (show !== undefined && show < 5) {
+      this.showHistory(modal);
+    }
+  }
 
   opcion: string = '';
 
@@ -76,7 +98,17 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   getWord(word: string): void {
     this.opcion = word;
   }
-
+  ngOnChanges(changes: SimpleChanges): void {
+    this.life = this.lifeChangeService.life.value;
+    if (changes) {
+      this.allHistory=[];
+    }
+    console.log(this.life);
+    const liveChange = changes['life'];
+    if (liveChange && !liveChange.firstChange) {
+      this.changeLife();
+    }
+  }
   /**
    * Changes the life image based on the current live value.
    */
@@ -85,7 +117,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
  
     if (this.life === 6) {
     
-      this.imagePathLeftArm = 'assets/img/bocaAbajo.jpg';
+      this.scientific 
        } else if(this.life === 5) {
         this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
        }else if(this.life === 4) {
@@ -117,16 +149,43 @@ export class ChemGuess7Component implements OnChanges, OnInit {
      
     
   }
+  // changeLife(): void {
+  //   this.life = this.lifeChangeService.life.value;
+ 
+  //   if (this.life === 6) {
+    
+  //     this.scientific 
+  //      } else if(this.life === 5) {
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //      }else if(this.life === 4) {
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+        
+        
+  //      }else if(this.life === 3) {  
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
+  //      } else if(this.life === 2) {
+       
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
+  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
+  //      }
+  //      else if(this.life === 1) {
+        
+  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
+  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
+  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
+  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
+  //       this.imagePathHead = 'assets/img/exodia/Head.png';
+  //      }
+     
+    
+  // }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.life = this.lifeChangeService.life.value;
-    if (changes) {
-      this.allHistory=[];
-    }
-    console.log(this.life);
-    const liveChange = changes['live'];
-    if (liveChange && !liveChange.firstChange) {
-      this.changeLife();
-    }
-  }
+ 
 }

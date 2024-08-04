@@ -3,13 +3,27 @@
 <main (mousemove)="changeLife()">
     <div>
         <div class="Question-Timer">
-            <a (click)="showHistory(modalPrueba)" class="big-button">historial</a>
+            <a (click)="comprobation(modalPrueba)" class="big-button">historial</a>
             
 
             
             <h2 class="timer">12:00</h2>
         </div>
         <div class="imageQuestion">
+            
+          
+            <br>
+        
+            <div  class="imgs">
+                <img class="scientific" draggable="false" [src]="scientific" alt="" > 
+             
+            </div>
+            
+
+           
+            
+        </div> 
+        <!-- <div class="imageQuestion">
             
           
             <br>
@@ -26,7 +40,7 @@
 
            
             
-        </div>
+        </div> -->
     </div>
 </main>
 <app-chem-guess-hang-man 

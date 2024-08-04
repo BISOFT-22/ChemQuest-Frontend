@@ -58,7 +58,6 @@ export class ChemGuessHangManComponent implements OnInit {
    * Contains an array of all user histories.
    */
   @Input() allHistory: IHistory[] = [];
-  @Input() change: boolean = false;
 
   /**
    * The word to be guessed.
@@ -128,10 +127,10 @@ export class ChemGuessHangManComponent implements OnInit {
    */
   handleFormUpdate(response: boolean) {
     if (response) {
-      this.change = true;
       this.onConvert();
-
-    } 
+    } else {
+      
+    }
   }
 
   /**
@@ -248,6 +247,41 @@ export class ChemGuessHangManComponent implements OnInit {
     
   // }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   /**
    * Clears the slots by removing the letters and resetting the guessed letters and displayed word.
    */

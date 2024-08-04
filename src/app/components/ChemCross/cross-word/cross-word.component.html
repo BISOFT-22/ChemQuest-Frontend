@@ -1,3 +1,8 @@
+<label for="cboUser">User</label>
+<select name="cboUser" id="cboUser" [(ngModel)]="administrator">
+    <option value=0>User</option>
+    <option value=-1 selected>Admin</option>
+</select>
 <app-language-select [dictionary]="msg" [id_language]="id_language"
     (langChangd)="OnLanguageChanged($event)"></app-language-select>
 <div class="crosswordContainer">
@@ -11,10 +16,7 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
 </div>
 <div class="controlPanel">
     <div *ngIf="showHints">
@@ -22,24 +24,25 @@
         <input type="text" name="filter" id="filter" (keyup)="FilterWords()" (dragover)="OnDragOver($event)" (drop)="OnDrop($event)" placeholder="Filtro RegEx" >
     </div>
     <div>
-        <button (click)="BlockCells()" id="blockCells">{{msg[14][id_language]}}</button>
-        <button (click)="ClearCrossWord()" id="ClearCrossWord">{{msg[1][id_language]}}</button>
-        <button (click)="FillCrossWord()" id="FillCrossWord">{{msg[2][id_language]}}</button>
-        <button (click)="RandomCrossWFill()" id="RandomCrossWFill">{{msg[3][id_language]}}</button>
-        <button (click)="ExportCrossW()" id="ExportCrossW">{{msg[4][id_language]}}</button>
-        <button (click)="ImportCrossW()">{{msg[5][id_language]}}</button>
+        <app-timer [inputSeconds]="30" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+        <button  (click)="BlockCells()" id="blockCells" *ngIf="administrator">{{msg[14][id_language]}}</button>
+        <button  (click)="ClearCrossWord()" id="ClearCrossWord">{{msg[1][id_language]}}</button>
+        <button  (click)="FillCrossWord()" id="FillCrossWord" *ngIf="administrator">{{msg[2][id_language]}}</button>
+        <button  (click)="RandomCrossWFill()" id="RandomCrossWFill" *ngIf="administrator">{{msg[3][id_language]}}</button>
+        <button  (click)="ExportCrossW()" id="ExportCrossW">{{msg[4][id_language]}}</button>
+        <button  (click)="ImportCrossW()">{{msg[5][id_language]}}</button>
         <label for="size">{{msg[6][id_language]}}</label>
-        <!-- <button (click)="LoadCrossWord()">{{msg[6][id_language]}}</button> -->
+        <!-- <button  (click)="LoadCrossWord()">{{msg[6][id_language]}}</button> -->
         <input type="number" name="cross_id" (change)="LoadCrossWord()" id="cross_id" min="0" value="0"
-            [max]="totalCrossWords-1">
+        [max]="totalCrossWords-1">
         <label for="zoom">{{msg[12][id_language]}}</label>
-        <input type="number" name="zoom" (change)="CrossZoom()" [(ngModel)]="cellHeight" id="cross_cell_size"
-            min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
+        <input type="number" name="zoom" (change)="CrossZoom()" (scroll)="CrossZoom()" [(ngModel)]="cellHeight" id="cross_cell_size"
+        min="{{initialCellHeight}}" value="{{initialCellHeight}}" max="100">
         <label for="size">{{msg[13][id_language]}}</label>
         <input type="number" name="size" (change)="OnResize()" [(ngModel)]="crossSize" id="cross_cell_size"
-            min="10" max="100">
-        <!-- <button (click)="FilterWords()">{{msg[7][id_language]}}</button> -->
-        <!-- <button (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button> -->
+        min="10" max="100">
+        <!-- <button  (click)="FilterWords()">{{msg[7][id_language]}}</button> -->
+        <!-- <button  (click)="UpdateWordLogList()">{{msg[8][id_language]}}</button> -->
         <label for="showHints">{{msg[20][id_language]}}</label>
         <input type="checkbox" name="showHints" id="showHints" (click)="ShowHints($event)" [(ngModel)]="showHints" checked>
     </div>
@@ -48,12 +51,19 @@
     <app-word-log [dictionary]="msg" [id_language]="id_language" [id_message]="0"
         [wordList]="wordLogList"></app-word-log>
 <div id="hints">
-    <div id="wordHints">
+    <div>
+        <h1>{{msg[22][id_language]}}</h1>
     </div>
-    <div id="symbolHints">
+    <div id="HintsContainer">
+
+        <div id="wordHints">
+        </div>
+        <div id="symbolHints">
+        </div>
     </div>
 </div>
 
 <div class="console">
+    <h1>{{msg[23][id_language]}}</h1>
     <textarea name="" id="txtConsole"></textarea>
 </div>

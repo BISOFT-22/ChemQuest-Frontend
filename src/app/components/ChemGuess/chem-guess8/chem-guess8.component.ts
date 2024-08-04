@@ -41,12 +41,10 @@ export class ChemGuess8Component implements OnInit {
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   ngOnInit(): void {
-    this.initializeThings();
+    this.random.checkAndFetch();
     this.fillTableFields();
   }
-change(){
-  window.location.reload();
-}
+
   /**
    * Initializes things.
    */
@@ -54,8 +52,22 @@ change(){
     // Ensure data is fetched
     this.random.checkAndFetch();
 
-    
+    this.random.items$.subscribe({
+      next: () => {
+        // Data has been fetched; proceed to get random word
+        const randomWord = this.random.getRandomWord();
+      },
+      error: (error) => {
+        console.error('Error fetching items', error);
+      }
+    });
   }
+
+  public items = [
+    { word: "angular", hint: "A popular front-end framework" },
+    { word: "typescript", hint: "A superset of JavaScript" },
+  ];
+
   /**
    * Charges the element.
    */

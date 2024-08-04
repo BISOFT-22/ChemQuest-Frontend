@@ -1,21 +1,27 @@
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-timer',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent implements OnInit, OnDestroy {
-  timerDisplay: string = '0:00:00';
+  timerDisplay: string = '00:00:00';
   timerSeconds: number = 0; // Initially set to 0
   timerPaused: boolean = false;
   timerInterval: any;
-  inputHours: number = 0;
-  inputMinutes: number = 0;
-  inputSeconds: number = 0;
+  @Input() inputHours: number = 0;
+  @Input() inputMinutes: number = 0;
+  @Input() inputSeconds: number = 0;
+
+  @Input() showForm: boolean = false; 
+  @Input() showControls: boolean = false; 
+  @Input() showStart: boolean = true; 
+  @Input() startBtnText: string = "";
 
   // Event emitters for pause, resume, and completion
   @Output() pauseEvent = new EventEmitter<void>();
@@ -24,6 +30,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Do not start the timer automatically
+    this.setTimer();
   }
 
   ngOnDestroy(): void {
@@ -53,7 +60,7 @@ export class TimerComponent implements OnInit, OnDestroy {
         if (this.timerSeconds <= 0) {
           clearInterval(this.timerInterval);
           this.timerDisplay = '0:00:00';
-          alert('¡Tiempo agotado! El examen ha finalizado.');
+          // alert('¡Tiempo agotado! El examen ha finalizado.');
           this.emitTimeCompleteEvent();
           this.disableGame();
         } else {
@@ -66,7 +73,7 @@ export class TimerComponent implements OnInit, OnDestroy {
   setTimer(): void {
     this.timerSeconds = (this.inputHours * 3600) + (this.inputMinutes * 60) + this.inputSeconds;
     this.updateTimer();
-    this.startTimer();
+    // this.startTimer();
   }
 
   pauseTimer(): void {
@@ -95,4 +102,5 @@ export class TimerComponent implements OnInit, OnDestroy {
   private emitTimeCompleteEvent(): void {
     this.timeCompleteEvent.emit();
   }
+
 }

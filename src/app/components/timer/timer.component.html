@@ -1,9 +1,15 @@
 <div class="timer-container">
-  <input type="number" [(ngModel)]="inputHours" placeholder="Horas" min="0" />
-  <input type="number" [(ngModel)]="inputMinutes" placeholder="Minutos" min="0" max="59" />
-  <input type="number" [(ngModel)]="inputSeconds" placeholder="Segundos" min="0" max="59" />
-  <button (click)="setTimer()" class="btn btn-set">Establecer Tiempo</button>
+  <div *ngIf="showForm">
+    <input type="number" [(ngModel)]="inputHours" placeholder="Horas" min="0" />
+    <input type="number" [(ngModel)]="inputMinutes" placeholder="Minutos" min="0" max="59" />
+    <input type="number" [(ngModel)]="inputSeconds" placeholder="Segundos" min="0" max="59" />
+    <button (click)="setTimer()" class="btn btn-set">Establecer Tiempo</button>
+  </div>
+  
   <span id="timer">{{ timerDisplay }}</span>
-  <button (click)="pauseTimer()" class="btn btn-cancel">Pausar</button>
-  <button (click)="resumeTimer()" class="btn btn-continue">Reanudar</button>
+  <div *ngIf="showControls">
+    <button (click)="pauseTimer()" class="btn btn-cancel">Pausar</button>
+    <button (click)="resumeTimer()" class="btn btn-continue">Reanudar</button>
+  </div>
+    <button (click)="startTimer()" class="btn btn-continue" *ngIf="showStart">{{startBtnText}}&#8986;</button>
 </div>

@@ -2,9 +2,7 @@
 *@Author Guillermo Jiménez De Sárraga
 */
 :host{
-  --bckGround-color:#212121;
   --cellHeight: 30px;
-  background-color: var(--bckGround-color);
   
 }
 
@@ -13,8 +11,26 @@ label{
   padding: 0px 10px;
 }
 
+h1{
+  color: white;
+}
+
+button{
+  background-color: var(--button-ok-bg-color);
+  color: var(--font-color-light);
+  border: none;
+  padding: 8px 10px;
+  margin: 5px;
+  border-radius: 5px;
+  width: 100px;
+}
+
+button:hover{
+  background-color: var(--button-ok-bg-hover-color);
+}
+
 .crosswordContainer{
-  background-color: var(--bckGround-color);
+  background-color: var(--container-bg-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -112,7 +128,7 @@ label{
     display: flex;
     flex-direction: column;
     /* background-color: orange; */
-    background-color: var(--bckGround-color);
+    background-color: var(--container-bg-color);
 
   }
   
@@ -126,19 +142,27 @@ label{
   
   #hints{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     resize: both;
+    margin-top: 20px;
+    background-color: var(--container-bg-color);
+    padding: 10px;
+  }
+
+  #HintsContainer{
+    display: flex;
+    flex-direction: row;
   }
 
 
   #wordHints, #symbolHints{
-    background-color: var(--bckGround-color);
     font-size: small;
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
     resize: both;
+    // padding: 20px;
   }
 
   // #wordHints{
@@ -152,9 +176,14 @@ label{
   #filter{
     flex-grow: 1;
     text-align: center;
-    background-color: #ffa500;
+    background-color: var(--input-background-color);
     border-style: none;
     height: 20PX;
+  }
+
+  .console{
+    padding: 10px;
+    background-color: var(--container-bg-color);
   }
   
   .console, textarea{
@@ -181,7 +210,6 @@ label{
   
     .crosswordContainer{
         flex-direction: column;
-        background-color: black;
     }
   
     #wordLog{

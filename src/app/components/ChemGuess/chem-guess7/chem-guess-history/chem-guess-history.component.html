@@ -1,39 +1,19 @@
-<form class="container">
+<div>
   <div>
     <h2>Respuestas Anteriores</h2>
   </div>
   <div class="row">
   @for (history of allHistory; track $index) {
     <div class="history-item">
-    
-    
       <div class="item">
         @for (word of history.userWords; track $index) {
-          <div [style.background-color]="history.typeColor" class="slot" id="casilla-1{{ $index + 1 }}">{{ word }}</div>
+          <div style="font-weight: bold;" [style.background-color]="history.typeColor && history.typeColor[$index] " class="slot" id="casilla-1{{ $index + 1 }}">{{ word }}</div>
         }
-      </div>
-    
-
-    <div class="itemColor">
-      @for (word of history.typeColor; track $index) {
-      
-        <div [style.background-color]="word" class="varColor" id="casilla-1"></div>
-
-    }
+      </div>  
     </div>
-    
-    
-    </div>
-   
   }
-
-      
-    
-      <div class="col-6 position" >
-     
-      </div>
-    </div>
-  </form>
+  </div>
+</div>
 
 
 

@@ -16,7 +16,7 @@
 }
 
 .modalc-content {
-    max-width: 40%;
+    max-width: 50%;
     background-color: rgba(255, 255, 255, 1);
     padding: 20px;
     border-radius: 25px;
@@ -53,14 +53,14 @@
 }
 
 #title {
-    font-size: 24px;
+    font-size: 30px;
     margin-bottom: 10px;
     text-align: center;
 }
 
 #text {
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .action-button {
@@ -77,6 +77,7 @@
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
+    font-size: 20px;
 }
 
 
@@ -99,7 +100,7 @@
     text-align: end;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
     .modalc-content {
         max-width: 90%;
         padding: 15px;

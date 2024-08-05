@@ -143,6 +143,7 @@ export class ChemGuessHangManComponent implements OnInit {
       this.history.wrong = 5;
       this.lifeChangeService.setLive(this.history.wrong);
       this.allHistoryCleared.emit();
+      this.updateLife.emit();
       console.log("Se actualizo hang man");
       console.log(this.allHistory);
     } 

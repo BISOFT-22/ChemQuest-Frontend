@@ -26,6 +26,11 @@ import { UserService } from 'app/services/user.service';
 })
 export class ChemGuess7Component implements OnChanges, OnInit {
   @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
+
+  handleAllHistoryCleared(): void {
+    this.allHistory = [];
+  }
+  
   lifeImg: string = 'assets/img/live/live100.png';
 
 
@@ -86,6 +91,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
    */
   showHistory(modal: any): void {
     console.log(this.user.streak);
+    console.log(this.allHistory);
     let visible: boolean = true;
     modal.show();
   }

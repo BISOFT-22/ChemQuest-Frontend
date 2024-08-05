@@ -48,6 +48,7 @@
 [allHistory]="allHistory"
 [streak]="streak"
 (addFavoriteEvent)="getWord($event)"
+(allHistoryCleared)="handleAllHistoryCleared()"
 />
 <div>
 <p class="racha"><i class="fa-solid fa-fire"></i>{{user.streak}}</p>

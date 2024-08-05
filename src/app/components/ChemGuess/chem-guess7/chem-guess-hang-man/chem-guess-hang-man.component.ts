@@ -78,6 +78,9 @@ export class ChemGuessHangManComponent implements OnInit {
    */
   @Output() addFavoriteEvent = new EventEmitter<string>();
 
+
+  @Output() allHistoryCleared = new EventEmitter<void>();
+
   /**
    * The displayed word with blanks and guessed letters.
    */
@@ -136,7 +139,9 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormUpdate(event: { option: boolean }): void {
     if (event.option) {
       this.onConvert();
-      console.log("Se actualizo");
+      this.lifeChangeService.setLive(5);
+      this.allHistoryCleared.emit();
+      console.log("Se actualizo hang man");
       console.log(this.allHistory);
     } 
   }
@@ -177,6 +182,7 @@ export class ChemGuessHangManComponent implements OnInit {
           console.log(this.word);
           this.splitIntoWords(this.word);
           this.displayedWord = Array(this.word.length).fill('_');
+       
         } else {
           // Handle the case where no random word is available
           console.warn('No random word available');
@@ -240,8 +246,8 @@ export class ChemGuessHangManComponent implements OnInit {
   onConvert(): void {
     this.clearSlots();
     this.deleteHistory();
-    this.initializeThings();
-    
+    this.initializeThings();    
+
   }
   deleteHistory(): void {
     this.allHistory = [];

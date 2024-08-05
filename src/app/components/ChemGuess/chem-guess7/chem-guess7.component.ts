@@ -28,6 +28,11 @@ import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.c
 export class ChemGuess7Component implements OnChanges, OnInit {
   @ViewChild('modalHistory') modalhistory!: ChemquestModalComponent;
   @ViewChild('timer') timer!: TimerComponent;
+
+  handleAllHistoryCleared(): void {
+    this.allHistory = [];
+  }
+  
   lifeImg: string = 'assets/img/live/live100.png';
 
 
@@ -85,6 +90,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
    */
   showHistory(modal: any): void {
     console.log(this.user.streak);
+    console.log(this.allHistory);
     let visible: boolean = true;
     this.modalhistory.showModal('','',false, false, false);
   }

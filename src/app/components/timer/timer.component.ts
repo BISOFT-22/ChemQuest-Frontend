@@ -20,7 +20,7 @@ export class TimerComponent implements OnInit, OnDestroy {
 
   @Input() showForm: boolean = false; 
   @Input() showControls: boolean = false; 
-  @Input() showStart: boolean = true; 
+  @Input() showStart: boolean = false; 
   @Input() startBtnText: string = "";
 
   // Event emitters for pause, resume, and completion
@@ -50,7 +50,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     this.timerDisplay = this.formatTime(this.timerSeconds);
   }
 
-  startTimer(): void {
+  public startTimer(): void {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }

@@ -2,11 +2,13 @@
 
 <main (mousemove)="changeLife()">
     <div>
-        <div class="Question-Timer">
-            <a (click)="comprobation(modalPrueba)" class="big-button">historial</a>
+
+
+        <button (click)="comprobation(modalHistory)" class="big-button"><img src="assets/img/history.png" alt=""></button>
             
 
-            <app-timer [inputSeconds]="120" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+        <div class="Question-Timer">
+            <app-timer #timer [inputSeconds]="180" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
             <!-- <h2 class="timer">12:00</h2> -->
         </div>
         <div class="imageQuestion">
@@ -59,16 +61,9 @@
     }
 </script>
 
-    <app-modal-pruebas size="lg" #modalPrueba>
-        <div class="content" >
-            <div class="modal-error"  >
-                
-             <app-chem-guess-history [allHistory]="allHistory"
-                
-             ></app-chem-guess-history>  
-            </div>
-          </div>
-    </app-modal-pruebas>
+    <app-chemquest-modal size="lg" #modalHistory>    
+        <app-chem-guess-history style="width: 100%;" [allHistory]="allHistory"></app-chem-guess-history>
+    </app-chemquest-modal>
     
 
   

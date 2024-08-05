@@ -13,6 +13,7 @@ import { LifeChangeService} from '../../../services/lifeChange.service';
 import { TimerComponent } from "../../timer/timer.component";
 import { AuthService } from 'app/services/auth.service';
 import { UserService } from 'app/services/user.service';
+import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.component";
 
 /**
  * Component for ChemGuess7.
@@ -20,12 +21,13 @@ import { UserService } from 'app/services/user.service';
 @Component({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ModalComponent, NgbModule, ChemGuessHangManComponent, ModalPruebasComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent],
+  imports: [ NgbModule, ChemGuessHangManComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent, ChemquestModalComponent],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
 export class ChemGuess7Component implements OnChanges, OnInit {
-  @ViewChild('modalPrueba') modalhistory!: ModalPruebasComponent;
+  @ViewChild('modalHistory') modalhistory!: ChemquestModalComponent;
+  @ViewChild('timer') timer!: TimerComponent;
   lifeImg: string = 'assets/img/live/live100.png';
 
 
@@ -66,12 +68,9 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   constructor(private lifeChangeService: LifeChangeService, private authService:AuthService, private userService: UserService) {
   }
   ngOnInit(): void {
-    this.imagePathHead = 'assets/img/bocaAbajo.jpg';
-    this.imagePathLeftArm = 'assets/img/bocaAbajo.jpg';
-    this.imagePathRigthArm = 'assets/img/bocaAbajo.jpg';  
-    this.imagePathLeftLeg = 'assets/img/bocaAbajo.jpg';
-    this.imagePathRightLeg = 'assets/img/bocaAbajo.jpg';
-
+    setTimeout(() => {
+      this.timer.startTimer();
+    }, 100);
     this.setUser();
   }
   setUser(): void {
@@ -87,7 +86,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   showHistory(modal: any): void {
     console.log(this.user.streak);
     let visible: boolean = true;
-    modal.show();
+    this.modalhistory.showModal('','',false, false, false);
   }
   comprobation(modal: any): void {
     let show = this.life;

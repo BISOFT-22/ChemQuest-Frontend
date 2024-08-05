@@ -13,6 +13,7 @@ import { LifeChangeService } from '../../../../services/lifeChange.service';
 import { ChemGuessSendComponent } from '../chem-guess-send7/chem-guess-form7.component';
 import { UserService } from '../../../../services/user.service';
 import { AuthService } from '../../../../services/auth.service';
+import { ChemquestModalComponent } from "../../../chemquest-modal/chemquest-modal.component";
 
 /**
  * Component for the Hangman game in the ChemGuess application.
@@ -24,9 +25,12 @@ import { AuthService } from '../../../../services/auth.service';
   standalone: true,
   templateUrl: './chem-guess-hang-man.component.html',
   styleUrls: ['./chem-guess-hang-man.component.scss'],
-  imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent]
+  imports: [ModalComponent, ChemGuessForm7Component, ChemGuessHistoryComponent, CommonModule, FormsModule, ModalPruebasComponent, ChemGuessSendComponent, ChemquestModalComponent]
 })
 export class ChemGuessHangManComponent implements OnInit {
+  @ViewChild('modalChange') modalChange!: ChemquestModalComponent;
+  @ViewChild('modalSend') modalSend!: ChemquestModalComponent;
+
   /**
    * Path to the send image asset.
    */
@@ -117,16 +121,20 @@ export class ChemGuessHangManComponent implements OnInit {
    * Shows the detail modal.
    * @param modal - The modal to be shown.
    */
-  showDetailModal(modal: any) {
-    modal.show();
+  showDetailModal(modal: number) {
+    if(modal == 1){
+      this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true);
+    }else if(modal == 2){
+      this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true);
+    }
   }
-  @ViewChild('detailModalSend') detailModalChange!: ModalComponent;
+
   /**
    * Handles the form update event.
    * @param response - The response from the form update.
    */
-  handleFormUpdate(response: boolean) {
-    if (response) {
+  handleFormUpdate(event: { option: boolean }): void {
+    if (event.option) {
       this.onConvert();
       console.log("Se actualizo");
       console.log(this.allHistory);
@@ -137,10 +145,9 @@ export class ChemGuessHangManComponent implements OnInit {
    * Handles the form send event.
    * @param response - The response from the form send.
    */
-  handleFormSend(response: boolean) {
-    if (response) {
+  handleFormSend(event: { option: boolean }): void {
+    if (event.option) {
       this.CompareWord();
-      this.detailModalChange.hide(); // Cierra el modal
     }
   }
 
@@ -279,7 +286,7 @@ export class ChemGuessHangManComponent implements OnInit {
     slots.forEach((slot, i) => {
       if (slot.textContent === this.wordsArray[i]) {
         historytemp.userWords!.push(slot.textContent!);
-        historytemp.typeColor!.push("#4575b4"); // azul
+        historytemp.typeColor!.push("#4575b4d6"); // azul
         wordArrayCorrectTemp[i] = null;
         procesado[i] = true;
       } else {
@@ -298,14 +305,14 @@ export class ChemGuessHangManComponent implements OnInit {
           wordArrayCorrectTemp[index] = null;
         } else {
           historytemp.userWords![i] = slot.textContent!;
-          historytemp.typeColor![i] = "#d73027"; // Rojo
+          historytemp.typeColor![i] = "#d73027c4"; // Rojo
         }
       }
     });
 
     if (historytemp.typeColor) {
       for (const color of historytemp.typeColor) {
-        if (color === "#d73027") {
+        if (color === "#d73027c4") {
           historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
           break;
         }
@@ -316,7 +323,7 @@ export class ChemGuessHangManComponent implements OnInit {
         let goodAnswer = 0;
         console.log(historytemp.typeColor.length);
         for (const color of historytemp.typeColor) {
-          if (color === "#4575b4") {
+          if (color === "#4575b4d6") {
             goodAnswer++;
           }
         }
@@ -346,7 +353,7 @@ export class ChemGuessHangManComponent implements OnInit {
   increaseStreak(historyTemp:IHistory): void {
     if (historyTemp.typeColor && this.user) {
       for (const color of historyTemp.typeColor) {
-        if (color === "#4575b4") {
+        if (color === "#4575b4d6") {
           this.user.streak = (this.user.streak || 0) + 1;
           this.streak = this.user.streak;
           console.log("Racha: " + this.streak);

@@ -2,7 +2,7 @@
  <br>
  <div class="hangman-container">
     <div class="word">
-        <img [src]="convert" draggable="false" (click)="showDetailModal(detailModalChange)" class="imgSize" alt="" title="Cambiar de palabra">
+        <img [src]="convert" draggable="false" (click)="showDetailModal(1)" class="imgSize" alt="" title="Cambiar de palabra">
         @for (item of wordsArray; track $index) {
             <div (drop)="OnDropOnCross($event)" (dragover)="OnDragOver($event)" class="slot" [attr.id]="'casilla-'"></div>
         }
@@ -10,7 +10,7 @@
                 <p>{{letter}}</p>
             }
         
-        <img [src]="send" draggable="false" (click)="showDetailModal(detailModalSend)" class="imgSize" alt="" title="Verificar intento">
+        <img [src]="send" draggable="false" (click)="showDetailModal(2)" class="imgSize" alt="" title="Verificar intento">
     </div>
     <br>
 </div>
@@ -32,21 +32,17 @@
         </div>
     </div>
 </div>
-    
 
-   
-    
-    <app-modal #detailModalChange>
-        <app-chem-guess-form7
-        (callParentEvent)="handleFormUpdate($event)"
-        />
-    </app-modal>
 
-    <app-modal #detailModalSend>
-        <app-chem-guess-send
-        (callParentEvent)="handleFormSend($event)"
-        />
-    </app-modal>
+    <app-chemquest-modal size="lg" #modalChange 
+    (action)="handleFormUpdate($event)"
+    >  
+    </app-chemquest-modal>
+
+    <app-chemquest-modal size="lg" #modalSend 
+        (action)="handleFormSend($event)"
+        >  
+    </app-chemquest-modal>
 
 
 

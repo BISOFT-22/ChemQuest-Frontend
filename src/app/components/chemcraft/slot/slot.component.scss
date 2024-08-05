@@ -79,14 +79,14 @@
 }
 
 #title {
-  font-size: 24px;
+  font-size: 30px;
   margin-bottom: 10px;
   text-align: center;
 }
 
 #text {
   text-align: center;
-  font-size: 16px;
+  font-size: 20px;
 }
 .action-button {
   background-color: var(--button-ok-bg-color);
@@ -102,6 +102,7 @@
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
+  font-size: 20px;
 }
 
 #edit{

@@ -14,6 +14,7 @@ import { TimerComponent } from "../../timer/timer.component";
 import { AuthService } from 'app/services/auth.service';
 import { UserService } from 'app/services/user.service';
 import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.component";
+import { ModalTimeEndComponent } from 'app/modal-time-end/modal-time-end.component';
 
 /**
  * Component for ChemGuess7.
@@ -21,17 +22,18 @@ import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.c
 @Component({
   selector: 'app-chem-guess7',
   standalone: true,
-  imports: [ NgbModule, ChemGuessHangManComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent, ChemquestModalComponent],
+  imports: [ NgbModule, ChemGuessHangManComponent, CommonModule, ChemGuessHistoryComponent, TimerComponent, ChemquestModalComponent,ModalTimeEndComponent],
   templateUrl: './chem-guess7.component.html',
   styleUrl: './chem-guess7.component.scss'
 })
 export class ChemGuess7Component implements OnChanges, OnInit {
   @ViewChild('modalHistory') modalhistory!: ChemquestModalComponent;
   @ViewChild('timer') timer!: TimerComponent;
-
+  @ViewChild('modalTimeEnd') timeEnd!: ChemquestModalComponent;
   handleAllHistoryCleared(): void {
     this.allHistory = [];
   }
+ 
   
   lifeImg: string = 'assets/img/live/live100.png';
 
@@ -82,6 +84,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     const user = this.authService.getUser();
     if (user) {
       this.user = user;
+      
     }
   }
   /**
@@ -89,10 +92,12 @@ export class ChemGuess7Component implements OnChanges, OnInit {
    * @param modal - The modal component.
    */
   showHistory(modal: any): void {
-    console.log(this.user.streak);
-    console.log(this.allHistory);
+ 
     let visible: boolean = true;
     this.modalhistory.showModal('','',false, false, false);
+  }
+  ShowTimeEnd(modal: any): void {
+    modal.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true);
   }
   comprobation(modal: any): void {
     let show = this.life;
@@ -145,49 +150,12 @@ export class ChemGuess7Component implements OnChanges, OnInit {
         this.hangMan = 'assets/img/exodia/Hangman1.gif';
        }
   }
-  // changeLife(): void {
-  //   this.life = this.lifeChangeService.life.value;
- 
-  //   if (this.life === 6) {
-    
-  //     this.scientific 
-  //      } else if(this.life === 5) {
-  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-  //      }else if(this.life === 4) {
-       
-  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
-        
-        
-  //      }else if(this.life === 3) {  
-       
-  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
-  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png';  
-  //      } else if(this.life === 2) {
-       
-  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
-  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
-  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
-  //      }
-  //      else if(this.life === 1) {
-        
-  //       this.imagePathLeftArm = 'assets/img/exodia/ArmLeft.png';
-  //       this.imagePathRigthArm = 'assets/img/exodia/ArmRight.png';
-  //       this.imagePathLeftLeg = 'assets/img/exodia/LegLeft.png'; 
-  //       this.imagePathRightLeg = 'assets/img/exodia/LegRight.png';
-  //       this.imagePathHead = 'assets/img/exodia/Head.png';
-  //      }
-     
-    
-  // }
 
   
 
 
   // GJDES
-  OnTimeComplete() {
-    alert("Time is over");
+  OnTimeComplete(modal: any): void {
+    this.ShowTimeEnd(modal);
   }
 }

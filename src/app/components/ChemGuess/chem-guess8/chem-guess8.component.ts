@@ -109,6 +109,15 @@ tryAction(event: { option: boolean }): void {
   ShowTimeEnd(): void {
     this.timerM.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true);
   }
+  exit(event: { option: boolean }): void {
+    if (event.option) {
+      
+      this.fillTableFields();
+    }else{
+      window.location.reload();
+    }
+    
+  }
   /**
    * Initializes things.
    */

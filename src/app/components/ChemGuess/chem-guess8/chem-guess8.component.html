@@ -86,7 +86,7 @@
 
 
 
-<app-chemquest-modal size="lg" #modalWIN></app-chemquest-modal>
-<app-chemquest-modal size="lg" #modalLose></app-chemquest-modal>
+<app-chemquest-modal size="lg" #modalWIN (action)="exit($event)"></app-chemquest-modal>
+<app-chemquest-modal size="lg" #modalLose (action)="exit($event)"></app-chemquest-modal>
 <app-chemquest-modal size="lg" #modalChange (action)="Change($event)"></app-chemquest-modal>
 <app-chemquest-modal size="lg" #timing> </app-chemquest-modal>

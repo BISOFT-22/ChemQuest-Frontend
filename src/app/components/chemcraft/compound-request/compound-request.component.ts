@@ -19,7 +19,7 @@ import { ICompound } from '../../../interfaces';
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
   @Output() compoundGenerated = new EventEmitter<string>();
-  @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean }>();
+  @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean }>();
   @Input() change: Boolean = false;
   public compound: ICompound = {};
   public lastCompound: string = '';
@@ -126,7 +126,8 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
       text: 'Deseas cambiar la solicitud del compuesto a crear? si lo deseas cambiar perderás puntos.',
       isAlert: true,
       buttonAccept: true,
-      buttonCancel: true
+      buttonCancel: true,
+      buttonClose: false,
     });
   }
 }

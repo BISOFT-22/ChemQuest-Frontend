@@ -126,9 +126,9 @@ export class ChemGuessHangManComponent implements OnInit {
    */
   showDetailModal(modal: number) {
     if(modal == 1){
-      this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true);
+      this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true, false);
     }else if(modal == 2){
-      this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true);
+      this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true, false);
     }
   }
 

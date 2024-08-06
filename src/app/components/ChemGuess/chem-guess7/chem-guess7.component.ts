@@ -92,7 +92,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     console.log(this.user.streak);
     console.log(this.allHistory);
     let visible: boolean = true;
-    this.modalhistory.showModal('','',false, false, false);
+    this.modalhistory.showModal('','',false, false, false, false);
   }
   comprobation(modal: any): void {
     let show = this.life;

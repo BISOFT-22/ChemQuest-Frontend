@@ -590,7 +590,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
 
     
     if (!this.ValidateCell(e.target.value)) {
-      e.target.value = "";
+      e.target.value = " ";
       return;
     }
 
@@ -821,21 +821,16 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * Exports the crossword data as a string array.
    */
   ExportCrossW() {
-    let str = "[";
+    let str = "";
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
 
     this.cellsCollection = Array.from(document.getElementsByClassName("txtChar")) as HTMLInputElement[];
 
     for (const c of this.cellsCollection) {
-      str += '\"' + c.value + '\"' + ",";
+      str +=  c.value == "" ? " " : c.value;
     }
 
-    str += "]";
-
-    str = str.replace(",]", "]");
-
     this.txtConsole!.value = str;
-
 
   }
 
@@ -843,18 +838,23 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
   /**
    * Imports the cross word from the input field and generates the crossword puzzle.
    */
-  ImportCrossW() {
+  ImportCrossW():boolean {
     this.txtConsole = document.getElementById("txtConsole") as HTMLInputElement;
     let str = this.txtConsole.value;
-
-    //Eliminar [" y ]
-    str = str.substring(2, str.length - 2);
-    let crossArray = str.split('","');
-
+   
+    let crossArray = str.split("");
+    
     let i = 0;
     let j = 0;
+    
+    let tempSize = Math.sqrt(str.length);
 
-    this.crossSize = Math.sqrt(crossArray.length);
+    // Verify if the string is a square
+    if (tempSize % 1 != 0) {
+      return false;
+    }
+
+    this.crossSize = tempSize;
     this.GenerateCrossW();
 
     for (const c of crossArray) {
@@ -871,6 +871,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.DrawCrossWord();
     this.UpdateWordLogList();
 
+    return true;
+
   }
 
 
@@ -879,7 +881,7 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
    * If no ID is provided, it retrieves the ID from the "cross_id" input element.
    * @param id - The ID of the crossword puzzle to load (optional).
    */
-  LoadCrossWord(id?: number) {
+  LoadCrossWord(id?: number): boolean {
 
     let i = 0;
     let j = 0;
@@ -892,12 +894,21 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
       idCrossWord = id;
     }
 
+    let tempSize = Math.sqrt(crossWordCollection[idCrossWord][0].length);
 
-    this.crossSize = Math.sqrt(crossWordCollection[idCrossWord].length);
+    // Verify if the string is a square
+    if (tempSize % 1 != 0) {
+      return false;
+    }
+
+    this.crossSize = tempSize;
+
     this.fakeArray = new Array(this.crossSize);
     this.GenerateCrossW();
     
-    for (const c of crossWordCollection[idCrossWord]) {
+    let crossArray = crossWordCollection[idCrossWord][0].split("");
+
+    for (const c of crossArray) {
       this.crossWord[i][j] = c;
       
       j++;
@@ -911,6 +922,8 @@ export class CrossWordComponent implements OnInit, AfterViewInit, AfterViewCheck
     this.DrawCrossWord();
     this.AssignId();
     this.UpdateWordLogList();
+
+    return true;
 
   }
 

@@ -24,7 +24,7 @@
         <input type="text" name="filter" id="filter" (keyup)="FilterWords()" (dragover)="OnDragOver($event)" (drop)="OnDrop($event)" placeholder="Filtro RegEx" >
     </div>
     <div>
-        <app-timer [inputSeconds]="30" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+        <app-timer [inputSeconds]="30" [showStart]="true" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
         <button  (click)="BlockCells()" id="blockCells" *ngIf="administrator">{{msg[14][id_language]}}</button>
         <button  (click)="ClearCrossWord()" id="ClearCrossWord">{{msg[1][id_language]}}</button>
         <button  (click)="FillCrossWord()" id="FillCrossWord" *ngIf="administrator">{{msg[2][id_language]}}</button>

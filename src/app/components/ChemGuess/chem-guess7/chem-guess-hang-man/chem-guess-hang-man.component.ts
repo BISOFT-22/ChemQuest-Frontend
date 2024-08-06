@@ -81,6 +81,7 @@ export class ChemGuessHangManComponent implements OnInit {
 
   @Output() allHistoryCleared = new EventEmitter<void>();
   @Output() updateLife = new EventEmitter<void>();
+  @Output() diedAnimation = new EventEmitter<void>();
 
   /**
    * The displayed word with blanks and guessed letters.
@@ -354,17 +355,23 @@ export class ChemGuessHangManComponent implements OnInit {
           // }, 1000);
         }
       }
-
+      this.lifeChangeService.setLive(historytemp.wrong || 5);
+      this.updateLife.emit();
+      console.log("Vidas: " + historytemp.wrong);
     if (historytemp.wrong == 0) {
-      this.router.navigate(['app/games']);
+      
+        this.lifeChangeService.setLive(0);
+        this.diedAnimation.emit();
+       
+         
+      
     }
     //se encarga de aumentar la racha del usuario
    
   
     this.updateHistory(historytemp);
 
-    this.lifeChangeService.setLive(historytemp.wrong || 5);
-    this.updateLife.emit();
+   
     console.log("Vidas: " + this.lifeChangeService.life.value);
     this.clearSlots();
     this.allHistory.push(historytemp)

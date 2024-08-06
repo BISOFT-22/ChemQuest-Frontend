@@ -148,11 +148,16 @@ export class ChemGuess7Component implements OnChanges, OnInit {
        } else if(this.life === 1) {
        
         this.hangMan = 'assets/img/exodia/Hangman1.gif';
+       }else if(this.life === 0) {
+        this.hangMan = 'assets/img/exodia/HangmanMuerte.gif';
        }
+       
   }
 
   
-
+  diedAnimation(): void {
+    this.hangMan = 'assets/img/exodia/HangmanMuerte.gif';
+  }
 
   // GJDES
   OnTimeComplete(modal: any): void {

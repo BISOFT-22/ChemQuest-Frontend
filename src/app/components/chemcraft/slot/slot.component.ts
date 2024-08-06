@@ -18,7 +18,7 @@ import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.c
 })
 export class SlotComponent {
   @Input() element: { symbol: string; count: number } | null = null;
-  @Output() error = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean }>();
+  @Output() error = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean }>();
   @Input() cleanSlot: boolean = false;
   counterValue: number = 0; 
   @ViewChild('modal') modal!: ChemquestModalComponent;
@@ -48,7 +48,7 @@ export class SlotComponent {
         if (this.element.symbol === draggedElement.symbol) {
           this.element.count += 1; 
         } else {
-          this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', isAlert: true, buttonAccept: true, buttonCancel: false });
+          this.error.emit({ title: 'Alto ahí!!', text: 'No se pueden mezclar elementos diferentes en una misma casilla.', isAlert: true, buttonAccept: true, buttonCancel: false, buttonClose: false });
         }
       } else {
         this.element = {
@@ -118,7 +118,7 @@ inputElement.value = this.counterValue.toString();
    */
   showEditCounter(): void {
     this.counterValue = this.element?.count || 0;
-    this.modal.showModal('', '', false, false, false);
+    this.modal.showModal('', '', false, false, false, false);
 }
 
 getSlotContentString(): string {

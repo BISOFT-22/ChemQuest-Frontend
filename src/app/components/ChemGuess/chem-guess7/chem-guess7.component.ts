@@ -96,7 +96,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   showHistory(modal: any): void {
  
     let visible: boolean = true;
-    this.modalhistory.showModal('','',false, false, false);
+    this.modalhistory.showModal('','',false, false, false, false);
   }
   ShowTimeEnd(modal: any): void {
     modal.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true);

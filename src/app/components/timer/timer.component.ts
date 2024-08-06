@@ -50,7 +50,7 @@ export class TimerComponent implements OnInit, OnDestroy {
     this.timerDisplay = this.formatTime(this.timerSeconds);
   }
 
-  public startTimer(): void {
+  startTimer(): void {
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
     }
@@ -89,6 +89,15 @@ export class TimerComponent implements OnInit, OnDestroy {
   disableGame(): void {
     // Logic to disable the game goes HERE.
   }
+
+
+  public restartTimer(): void {
+    this.timerInterval = setInterval(() => {
+          this.timerSeconds = this.inputSeconds + 1;
+          this.startTimer();
+      },0);
+  }
+
 
   // Emitters for custom events
   private emitPauseEvent(): void {

@@ -82,9 +82,6 @@ export class ChemGuess7Component implements OnChanges, OnInit {
     this.setUser();
     this.backgroundService.changeBackground('assets/img/exodia/FluywShXkAAwfJS.jpeg');
   }
-
-   
-  
   setUser(): void {
     const user = this.authService.getUser();
     if (user) {

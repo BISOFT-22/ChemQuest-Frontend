@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { RandomizerService } from '../../../services/randomizer.service';
 import { IElement } from '../../../interfaces';
+import { ChemquestModalComponent } from 'app/components/chemquest-modal/chemquest-modal.component';
+import { TimerComponent } from 'app/components/timer/timer.component';
+import { BackgroundService } from 'app/services/background.service';
 
 
 /**
@@ -10,7 +13,7 @@ import { IElement } from '../../../interfaces';
 @Component({
   selector: 'app-chem-guess8',
   standalone: true,
-  imports: [],
+  imports: [ChemquestModalComponent,TimerComponent],
   templateUrl: './chem-guess8.component.html',
   styleUrls: ['./chem-guess8.component.scss']
 })
@@ -34,17 +37,78 @@ export class ChemGuess8Component implements OnInit {
   };
   elementCheck1: IElement = {};
   elementCheck2: IElement = {};
+  change: boolean = false;
+  change2: boolean = false;
 
-  constructor(private random: RandomizerService) { }
+  constructor(private random: RandomizerService, private backgroundService:BackgroundService) { }
+  @ViewChild('timer') timer!: TimerComponent;
+  @ViewChild('timerM') timerM!: ChemquestModalComponent;
+  @ViewChild('modalTry') modalTry!: ChemquestModalComponent;
+  @ViewChild('modalCW') modalCW!: ChemquestModalComponent;
+  @ViewChild('modalWIN') modalWIN!: ChemquestModalComponent;
+  @ViewChild('modalLose') modalLose!: ChemquestModalComponent;
+  @ViewChild('modalChange') modalChange!: ChemquestModalComponent;
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
   ngOnInit(): void {
     this.random.checkAndFetch();
-    this.fillTableFields();
+    this.backgroundService.changeBackground('assets/img/exodia/Chem8.jpg');
+
+  }
+  ShowTimeTry(): void {
+    this.modalTry.showModal('Empezar a Jugar','En el momento que aceptes apareceran los datos de ayuda y el timer empezara a correr',true, true, true);
+  }
+  ShowTryWinGame(): void {
+    this.modalCW.showModal('Comprobar','Dale aceptar si quieres ver que los datos que pusiste estan bien',true, true, true)
+  }
+  ShowWinGame(): void {
+    this.modalWIN.showModal('GANASTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+  }
+  ShowLoseGame(response1:boolean, response2:boolean): void {
+    if (!response1 && !response2) {
+      this.modalLose.showModal('Perdiste','Fallaste en ambas tablas dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+    }
+    if (!response1 && response2) {
+      this.modalLose.showModal('Perdiste','Fallaste en la primera tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+    }
+    if (response1 && !response2) {
+      this.modalLose.showModal('Perdiste','Fallaste en la segunda tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+    }
+  }
+  ShowChange(): void {
+    this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true);
+  }
+tryAction(event: { option: boolean }): void {
+    this.change = event.option;
+    if (this.change) {
+      this.fillTableFields();
+      setTimeout(() => {
+        this.change = false; //esto porque desde el request.compound no detecta los cambios cuando el cambio es true y se pasa a false
+      }, 1000);
+    }
+  }
+  finishAction(event: { option: boolean }): void {
+    this.change2 = event.option;
+    if (this.change2) {
+      this.save();
+      setTimeout(() => {
+        this.change = false; //esto porque desde el request.compound no detecta los cambios cuando el cambio es true y se pasa a false
+      }, 1000);
+    }
+  }
+  Change(event: { option: boolean }){
+    this.tryAction(event);
+    
   }
 
+  OnTimeComplete(modal:any): void {
+    this.ShowTimeEnd();
+  }
+  ShowTimeEnd(): void {
+    this.timerM.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true);
+  }
   /**
    * Initializes things.
    */
@@ -67,6 +131,7 @@ export class ChemGuess8Component implements OnInit {
     { word: "angular", hint: "A popular front-end framework" },
     { word: "typescript", hint: "A superset of JavaScript" },
   ];
+  
 
   /**
    * Charges the element.
@@ -148,7 +213,7 @@ export class ChemGuess8Component implements OnInit {
       }
     });
   }
-
+  
   /**
    * Fills the fields of the table.
    */
@@ -185,6 +250,9 @@ export class ChemGuess8Component implements OnInit {
       inputs[4].value = this.element2P?.neutron?.toString() || '';
       inputs[5].value = this.element2P?.electron?.toString() || '';
     }
+    setTimeout(() => {
+      this.timer.startTimer();
+    }, 100);
   }
 
   save(): void {
@@ -219,8 +287,18 @@ export class ChemGuess8Component implements OnInit {
     let response2:boolean = this.compareElement2();
 
     if (response1 && response2) {
-      console.log("TODO CORRECTO")
+      this.ShowWinGame();
     }
+    if (!response1 || !response2) {
+      this.ShowLoseGame(response1,response2);
+    }
+
+    
+
+
+      
+      
+    
   }
   insertInfo1(name1:string, symbol1:string, atomicNumber1:number, proton1:string, neutron1:string, electron1:string): void {
     this.element1P = {
@@ -259,6 +337,8 @@ export class ChemGuess8Component implements OnInit {
            this.element2P.neutron === this.elementCheck2.neutron &&
            this.element2P.electron === this.elementCheck2.electron;
   }
+
+  
 
 }
  

@@ -31,7 +31,6 @@
 (allHistoryCleared)="handleAllHistoryCleared()"
 (updateLife)="changeLife()" 
 (diedAnimation)="diedAnimation()"   
-
 />
 <div>
 <p class="racha"><i class="fa-solid fa-fire"></i>{{user.streak}}</p>
@@ -41,9 +40,7 @@
     <app-chemquest-modal size="lg" #modalHistory>    
         <app-chem-guess-history style="width: 100%;" [allHistory]="allHistory"></app-chem-guess-history>
     </app-chemquest-modal>
-    <app-chemquest-modal size="lg" #modalTimeEnd
-    
-    >    
+    <app-chemquest-modal size="lg" #modalTimeEnd>    
   
     </app-chemquest-modal>
     

@@ -12,11 +12,14 @@ import { ICompound } from '../../interfaces';
 import { BackgroundService } from '../../services/background.service';
 import { CommonModule } from '@angular/common';
 import { ChemquestModalComponent } from "../../components/chemquest-modal/chemquest-modal.component";
+import { TimerComponent } from 'app/components/timer/timer.component';
+import { Router } from '@angular/router';
+import { transition } from '@angular/animations';
 
 @Component({
   selector: 'app-chemcraft',
   standalone: true,
-  imports: [CommonModule, ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ChemquestModalComponent],
+  imports: [CommonModule, ElementListComponent, SlotComponent, ModalInfoCompoundComponent, ModalTutorialComponent, CompoundRequestComponent, ChemquestModalComponent, TimerComponent],
   templateUrl: './chemcraft.component.html',
   styleUrl: './chemcraft.component.scss'
 })
@@ -24,14 +27,18 @@ export class ChemcraftComponent implements OnInit {
   public compoundsList: ICompound[] = [];
   public currentCompoundFormula: string = '';
   public craftFormula: string = '';
+  public hangManGameOver: string = 'assets/img/chemcraft/HangmanGameover224x208.gif';
   public elementCount: number = 0;
+  public time: number = 5; 
   public slotsArray: any[] = [];
   @ViewChild('modal') modal!: ChemquestModalComponent;
+  @ViewChild('gameOverModal') modalGameOver!: ChemquestModalComponent;
+  @ViewChild('timer') timer!: TimerComponent;
   public change: boolean = false;
   @ViewChildren(SlotComponent) slots!: QueryList<SlotComponent>;
 //tambien los viewChild se pueden trabjar asi ahora: children = viewChild!(ElementListComponent); trabajan como signals, en la documentacion de angular esta, pero mejor los dejo con los decoradores viejos
 
-  constructor(private backgroundService: BackgroundService, private compoundService: CompoundService) {
+  constructor(private backgroundService: BackgroundService, private compoundService: CompoundService, private router: Router) {
     this.compoundService.getAll();
     effect(() => {      
       this.compoundsList = this.compoundService.compounds$();
@@ -44,14 +51,17 @@ export class ChemcraftComponent implements OnInit {
    */
   ngOnInit(): void {
     this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
+    setTimeout(() => {
+      this.timer.startTimer();
+    }, 100);
   }
 
   /**
    * Muestra un modal de alerta para cambiar el compuesto.
    */
-  showAlert(event: { title: string; text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean  }): void {
+  showAlert(event: { title: string; text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean  }): void {
     // console.log('Alert: ', event);
-    this.modal.showModal(event.title, event.text, event.isAlert, event.buttonAccept, event.buttonCancel);
+    this.modal.showModal(event.title, event.text, event.isAlert, event.buttonAccept, event.buttonCancel, event.buttonClose);
   }
 
 
@@ -190,17 +200,23 @@ export class ChemcraftComponent implements OnInit {
     console.log ('Fórmula a crear: ', this.craftFormula);
     if (this.craftFormula === this.currentCompoundFormula) {
       console.log('Las fórmulas son iguales.');
+      this.modal.showModal('¡Felicidades!', '¡Has creado el compuesto correctamente!', true, true, false, false);
       this.cleanSlots();
+      setTimeout(() => {
+      this.change = true;
+    }, 10);
+      setTimeout(() => {
+        this.change = false;
+      }, 1000);
     } else if (this.sameOrder(this.craftFormula, this.currentCompoundFormula)) {
       console.log('Las fórmulas tienen los mismos símbolos pero en diferente orden.');
-      this.cleanSlots();
+      this.modal.showModal('¡Casi!', '¡Los elementos son correctos pero el orden no!', true, true, false, false);
 
     } else {
       console.log('Las fórmulas son diferentes.');
-      this.cleanSlots();  
+      this.modal.showModal('¡Inténtalo de nuevo!', '¡Los elementos no son correctos!', true, true, false, false);
     }
     this.craftFormula = '';
-
   }
 
 
@@ -213,5 +229,40 @@ export class ChemcraftComponent implements OnInit {
    console.log(this.craftFormula);
   this.compareFormulas();
   }
+
+
+  //modales gameover
+
+  OnTimeComplete(): void{
+    setTimeout(() => {
+      this.modalGameOver.showModal('', '', false, false, false, false);
+      this.modal.closeModal();
+      this.slots.forEach(slot => slot.modal.closeModal());
+    }, 10);
+    setTimeout(() => {
+      this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.png';
+    }, 1870);
+  }
+
+  playAgain(): void {
+    this.modalGameOver.closeModal();
+    this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
+    this.cleanSlots();
+    this.timer.restartTimer();
+    setTimeout(() => {
+      this.change = true;
+    }, 10);
+    setTimeout(() => {
+      this.change = false;
+    }, 1000);
+  }
+
+  closeGame(): void {
+    this.modalGameOver.closeModal();
+    this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
+    this.router.navigate(['app/games']);
+
+  }
+
 
 }

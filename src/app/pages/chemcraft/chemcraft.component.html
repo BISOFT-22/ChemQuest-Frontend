@@ -1,6 +1,13 @@
 <!-- <div style="background-image: url('assets/img/chemcraft/bgChemcraft-light.png');"> -->
 
 <div class="container">
+
+
+  <div class="Question-Timer">
+    <app-timer #timer [inputSeconds]="time" (timeCompleteEvent)="OnTimeComplete()"></app-timer>
+    <!-- <h2 class="timer">12:00</h2> -->
+</div>
+
   <app-compound-request style="margin-top: -3%;" class="app-compound-request"
   [compoundsList]="compoundsList"
 (compoundGenerated)="onCompoundGenerated($event)"
@@ -41,6 +48,21 @@
  <app-chemquest-modal size="lg" #modal
  (action)="sendAction($event)"
  >
+ </app-chemquest-modal>
+
+
+ <app-chemquest-modal size="lg" #gameOverModal>
+  <div class="info">
+    <h2 id="title">¡Se ha acabo el tiempo!</h2>
+    <p id="text"> ¿Quieres jugar de nuevo o deseas salir?</p>
+    <img [src]="hangManGameOver" alt="">
+
+    
+     <div style="text-align: center;" class="buttons-container-modal">
+        <button id="accept" class="action-button-modal" (click)="playAgain()">Jugar</button>
+        <button id="cancel" class="action-button-modal" (click)="closeGame()">Salir</button>
+     </div>
+  </div>  
  </app-chemquest-modal>
 </div>
   

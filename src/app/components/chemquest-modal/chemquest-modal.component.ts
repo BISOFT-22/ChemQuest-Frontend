@@ -46,6 +46,13 @@ export class ChemquestModalComponent {
    */
   buttonAcceptVisible: boolean = false;
 
+   
+  /**
+   * Indica si el boton "x" de salir del modal está visible.
+   */
+  buttonCloseVisible: boolean = false;
+
+   
 
     /**
    * Indica si los boton de cancelar del modal está visible.
@@ -69,11 +76,18 @@ export class ChemquestModalComponent {
    * @param isAlert - Indica si el modal es de tipo alerta.
    * @param buttons - Indica si los botones del modal están visibles.
    */
-  showModal(title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean): void {
+  showModal(title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean): void {
     this.title = title;
     this.text = text;
     this.isVisible = true;
     this.isAlert = isAlert;
+
+    if(buttonClose){
+      this.buttonCloseVisible = true;
+    } else {
+      this.buttonCloseVisible = false;
+    }
+
     if(buttonAccept){
       this.buttonAcceptVisible = true;
     } else {

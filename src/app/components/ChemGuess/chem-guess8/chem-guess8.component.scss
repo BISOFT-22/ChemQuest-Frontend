@@ -260,8 +260,9 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   .try{
-    margin-top: 40px;
     display: flex;
+    margin-top: 40px;
+    gap: 90px;
     justify-content: center;
   }
   .slot{

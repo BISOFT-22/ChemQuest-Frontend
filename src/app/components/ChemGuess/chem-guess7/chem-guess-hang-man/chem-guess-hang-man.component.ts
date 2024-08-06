@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input,OnInit, Output, ViewChild } from '@angular/core';
 import { RandomizerService } from '../../../../services/randomizer.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {IHistory, IUser } from '../../../../interfaces';
+import {IFeedBackMessage, IFeedbackStatus, IHistory, IUser } from '../../../../interfaces';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../../../modal/modal.component';
 import { ChemGuessForm7Component } from '../chem-guess-form7/chem-guess-form7.component';
@@ -56,7 +56,7 @@ export class ChemGuessHangManComponent implements OnInit {
    * User object.
    */
   user:IUser = {};
-
+  @Input() action: string = 'add'
   /**
    * Input property for all user histories.
    * Contains an array of all user histories.
@@ -80,6 +80,8 @@ export class ChemGuessHangManComponent implements OnInit {
 
 
   @Output() allHistoryCleared = new EventEmitter<void>();
+  @Output() updateLife = new EventEmitter<void>();
+  @Output() diedAnimation = new EventEmitter<void>();
 
   /**
    * The displayed word with blanks and guessed letters.
@@ -126,9 +128,9 @@ export class ChemGuessHangManComponent implements OnInit {
    */
   showDetailModal(modal: number) {
     if(modal == 1){
-      this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true);
+      this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true, false);
     }else if(modal == 2){
-      this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true);
+      this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true, false);
     }
   }
 
@@ -139,8 +141,10 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormUpdate(event: { option: boolean }): void {
     if (event.option) {
       this.onConvert();
-      this.lifeChangeService.setLive(5);
+      this.history.wrong = 5;
+      this.lifeChangeService.setLive(this.history.wrong);
       this.allHistoryCleared.emit();
+      this.updateLife.emit();
       console.log("Se actualizo hang man");
       console.log(this.allHistory);
     } 
@@ -153,14 +157,22 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormSend(event: { option: boolean }): void {
     if (event.option) {
       this.CompareWord();
+      
     }
   }
 
   /**
    * Initializes the component.
    */
+  setUser(): void {
+    const user = this.authService.getUser();
+    if (user) {
+      this.user = user;
+    }
+  }
   ngOnInit(): void {
     this.initializeThings();
+    this.setUser();
   }
   
 
@@ -247,6 +259,7 @@ export class ChemGuessHangManComponent implements OnInit {
     this.clearSlots();
     this.deleteHistory();
     this.initializeThings();    
+  
 
   }
   deleteHistory(): void {
@@ -320,6 +333,7 @@ export class ChemGuessHangManComponent implements OnInit {
       for (const color of historytemp.typeColor) {
         if (color === "#d73027c4") {
           historytemp.wrong = historytemp.wrong ? historytemp.wrong - 1 : 0;
+          
           break;
         }
       }
@@ -335,39 +349,62 @@ export class ChemGuessHangManComponent implements OnInit {
         }
         console.log(goodAnswer);
         if (goodAnswer === historytemp.typeColor.length) {
-          this.increaseStreak(historytemp);
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+          this.updateUserAndStreak(historytemp);
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 1000);
         }
       }
-
+      this.lifeChangeService.setLive(historytemp.wrong || 5);
+      this.updateLife.emit();
+      console.log("Vidas: " + historytemp.wrong);
     if (historytemp.wrong == 0) {
-      this.router.navigate(['app/games']);
+      
+        this.lifeChangeService.setLive(0);
+        this.diedAnimation.emit();
+       
+         
+      
     }
     //se encarga de aumentar la racha del usuario
    
   
     this.updateHistory(historytemp);
 
-    this.lifeChangeService.setLive(historytemp.wrong || 5);
+   
     console.log("Vidas: " + this.lifeChangeService.life.value);
     this.clearSlots();
     this.allHistory.push(historytemp)
     this.callEvent();
   }
-  increaseStreak(historyTemp:IHistory): void {
+  feedbackMessage: IFeedBackMessage = {type: IFeedbackStatus.default, message: ''};
+  updateUserAndStreak(historyTemp: IHistory) {
+    // Actualiza la racha del usuario
     if (historyTemp.typeColor && this.user) {
       for (const color of historyTemp.typeColor) {
-        if (color === "#4575b4d6") {
+        if (color === "#4575b4") {
           this.user.streak = (this.user.streak || 0) + 1;
           this.streak = this.user.streak;
           console.log("Racha: " + this.streak);
-          this.userService.updateUserSignal(this.user);
           break;
         }
       }
     }
+    this.user.streak = this.streak;
+    this.userService.updateUserSignal(this.user).subscribe({
+      next: () => {
+        this.feedbackMessage.type = IFeedbackStatus.success;
+        this.feedbackMessage.message = `User successfully updated`;
+      },
+      error: (error: any) => {
+        this.feedbackMessage.type = IFeedbackStatus.error;
+        this.feedbackMessage.message = error.message;
+      }
+    });
+  
+ 
+    
+    
   }
   /**
    * Updates the history with the provided historyTemp.

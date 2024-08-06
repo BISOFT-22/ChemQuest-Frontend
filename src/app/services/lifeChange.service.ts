@@ -11,6 +11,7 @@ export class LifeChangeService {
    
     setLive(livetemp: number) {
         this.life.next(livetemp);
+        console.log('Life:', this.life.value);
         return this.life.asObservable();
     }
 

@@ -1,13 +1,16 @@
 <main>
     <div>
         <div class="Question-Timer">
-            <img [src]="convert" class="imgSize" alt="">
+          <img [src]="convert"  (click)="ShowChange()" class="imgSize" alt="" title="Cambiar de palabra">
               <div>
                 <p></p>
-                <h2 class="advance">Completa los elementos faltantes, ¡¡El tiempo es limitado!!</h2>
+                <h2 class="advance">Completa los elementos faltantes,  <span style="color: white;">¡El tiempo es limitado!</span></h2>
               </div>
             
-            <h2 class="timer">2:00</h2>
+              <div class="Question-Timer">
+                <app-timer style="color: white;" #timer [inputSeconds]="100" (timeCompleteEvent)="OnTimeComplete(timing)"></app-timer>
+                <!-- <h2 class="timer">12:00</h2> -->
+            </div>
         </div>
         <br>
         <table id="table1" class="styled-table ">
@@ -69,7 +72,21 @@
         
         
 <div class="try">
-    <button (click)="fillTableFields()" class="info-send">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
-    <button (click)="save()" class="info-send">Finalizar <i class="fa-solid fa-floppy-disk"></i> </button>
+    <button (click)="ShowTimeTry()" class="info-send">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
+
+    <button (click)="ShowTryWinGame()" class="info-send">Finalizar <i class="fa-solid fa-floppy-disk"></i> </button>
 </div>
         
+<app-chemquest-modal size="lg" #modalTry
+(action)="tryAction($event)"></app-chemquest-modal>  
+
+
+<app-chemquest-modal size="lg" #modalCW
+(action)="finishAction($event)"></app-chemquest-modal>
+
+
+
+<app-chemquest-modal size="lg" #modalWIN (action)="exit($event)"></app-chemquest-modal>
+<app-chemquest-modal size="lg" #modalLose (action)="exit($event)"></app-chemquest-modal>
+<app-chemquest-modal size="lg" #modalChange (action)="Change($event)"></app-chemquest-modal>
+<app-chemquest-modal size="lg" #timing> </app-chemquest-modal>

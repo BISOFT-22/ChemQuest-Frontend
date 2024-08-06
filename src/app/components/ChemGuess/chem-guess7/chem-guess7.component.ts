@@ -15,6 +15,7 @@ import { AuthService } from 'app/services/auth.service';
 import { UserService } from 'app/services/user.service';
 import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.component";
 import { ModalTimeEndComponent } from 'app/modal-time-end/modal-time-end.component';
+import { BackgroundService } from 'app/services/background.service';
 
 /**
  * Component for ChemGuess7.
@@ -72,14 +73,18 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   public streak: number | undefined=0;
   public change: boolean = false;
   user:IUser = {};
-  constructor(private lifeChangeService: LifeChangeService, private authService:AuthService, private userService: UserService) {
+  constructor(private lifeChangeService: LifeChangeService, private authService:AuthService, private userService: UserService, private backgroundService: BackgroundService) {
   }
   ngOnInit(): void {
     setTimeout(() => {
       this.timer.startTimer();
     }, 100);
     this.setUser();
+    this.backgroundService.changeBackground('assets/img/exodia/FluywShXkAAwfJS.jpeg');
   }
+
+   
+  
   setUser(): void {
     const user = this.authService.getUser();
     if (user) {

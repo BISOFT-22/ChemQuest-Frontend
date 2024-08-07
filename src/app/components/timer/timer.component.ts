@@ -92,6 +92,8 @@ export class TimerComponent implements OnInit, OnDestroy {
 
 
   public restartTimer(): void {
+    clearInterval(this.timerInterval);
+    console.log('Restarting timer...');
     this.timerInterval = setInterval(() => {
           this.timerSeconds = this.inputSeconds + 1;
           this.startTimer();

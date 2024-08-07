@@ -3,18 +3,22 @@
 */
 
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
+import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'app-chemquest-modal',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './chemquest-modal.component.html',
   styleUrl: './chemquest-modal.component.scss'
 })
-export class ChemquestModalComponent {
+export class ChemquestModalComponent implements OnInit, OnDestroy {
+  sidebarOpen: boolean = true;
+  private subscription: Subscription | undefined;
 
+  constructor(@Inject(LayoutService) private layoutService: LayoutService) {}
 
   /**
    * Título del modal.
@@ -75,7 +79,22 @@ export class ChemquestModalComponent {
    * @param text - El texto del modal.
    * @param isAlert - Indica si el modal es de tipo alerta.
    * @param buttons - Indica si los botones del modal están visibles.
+   *
    */
+
+
+  ngOnInit(): void {
+    this.subscription = this.layoutService.sidebarOpenO$.subscribe(open => {
+      this.sidebarOpen = open;
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   showModal(title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean): void {
     this.title = title;
     this.text = text;

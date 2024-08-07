@@ -125,6 +125,7 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
   closeModal(): void {
     this.isVisible = false;
     this.isAlert = false;
+    this.action.emit({option: false});
   }
 
   /**
@@ -132,7 +133,9 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
    * @param option - La opción seleccionada.
    */
   onButtonClick(option : boolean): void {
+    console.log(option);
     if(this.buttonAcceptVisible && this.buttonCancelVisible){
+      console.log('dos', option);
       this.action.emit({option});
     }
     this.closeModal();

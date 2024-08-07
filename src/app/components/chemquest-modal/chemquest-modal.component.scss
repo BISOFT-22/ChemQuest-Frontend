@@ -111,11 +111,12 @@
     text-align: end;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
     .modalc-content {
         max-width: 90%;
         padding: 15px;
         flex-direction: column;
+        margin-left: 0px;
     }
 
     #alert {
@@ -139,7 +140,20 @@
     }
 }
 
+
+@media (max-width: 991px) {
+
+    .modalc-content {
+            margin-left: 0px !important;
+    }
+
+}
+
+
 @media (max-width: 855px) {
+
+
+
 .buttons-container {
     text-align: center;
     display: block;

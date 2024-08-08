@@ -15,12 +15,21 @@ export interface IUser {
   lastname?: string;
   email?: string;
   streak?: number;
+  score?: number;
   password?: string;
   active?: boolean;
   createdAt?: string;
   updatedAt?: string;
   authorities?: IAuthority[];
+  userType?: IUserType; 
   role?: IRole;
+}
+
+
+export interface IUserType {
+  id?: number;
+  typeName?: string;
+
 }
 
 export interface IRole {

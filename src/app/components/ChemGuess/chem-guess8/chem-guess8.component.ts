@@ -5,6 +5,7 @@ import { IElement } from '../../../interfaces';
 import { ChemquestModalComponent } from 'app/components/chemquest-modal/chemquest-modal.component';
 import { TimerComponent } from 'app/components/timer/timer.component';
 import { BackgroundService } from 'app/services/background.service';
+import { Router } from '@angular/router';
 
 
 /**
@@ -40,7 +41,7 @@ export class ChemGuess8Component implements OnInit {
   change: boolean = false;
   change2: boolean = false;
 
-  constructor(private random: RandomizerService, private backgroundService:BackgroundService) { }
+  constructor(private random: RandomizerService, private backgroundService:BackgroundService, private router:Router) { }
   @ViewChild('timer') timer!: TimerComponent;
   @ViewChild('timerM') timerM!: ChemquestModalComponent;
   @ViewChild('modalTry') modalTry!: ChemquestModalComponent;
@@ -48,7 +49,7 @@ export class ChemGuess8Component implements OnInit {
   @ViewChild('modalWIN') modalWIN!: ChemquestModalComponent;
   @ViewChild('modalLose') modalLose!: ChemquestModalComponent;
   @ViewChild('modalChange') modalChange!: ChemquestModalComponent;
-
+  hangManGameOver:string ='assets/img/chemcraft/HangmanGameover224x208.gif';
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
    */
@@ -58,27 +59,28 @@ export class ChemGuess8Component implements OnInit {
 
   }
   ShowTimeTry(): void {
-    this.modalTry.showModal('Empezar a Jugar','En el momento que aceptes apareceran los datos de ayuda y el timer empezara a correr',true, true, true);
+    
+    this.modalTry.showModal('Empezar a Jugar','En el momento que aceptes apareceran los datos de ayuda y el timer empezara a correr',true, true, true,false);
   }
   ShowTryWinGame(): void {
-    this.modalCW.showModal('Comprobar','Dale aceptar si quieres ver que los datos que pusiste estan bien',true, true, true)
+    this.modalCW.showModal('Comprobar','Dale aceptar si quieres ver que los datos que pusiste estan bien',true, true, true,false)
   }
   ShowWinGame(): void {
-    this.modalWIN.showModal('GANASTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+    this.modalWIN.showModal('GANASTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
   }
   ShowLoseGame(response1:boolean, response2:boolean): void {
     if (!response1 && !response2) {
-      this.modalLose.showModal('Perdiste','Fallaste en ambas tablas dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+      this.modalLose.showModal('Perdiste','Fallaste en ambas tablas dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
     }
     if (!response1 && response2) {
-      this.modalLose.showModal('Perdiste','Fallaste en la primera tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+      this.modalLose.showModal('Perdiste','Fallaste en la primera tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
     }
     if (response1 && !response2) {
-      this.modalLose.showModal('Perdiste','Fallaste en la segunda tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true)
+      this.modalLose.showModal('Perdiste','Fallaste en la segunda tabla dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
     }
   }
   ShowChange(): void {
-    this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true);
+    this.modalChange.showModal('¿Estás seguro de que deseas cambiar el elemento?', 'Si haces esto, corres el riesgo de perder tu racha.', true, true, true,false);
   }
 tryAction(event: { option: boolean }): void {
     this.change = event.option;
@@ -107,14 +109,33 @@ tryAction(event: { option: boolean }): void {
     this.ShowTimeEnd();
   }
   ShowTimeEnd(): void {
-    this.timerM.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true);
+    this.timerM.showModal('PERDISTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',false, false, false,false);
+  }
+  playAgain(): void {
+    this.timerM.closeModal();
+    this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
+    this.fillTableFields();
+    this.timer.restartTimer();
+    setTimeout(() => {
+      this.change = true;
+    }, 10);
+    setTimeout(() => {
+      this.change = false;
+    }, 1000);
+  }
+
+  closeGame(): void {
+    this.timerM.closeModal();
+    this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
+    this.router.navigate(['app/games']);
+
   }
   exit(event: { option: boolean }): void {
     if (event.option) {
       
       this.fillTableFields();
     }else{
-      window.location.reload();
+     this.closeGame();
     }
     
   }

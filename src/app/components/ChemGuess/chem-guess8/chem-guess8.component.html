@@ -8,7 +8,7 @@
               </div>
             
               <div class="Question-Timer">
-                <app-timer style="color: white;" #timer [inputSeconds]="100" (timeCompleteEvent)="OnTimeComplete(timing)"></app-timer>
+                <app-timer style="color: white;" #timer [inputSeconds]="1000" (timeCompleteEvent)="OnTimeComplete(timing)"></app-timer>
                 <!-- <h2 class="timer">12:00</h2> -->
             </div>
         </div>
@@ -90,3 +90,17 @@
 <app-chemquest-modal size="lg" #modalLose (action)="exit($event)"></app-chemquest-modal>
 <app-chemquest-modal size="lg" #modalChange (action)="Change($event)"></app-chemquest-modal>
 <app-chemquest-modal size="lg" #timing> </app-chemquest-modal>
+
+<app-chemquest-modal size="lg" #timerM>
+  <div class="info">
+    <h2 id="title">¡Se ha acabo el tiempo!</h2>
+    <p id="text"> ¿Quieres jugar de nuevo o deseas salir?</p>
+    <img [src]="hangManGameOver" alt="">
+
+    
+     <div style="text-align: center;" class="buttons-container-modal">
+        <button id="accept" class="action-button" (click)="playAgain()">Jugar</button>
+        <button id="cancel" class="action-button" (click)="closeGame()">Salir</button>
+     </div>
+  </div>  
+ </app-chemquest-modal>

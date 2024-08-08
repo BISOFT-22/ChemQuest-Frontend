@@ -34,7 +34,9 @@ export class UserFormComponent {
       return;
     } else {
       this.service[ this.action == 'add' ? 'saveUserSignal': 'updateUserSignal'](this.user).subscribe({
+
         next: () => {
+
           this.feedbackMessage.type = IFeedbackStatus.success;
           this.feedbackMessage.message = `User successfully ${this.action == 'add' ? 'added': 'updated'}`
         },

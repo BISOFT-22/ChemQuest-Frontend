@@ -17,6 +17,9 @@ export class LayoutService {
   public title = this.pageTitle.asObservable();
   public sidebarOpen: boolean = true;
 
+  private sidebarOpenSubject = new BehaviorSubject<boolean>(true);
+  public sidebarOpenO$ = this.sidebarOpenSubject.asObservable();
+
   constructor() {
     // fromEvent(window, 'resize')
     //   .pipe(debounceTime(100), takeUntil(this.unsubscriber))
@@ -35,5 +38,9 @@ export class LayoutService {
 
   public toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
+
+    //para el modal o cualquier otro componente que necesite saber si el sidebar esta abierto o cerrado
+    const currentState = this.sidebarOpenSubject.value;
+    this.sidebarOpenSubject.next(!currentState);
   }
 }

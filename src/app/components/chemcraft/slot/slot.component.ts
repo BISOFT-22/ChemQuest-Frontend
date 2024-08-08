@@ -8,6 +8,7 @@ import { IElement } from '../../../interfaces';
 import { FormsModule } from '@angular/forms';
 import { ModalErrorComponent } from "../modal-error/modal-error.component";
 import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.component";
+import e from 'cors';
 
 @Component({
   selector: 'app-slot',
@@ -18,6 +19,7 @@ import { ChemquestModalComponent } from "../../chemquest-modal/chemquest-modal.c
 })
 export class SlotComponent {
   @Input() element: { symbol: string; count: number } | null = null;
+   elementAux: { symbol: string; count: number }  = { symbol: '', count: 0 };
   @Output() error = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean }>();
   @Input() cleanSlot: boolean = false;
   counterValue: number = 0; 
@@ -85,6 +87,8 @@ export class SlotComponent {
  */ 
   clearSlotContent() {
     this.element = null;
+    this.elementAux.symbol = '';
+    this.elementAux.count = 0;
   }
 
   /**metodo para editar el valor del contador del elemento y cerrar el modal de edición del contador
@@ -130,6 +134,32 @@ getSlotContentString(): string {
     }
   }
   return '';
+
+}
+
+getSlotContent(): string {
+  if (this.element && this.element.symbol && this.element.count !== undefined) {
+    if (this.element.count >= 1) {
+      return this.element.symbol;
+    }
+  }
+  return '';
+
+}
+
+
+ /**
+   * Método para setear el contenido en el slot.
+   * @param element - El elemento a setear en el slot.
+   */
+ setSlotContent(symbol: string): void {
+  if (symbol) {
+    this.elementAux.symbol = symbol;
+    this.elementAux.count += 1;
+    this.element = this.elementAux;
+  } else {
+    console.error('El elemento proporcionado es nulo o indefinido.');
+  }
 }
 
 }

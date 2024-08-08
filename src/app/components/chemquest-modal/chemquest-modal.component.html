@@ -1,11 +1,11 @@
 @if(isVisible){
 
     <div class="content">
-        <div class="modalc-content "  >
+        <div class="modalc-content" [ngClass]="{'sidebar-open': sidebarOpen, 'sidebar-closed': !sidebarOpen}" >
           @if(buttonCloseVisible){
           <button class="close-button" (click)="closeModal()">x</button>
           }
-          <ng-content></ng-content>
+   
     
           <!-- Si no les gusta este contenido por defecto, entonces solo pasan por parametros
            cuando llaman al metodo de mostrar el modal asi:
@@ -40,6 +40,8 @@
           </div>
     
         }
+
+        <ng-content></ng-content>
         </div>
       </div>
     }

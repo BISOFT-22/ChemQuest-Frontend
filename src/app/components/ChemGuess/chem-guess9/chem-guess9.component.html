@@ -15,23 +15,48 @@
     
 </main>
 
-
-<div class="cards">
-    @for (item of items; track $index) {
-    
-      <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
-            <h6 class="card-subtitle mb-4 text-body-secondary">Pista cada 2 errores</h6>
-            <p class="card-text ">OXIDO DE _____()</p>
-        </div>
+@if (visible) {
+  <div class="cards">
+    <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
+      <h3 class="card-subtitle mb-4 text-body-secondary">hello</h3>
+      
     </div>
-          
-    }
   </div>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
+      <h3 class="card-subtitle mb-4 text-body-secondary">hello</h3>
+      
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
+      <h3 class="card-subtitle mb-4 text-body-secondary">hello</h3>
+      
+    </div>
+  </div>
+  </div>
+}
+<div class="cards">
+  @for (item of compoundOptions; track $index) {
+ 
+    <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">ADIVINA EL COMPUESTO</h3>
+      <h3 class="card-subtitle mb-4 text-body-secondary">{{item.name}}</h3>
+      
+    </div>
+  </div>
+      
+  }
+</div>
+
 
   <div class="try">
-    <button class="big-button">Intento <i class="fa-solid fa-floppy-disk"></i> </button>
+    <button class="big-button"(click)="chargeOptions()" >Intento <i class="fa-solid fa-floppy-disk"></i> </button>
 </div>
 
 <p class="racha"><i class="fa-solid fa-fire"></i>100</p>

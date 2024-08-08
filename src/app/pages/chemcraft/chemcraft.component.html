@@ -12,7 +12,7 @@
   [compoundsList]="compoundsList"
 (compoundGenerated)="onCompoundGenerated($event)"
 (alert)="showAlert($event)"
-  [change]="change"
+#compoundRequest
   ></app-compound-request>
 
   <div class="crafting-area">
@@ -40,7 +40,9 @@
 
  
 
-  <app-element-list class="app-element-list"></app-element-list>
+  <app-element-list class="app-element-list"
+  (elementShared)="onElementDoubleClick($event)"
+  ></app-element-list>
   <app-modal-info-compound></app-modal-info-compound>
   <app-modal-tutorial></app-modal-tutorial>
   
@@ -48,7 +50,14 @@
  <app-chemquest-modal size="lg" #modal
  (action)="sendAction($event)"
  >
- </app-chemquest-modal>
+
+</app-chemquest-modal>
+
+ <app-chemquest-modal size="lg" #modalCorrect
+ (action)="showCompoundInfo(true)"
+ >
+
+</app-chemquest-modal>
 
 
  <app-chemquest-modal size="lg" #gameOverModal>
@@ -64,6 +73,14 @@
      </div>
   </div>  
  </app-chemquest-modal>
+
+
+ <app-modal-info-compound #modalInfoCompound
+ [compound]="compoundAux"
+ (action)="RestartGame($event)"
+ />
+
+
 </div>
   
 <!-- </div> -->

@@ -11,17 +11,10 @@ import { CompoundService } from 'app/services/compound.service';
   templateUrl: './chem-guess9.component.html',
   styleUrl: './chem-guess9.component.scss'
 })
-export class ChemGuess9Component {
+export class ChemGuess9Component implements OnInit {
   compoundsList: ICompound[] = []
-  compound: ICompound = {};
   compoundOptions: ICompound[] = []
-  public items =  [
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-    { word: "angular", hint: "A popular front-end framework" },
-    { word: "typescript", hint: "A superset of JavaScript" },
-    
-  ];
+  visible = true;
 
   constructor(private modalService: NgbModal, private compoundService: CompoundService) {
     this.compoundService.getAll();
@@ -29,19 +22,29 @@ export class ChemGuess9Component {
       this.compoundsList = this.compoundService.compounds$();
     });
   }
+  ngOnInit(): void {
+   
+
+    
+  }
   
 
-  getRamdonCompound(): void {
+  getRamdonCompound(): ICompound {
+    let compound: ICompound;
     if (this.compoundsList.length === 0) {
       throw new Error('Compound list is empty');
     }
     const randomIndex = Math.floor(Math.random() * this.compoundsList.length);
-    this.compound = this.compoundsList[randomIndex];
+    return compound = this.compoundsList[randomIndex];
   }
   chargeOptions(){
+    this.visible = false;
+    
+    let compound: ICompound;
+    console.log(this.compoundsList);
     for (let index = 0; index < 3; index++) {
-      this.getRamdonCompound
-      this.compoundOptions.push(this.compound);
+      compound =this.getRamdonCompound();
+      this.compoundOptions.push(compound);
     }
     
 }

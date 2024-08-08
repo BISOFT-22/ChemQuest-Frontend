@@ -18,7 +18,7 @@ import { ICompound } from '../../../interfaces';
 })
 export class CompoundRequestComponent implements OnInit, OnChanges {
   @Input() compoundsList: ICompound[] = []
-  @Output() compoundGenerated = new EventEmitter<string>();
+  @Output() compoundGenerated = new EventEmitter<ICompound>();
   @Output() alert = new EventEmitter<{ title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean }>();
   @Input() change: Boolean = false;
   public compound: ICompound = {};
@@ -41,15 +41,13 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     if (changes['compoundsList'] && changes['compoundsList'].currentValue.length > 0) {
       this.generateCompoundRequest();
     }
+  }
 
-   
-    if(changes['change'] ){
-    // console.log(this.change);
-    if (this.change) {
-      this.generateCompoundRequest();
-    }
-    // this.change = false; lo pase a chemcraft porque sino, no se detecta como un cambio supongo q por ser un input
-    }
+
+  ReGeneratedCompoundRequest(change: boolean): void {
+    if(change){
+        this.generateCompoundRequest();
+      }
   }
 
   //genera un componente ramdon de la lista
@@ -102,7 +100,7 @@ export class CompoundRequestComponent implements OnInit, OnChanges {
     if (!this.compound.name || !this.compound.formula) {
       throw new Error("Compound.name or compound.formula is empty.");
     }
-    this.compoundGenerated.emit(this.compound.formula);
+    this.compoundGenerated.emit(this.compound);
     this.textList = [
       'Debes crear el compuesto <span class="compound-name">"' + this.compound.name + '"</span>. ¿Qué elementos son necesarios para ello?',
       '¿Recuerdas la fórmula química del compuesto <span class="compound-name">"' + this.compound.name + '"</span>? Genial, ¿De qué elementos está compuesta la fórmula?',

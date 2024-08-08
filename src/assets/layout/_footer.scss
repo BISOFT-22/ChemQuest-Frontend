@@ -28,6 +28,19 @@
   width: 100%;
   z-index: 10;
 }
+
+
+.footer-layout {
+  transition: margin-left 0.5s;
+
+  &.sidebar-open {
+    margin-left: 130px;
+  }
+
+  &.sidebar-closed {
+    margin-left: 45px;
+  }
+}
 /**=====================
      47. Footer CSS Ends
 ==========================**/

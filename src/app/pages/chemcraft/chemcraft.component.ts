@@ -8,13 +8,12 @@ import { ModalInfoCompoundComponent } from "../../components/chemcraft/modal-inf
 import { ModalTutorialComponent } from "../../components/chemcraft/modal-tutorial/modal-tutorial.component";
 import { CompoundRequestComponent } from "../../components/chemcraft/compound-request/compound-request.component";
 import { CompoundService } from '../../services/compound.service';
-import { ICompound } from '../../interfaces';
+import { ICompound, IElement } from '../../interfaces';
 import { BackgroundService } from '../../services/background.service';
 import { CommonModule } from '@angular/common';
 import { ChemquestModalComponent } from "../../components/chemquest-modal/chemquest-modal.component";
 import { TimerComponent } from 'app/components/timer/timer.component';
 import { Router } from '@angular/router';
-import { transition } from '@angular/animations';
 
 @Component({
   selector: 'app-chemcraft',
@@ -25,17 +24,22 @@ import { transition } from '@angular/animations';
 })
 export class ChemcraftComponent implements OnInit {
   public compoundsList: ICompound[] = [];
+  public compound: ICompound = {};
+  public compoundAux: ICompound = {};
   public currentCompoundFormula: string = '';
   public craftFormula: string = '';
   public hangManGameOver: string = 'assets/img/chemcraft/HangmanGameover224x208.gif';
   public elementCount: number = 0;
-  public time: number = 5; 
+  public time: number = 40; 
   public slotsArray: any[] = [];
   @ViewChild('modal') modal!: ChemquestModalComponent;
+  @ViewChild('modalCorrect') modalCorrect!: ChemquestModalComponent;
   @ViewChild('gameOverModal') modalGameOver!: ChemquestModalComponent;
   @ViewChild('timer') timer!: TimerComponent;
+  @ViewChild('compoundRequest') compoundRequest!: CompoundRequestComponent;
   public change: boolean = false;
   @ViewChildren(SlotComponent) slots!: QueryList<SlotComponent>;
+  @ViewChild('modalInfoCompound') modalInfoCompound!: ModalInfoCompoundComponent;
 //tambien los viewChild se pueden trabjar asi ahora: children = viewChild!(ElementListComponent); trabajan como signals, en la documentacion de angular esta, pero mejor los dejo con los decoradores viejos
 
   constructor(private backgroundService: BackgroundService, private compoundService: CompoundService, private router: Router) {
@@ -53,7 +57,9 @@ export class ChemcraftComponent implements OnInit {
     this.backgroundService.changeBackground('assets/img/chemcraft/bgChemcraft-light.png');
     setTimeout(() => {
       this.timer.startTimer();
-    }, 100);
+    }, 1000);
+
+
   }
 
   /**
@@ -71,7 +77,9 @@ export class ChemcraftComponent implements OnInit {
    * 
    * @param formula La fórmula del compuesto generado.
    */
-  onCompoundGenerated(formula: string): void {
+  onCompoundGenerated(compound: ICompound): void {
+    this.compound = compound;
+    const formula = compound.formula || '';
     console.log('Formula: ', formula);
     this.currentCompoundFormula = this.expandFormula(formula);
      console.log('Formula: ', this.currentCompoundFormula);
@@ -152,6 +160,30 @@ export class ChemcraftComponent implements OnInit {
     return expandedFormula;
   }
 
+
+  onElementDoubleClick(element: string): void {
+    console.log('Elemento: ', element);
+    let symbol = element;
+    let slotFound = false;
+    this.slots.forEach(slot => {
+    let slotElement = '';
+      if(!slotFound){
+      slotElement = slot.getSlotContent();
+      console.log('Slot: ', slotElement);
+      if (!slotElement || slotElement === symbol) {
+        slot.setSlotContent(symbol);
+        slotFound = true;
+        return;
+      }
+    }
+    });
+
+    if (!slotFound) {
+      console.log('No hay slots disponibles o no se encontró un slot con el mismo elemento.');
+      this.modal.showModal('¡Ups!', '¡No hay slots disponibles o no se encontró un slot con el mismo elemento!', true, true, false, false);
+    }
+  }
+
   
   /**
    * Establece los espacios.
@@ -174,16 +206,17 @@ export class ChemcraftComponent implements OnInit {
   }
 
   /**
-   * Envía una acción y actualiza el estado de la variable 'change'.
+   * Envía una acción y actualiza el estado de la variable 'change' para entonces habilitar el cambio en compoundrequest.
    * @param event - El evento que contiene la opción booleana.
    */
   sendAction(event: { option: boolean }): void {
-    this.change = event.option;
-    if (this.change) {
+    if (event.option) {
       this.cleanSlots();
-      setTimeout(() => {
-        this.change = false; //esto porque desde el request.compound no detecta los cambios cuando el cambio es true y se pasa a false
-      }, 1000);
+      this.compoundRequest.ReGeneratedCompoundRequest(true);
+      console.log('1: ', this.compoundAux);
+      this.compoundAux = this.compound;
+      console.log('nuevo: ', this.compound);
+      console.log('1: ', this.compoundAux);
     }
   }
 
@@ -200,7 +233,10 @@ export class ChemcraftComponent implements OnInit {
     console.log ('Fórmula a crear: ', this.craftFormula);
     if (this.craftFormula === this.currentCompoundFormula) {
       console.log('Las fórmulas son iguales.');
-      this.modal.showModal('¡Felicidades!', '¡Has creado el compuesto correctamente!', true, true, false, false);
+      this.compoundAux = this.compound;
+      console.log('3 Comparacion: ', this.compoundAux);
+      this.modalCorrect.showModal('¡Felicidades!', '¡Has creado el compuesto correctamente!', true, false, false, true);
+      this.timer.pauseTimer();
       this.cleanSlots();
       setTimeout(() => {
       this.change = true;
@@ -214,9 +250,17 @@ export class ChemcraftComponent implements OnInit {
 
     } else {
       console.log('Las fórmulas son diferentes.');
-      this.modal.showModal('¡Inténtalo de nuevo!', '¡Los elementos no son correctos!', true, true, false, false);
+      this.modal.showModal('¡Inténtalo de nuevo!', '¡Los elementos no son correctos!', true, true, false, false );    
     }
     this.craftFormula = '';
+  }
+
+
+  showCompoundInfo(mostrar: boolean): void {
+    if (mostrar) {
+      this.modalCorrect.closeModal();
+      this.modalInfoCompound.modal.showModal('', '', false, false, false, true);
+    }
   }
 
 
@@ -230,6 +274,16 @@ export class ChemcraftComponent implements OnInit {
   this.compareFormulas();
   }
 
+
+  RestartGame(event: { option: boolean }): void {
+    if(event.option){
+      this.cleanSlots();
+      this.compoundRequest.ReGeneratedCompoundRequest(true);
+      this.compoundAux = this.compound;
+      this.timer.resumeTimer();
+    this.timer.restartTimer();
+    }
+   }
 
   //modales gameover
 
@@ -248,13 +302,9 @@ export class ChemcraftComponent implements OnInit {
     this.modalGameOver.closeModal();
     this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
     this.cleanSlots();
+    this.compoundRequest.ReGeneratedCompoundRequest(true);
+    this.compoundAux = this.compound;
     this.timer.restartTimer();
-    setTimeout(() => {
-      this.change = true;
-    }, 10);
-    setTimeout(() => {
-      this.change = false;
-    }, 1000);
   }
 
   closeGame(): void {

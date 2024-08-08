@@ -3,22 +3,18 @@
 */
 
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, Inject, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { LayoutService } from '../../services/layout.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
 
 @Component({
   selector: 'app-chemquest-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './chemquest-modal.component.html',
   styleUrl: './chemquest-modal.component.scss'
 })
-export class ChemquestModalComponent implements OnInit, OnDestroy {
-  sidebarOpen: boolean = true;
-  private subscription: Subscription | undefined;
+export class ChemquestModalComponent {
 
-  constructor(@Inject(LayoutService) private layoutService: LayoutService) {}
 
   /**
    * Título del modal.
@@ -79,22 +75,7 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
    * @param text - El texto del modal.
    * @param isAlert - Indica si el modal es de tipo alerta.
    * @param buttons - Indica si los botones del modal están visibles.
-   *
    */
-
-
-  ngOnInit(): void {
-    this.subscription = this.layoutService.sidebarOpenO$.subscribe(open => {
-      this.sidebarOpen = open;
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
   showModal(title: string, text: string, isAlert: boolean, buttonAccept: boolean, buttonCancel: boolean, buttonClose: boolean): void {
     this.title = title;
     this.text = text;
@@ -125,7 +106,6 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
   closeModal(): void {
     this.isVisible = false;
     this.isAlert = false;
-    this.action.emit({option: false});
   }
 
   /**
@@ -133,9 +113,7 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
    * @param option - La opción seleccionada.
    */
   onButtonClick(option : boolean): void {
-    console.log(option);
     if(this.buttonAcceptVisible && this.buttonCancelVisible){
-      console.log('dos', option);
       this.action.emit({option});
     }
     this.closeModal();

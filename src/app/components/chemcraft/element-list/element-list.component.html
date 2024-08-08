@@ -26,8 +26,8 @@
         [attr.data-symbol]="element.symbol"
         [attr.data-name]="element.name"
         [attr.data-atomic-number]="element.atomicNumber"
-        (click)="dbClickCheck(1, $index)"
-        (dblclick)="shareElementInfo($index)"
+        (click)="showElementInfo($index)"
+        (dblclick)="hideElementInfo($event)"
       >
         {{ element.symbol }}
 

@@ -1,12 +1,11 @@
 /**
 *@Author Alejandro José Salazar Lobo
 */
-import { Component, ElementRef, EventEmitter, inject, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ElementService } from '../../../services/element.service';
 import { IElement } from '../../../interfaces';
 import { effect } from '@angular/core';
-import e from 'cors';
 
 @Component({
   selector: 'app-element-list',
@@ -22,10 +21,8 @@ export class ElementListComponent implements OnInit {
   public noResults: boolean = false;
   public isSearching: boolean = false;
   public clickElementIndex: number | null = null;
-  public actionDb: number = 0;
   private service = inject(ElementService);
   @ViewChild('elementsContainer', { static: true }) elementsContainer!: ElementRef;
-  @Output() elementShared = new EventEmitter<string>();
 
   constructor() {
     this.service.getAllSignal();
@@ -39,43 +36,12 @@ export class ElementListComponent implements OnInit {
     this.elementSearch();
   }
 
-
-
   /**
    *Muestra la información del elemento en el índice especificado.
    *@param index - El índice del elemento que se va a mostrar.
    */
   showElementInfo(index: number): void {
     this.clickElementIndex = index;
-  }
-
-  dbClickCheck(action: number, index: number): void {
-    console.log('action',action);
-    this.actionDb += action;
-    setTimeout(() => {
-    console.log('actionBD',this.actionDb);
-    setTimeout(() => {
-      if (this.actionDb === 1) {
-        console.log('EN IF actionBD',this.actionDb);
-        this.showElementInfo(index);
-        this.actionDb = 0;
-      }
-    }, 100);
-    if (this.actionDb === 2) {
-    this.actionDb = 0;
-    }
-  }, 200);
-    }
-  
-
-  /**
-   *Comparte la información del elemento.
-   *@param element - El elemento a compartir.
-   */
-  shareElementInfo(index: number): void {
-    this.hideElementInfo(new MouseEvent('click'));
-    let symbol = this.elementsList[index]!.symbol;
-   this.elementShared.emit(symbol);
   }
 
   /**
@@ -186,7 +152,4 @@ export class ElementListComponent implements OnInit {
   scrollRight(): void {
     this.elementsContainer.nativeElement.scrollBy({ left: 100, behavior: 'smooth' });
   }
-
-
-
 }

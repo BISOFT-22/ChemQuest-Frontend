@@ -86,8 +86,6 @@ export class AuthService {
   }
 
   public signup(user: IUser): Observable<ILoginResponse> {
-    console.log('user', user);
-    user.userType = {id: 1, typeName: 'player'};
     return this.http.post<ILoginResponse>('auth/signup', user);
   }
 

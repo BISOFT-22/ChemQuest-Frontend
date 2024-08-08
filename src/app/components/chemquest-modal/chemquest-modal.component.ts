@@ -34,6 +34,11 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
    * Evento que se emite cuando se realiza una acción en el modal.
    */
   @Output() action = new EventEmitter<{option: boolean}>();
+   /**
+   * Evento que se emite cuando se realiza una acción en el modal.
+   */
+   @Output() action2 = new EventEmitter<{option: boolean}>();
+
 
   /**
    * Indica si el modal está visible o no.
@@ -125,7 +130,7 @@ export class ChemquestModalComponent implements OnInit, OnDestroy {
   closeModal(): void {
     this.isVisible = false;
     this.isAlert = false;
-    this.action.emit({option: false});
+    this.action2.emit({option: false});
   }
 
   /**

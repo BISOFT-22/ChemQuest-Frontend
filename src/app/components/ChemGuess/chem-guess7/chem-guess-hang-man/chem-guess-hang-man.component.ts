@@ -161,7 +161,7 @@ export class ChemGuessHangManComponent implements OnInit {
     
   }
   closeGame(): void {
-    this.modalWinLose.closeModal();
+  
     this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
     this.router.navigate(['app/games']);
 

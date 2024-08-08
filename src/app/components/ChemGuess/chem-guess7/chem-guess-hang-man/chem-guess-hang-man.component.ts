@@ -30,7 +30,7 @@ import { ChemquestModalComponent } from "../../../chemquest-modal/chemquest-moda
 export class ChemGuessHangManComponent implements OnInit {
   @ViewChild('modalChange') modalChange!: ChemquestModalComponent;
   @ViewChild('modalSend') modalSend!: ChemquestModalComponent;
-
+  @ViewChild('modalWinLose') modalWinLose!: ChemquestModalComponent;
   /**
    * Path to the send image asset.
    */
@@ -40,6 +40,7 @@ export class ChemGuessHangManComponent implements OnInit {
    * Path to the convert image asset.
    */
   convert: string = 'assets/img/convert.png';
+  hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif'
 
   /**
    * Input property for the user's history.
@@ -133,6 +134,38 @@ export class ChemGuessHangManComponent implements OnInit {
       this.modalSend.showModal('¿Estás seguro de que deseas enviar tu respuesta?', 'Una vez enviada, no podrás cambiarla.', true, true, true, false);
     }
   }
+  ShowResult(modal:number): void {
+    if (modal==1) {
+      this.modalWinLose.showModal('GANASTE','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
+      this.resetLifeHistory();
+    }else{
+      this.modalWinLose.showModal('Perdiste','Dale aceptar si quieres volver a intentar o cancelar para seleccionar otro juego',true, true, true,false)
+      this.resetLifeHistory();
+    }
+    
+  }
+  resetLifeHistory(): void {
+    this.history.wrong = 5;
+    this.lifeChangeService.setLive(this.history.wrong);
+    this.allHistoryCleared.emit();
+    this.updateLife.emit();
+  }
+ 
+  finishGame(event: { option: boolean }): void {
+    if (event.option) {
+      
+      this.ngOnInit();
+    }else{
+     this.closeGame();
+    }
+    
+  }
+  closeGame(): void {
+    this.modalWinLose.closeModal();
+    this.hangManGameOver ='assets/img/chemcraft/HangmanGameover224x208.gif';
+    this.router.navigate(['app/games']);
+
+  }
 
   /**
    * Handles the form update event.
@@ -141,10 +174,7 @@ export class ChemGuessHangManComponent implements OnInit {
   handleFormUpdate(event: { option: boolean }): void {
     if (event.option) {
       this.onConvert();
-      this.history.wrong = 5;
-      this.lifeChangeService.setLive(this.history.wrong);
-      this.allHistoryCleared.emit();
-      this.updateLife.emit();
+      this.resetLifeHistory();
       console.log("Se actualizo hang man");
       console.log(this.allHistory);
     } 
@@ -349,7 +379,8 @@ export class ChemGuessHangManComponent implements OnInit {
         }
         console.log(goodAnswer);
         if (goodAnswer === historytemp.typeColor.length) {
-          this.updateUserAndStreak(historytemp);
+          this.ShowResult(1);
+       
           // setTimeout(() => {
           //   window.location.reload();
           // }, 1000);
@@ -362,7 +393,9 @@ export class ChemGuessHangManComponent implements OnInit {
       
         this.lifeChangeService.setLive(0);
         this.diedAnimation.emit();
-       
+          setTimeout(() => {
+            this.ShowResult(2);
+           }, 1500);
          
       
     }

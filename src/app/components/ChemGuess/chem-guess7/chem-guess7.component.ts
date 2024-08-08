@@ -72,6 +72,7 @@ export class ChemGuess7Component implements OnChanges, OnInit {
   @Input() life: number | undefined;
   public streak: number | undefined=0;
   public change: boolean = false;
+  
   user:IUser = {};
   constructor(private lifeChangeService: LifeChangeService, private authService:AuthService, private userService: UserService, private backgroundService: BackgroundService) {
   }
